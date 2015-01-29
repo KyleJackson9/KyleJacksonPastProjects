@@ -43,33 +43,27 @@ public class NBody{
 	    	  		list[n].draw();
 	    	  		n = n+1;
 	    	 }
-	    	 	StdDraw.show(20);
+	    	 	StdDraw.show(1);
 	    	 	time = time +dt;
 
 	    	 }
 
-	    	 //;
+	    	 
 
-	    	 /* 
-	    	 	    	 	StdDraw.setScale(-universeRadius, universeRadius);
-	    	  StdDraw.picture(0,0,"images/starfield.jpg");
-	    	  while (j < numberOfPlanets){
-	    	 	list[j] = getPlanet(in);
-	    	 	j = j+1;
-	    	 }
+	    	 
+	    	 
 
 
 
 	    	 
-StdOut.printf("%d\n", N);
-StdOut.printf("%.2e\n", R);
-for (int i = 0; i < N; i++) {
-    StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
-                   px[i], py[i], vx[i], vy[i], mass[i], image[i]);
-}
-	    	 */
+			StdOut.printf("%d\n", numberOfPlanets);
+			StdOut.printf("%.2e\n", universeRadius);
+				for (int q = 0; q < numberOfPlanets; q++) {
+   			StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",list[q].x, list[q].y, list[q].xVelocity, list[q].yVelocity, list[q].mass, list[q].img);
+			}
+	    	 
 	    	 	
-	    	 	//i = i +1;
+	    	 
 
 
 

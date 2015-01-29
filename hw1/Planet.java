@@ -41,7 +41,7 @@
 		double pairwisex;
 		double r = this.calcDistance(a);
 		pairwisex = calcPairwiseForce(a)*(a.x-this.x)/r;
-		return Math.abs(pairwisex);
+		return pairwisex;
 
 		 
 	}
@@ -50,7 +50,7 @@
 		double pairwisey;
 		double r = this.calcDistance(a);
 		pairwisey = calcPairwiseForce(a)*(a.y-this.y)/r;
-		return Math.abs(pairwisey);
+		return pairwisey;
 		 
 	}
 		 public void setNetForce(Planet[] b){
@@ -77,6 +77,7 @@
 
 		//xAccel = calcPairwiseForceX(this)/this.mass;
 		//yAccel = calcPairwiseForceY(this)/this.mass;
+
 		xAccel = xNetForce/mass;
 		yAccel = yNetForce/mass;
 
