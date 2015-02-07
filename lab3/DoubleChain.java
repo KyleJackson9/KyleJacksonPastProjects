@@ -27,7 +27,7 @@ public class DoubleChain {
 	
 	/** Adds D to the front of the DoubleChain. */	
 	public void insertFront(double d) {
-		DNode oldItem = head.next;
+		DNode oldItem = head;
 		DNode newItem = new DNode(null,d, oldItem);
 		head= newItem;
 	}
