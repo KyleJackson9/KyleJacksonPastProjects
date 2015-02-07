@@ -2,15 +2,13 @@
 public class DoubleChain {
 	
 	private DNode head;
-	// public DNode next;
-	// public double val;
+
 	
 	public DoubleChain(double val) {
-		/* your code here. */
+
 		DNode x = new DNode(val);
 		head = x;
-		// this.val = val;
-		// next = null;
+
 
 	}
 
@@ -43,19 +41,7 @@ public class DoubleChain {
 		old.next = new DNode(head, d, null);
 	}
 	
-	/** Removes the last item in the DoubleChain and returns it. 
-	  * This is an extra challenge problem. */
-	// public DNode deleteBack() {
-	// 	/* your code here */
-	// 	return null;
-	// }
-	
-	// * Returns a string representation of the DoubleChain. 
-	//   * This is an extra challenge problem. 
-	// public String toString() {
-	// 	/* your code here */		
-	// 	return null;
-	// }
+
 
 	public static class DNode {
 		public DNode prev;
