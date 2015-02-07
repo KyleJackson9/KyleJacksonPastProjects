@@ -45,17 +45,17 @@ public class DoubleChain {
 	
 	/** Removes the last item in the DoubleChain and returns it. 
 	  * This is an extra challenge problem. */
-	public DNode deleteBack() {
-		/* your code here */
-		return null;
-	}
+	// public DNode deleteBack() {
+	// 	/* your code here */
+	// 	return null;
+	// }
 	
-	/** Returns a string representation of the DoubleChain. 
-	  * This is an extra challenge problem. */
-	public String toString() {
-		/* your code here */		
-		return null;
-	}
+	// * Returns a string representation of the DoubleChain. 
+	//   * This is an extra challenge problem. 
+	// public String toString() {
+	// 	/* your code here */		
+	// 	return null;
+	// }
 
 	public static class DNode {
 		public DNode prev;
