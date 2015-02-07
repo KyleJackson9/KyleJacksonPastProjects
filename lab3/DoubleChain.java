@@ -2,10 +2,16 @@
 public class DoubleChain {
 	
 	private DNode head;
+	// public DNode next;
+	// public double val;
 	
 	public DoubleChain(double val) {
 		/* your code here. */
-		head = null; 
+		DNode x = new DNode(val);
+		head = x;
+		// this.val = val;
+		// next = null;
+
 	}
 
 	public DNode getFront() {
@@ -14,18 +20,27 @@ public class DoubleChain {
 
 	/** Returns the last item in the DoubleChain. */		
 	public DNode getBack() {
-		/* your code here */
-		return null;
+
+		while (head.next != null){
+			head = head.next;
+		}
+		return head;
 	}
 	
 	/** Adds D to the front of the DoubleChain. */	
 	public void insertFront(double d) {
-		/* your code here */
+		DNode oldItem = head.next;
+		DNode newItem = new DNode(null,d, oldItem);
+		head= newItem;
 	}
 	
 	/** Adds D to the back of the DoubleChain. */	
 	public void insertBack(double d) {
-		/* your code here */
+		DNode old = head;
+		while (old.next != null){
+			old = old.next;
+		}
+		old.next = new DNode(head, d, null);
 	}
 	
 	/** Removes the last item in the DoubleChain and returns it. 
