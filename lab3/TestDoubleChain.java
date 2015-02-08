@@ -47,14 +47,13 @@ public class TestDoubleChain {
     @Test
     public void testinsertBack() {
         DoubleChain d = new DoubleChain(5);
-        assertEquals(5, d.getFront().val, 1e-11);
-        assertEquals(5, d.getBack().val, 1e-11);
 
         d.insertBack(2);
         d.insertBack(1);
         d.insertBack(7);
         assertEquals(5, d.getFront().val, 1e-11);
         assertEquals(7, d.getBack().val, 1e-11);
+
     }
 
     public static void main(String[] args) {
