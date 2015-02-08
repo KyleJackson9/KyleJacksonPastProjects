@@ -6,8 +6,8 @@ public class DoubleChain {
 	
 	public DoubleChain(double val) {
 
-		DNode x = new DNode(val);
-		head = x;
+		head = new DNode(val);
+		
 
 
 	}
@@ -29,7 +29,7 @@ public class DoubleChain {
 	public void insertFront(double d) {
 		DNode oldItem = head;
 		DNode newItem = new DNode(null,d, oldItem);
-		head= newItem;
+		head = newItem;
 	}
 	
 	/** Adds D to the back of the DoubleChain. */	
@@ -39,7 +39,14 @@ public class DoubleChain {
 			old = old.next;
 		}
 		old.next = new DNode(head, d, null);
+
 	}
+
+		// DNode old = this.getBack();
+		// old.next = new DNode(head,d,null);
+		// head = old;
+
+
 	
 
 

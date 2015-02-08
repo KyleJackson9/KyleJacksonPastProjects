@@ -31,6 +31,32 @@ public class TestDoubleChain {
         assertEquals(8, d.getBack().val, 1e-11);
     }
 
+    @Test
+    public void testinsertFront() {
+        DoubleChain d = new DoubleChain(5);
+        assertEquals(5, d.getFront().val, 1e-11);
+        assertEquals(5, d.getBack().val, 1e-11);
+
+        d.insertFront(2);
+        d.insertFront(1);
+        d.insertFront(7);
+        assertEquals(7, d.getFront().val, 1e-11);
+        assertEquals(5, d.getBack().val, 1e-11);
+    }
+
+    @Test
+    public void testinsertBack() {
+        DoubleChain d = new DoubleChain(5);
+        assertEquals(5, d.getFront().val, 1e-11);
+        assertEquals(5, d.getBack().val, 1e-11);
+
+        d.insertBack(2);
+        d.insertBack(1);
+        d.insertBack(7);
+        assertEquals(5, d.getFront().val, 1e-11);
+        assertEquals(7, d.getBack().val, 1e-11);
+    }
+
     public static void main(String[] args) {
         jh61b.junit.textui.runClasses(TestDoubleChain.class);
     }
