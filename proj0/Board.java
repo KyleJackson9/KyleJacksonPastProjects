@@ -18,7 +18,6 @@ public class Board {
         StdDrawPlus.setXscale(0, N);
         StdDrawPlus.setYscale(0, N);
         players = new Piece[N][N];
-        int turn = 0;
 
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
@@ -30,33 +29,32 @@ public class Board {
                 double x = StdDrawPlus.mouseX();
                 double y = StdDrawPlus.mouseY();
                 p = pieceAt((int) x, (int) y);
-                System.out.println(prev);
-                if (turn%2 ==0){
-               	 if (p==null && prev == null){
-                	System.out.println("invalid choice");
-               	 } else if (p==null && prev.isFire() && canSelect((int) x, (int) y)){
-                	removed = remove(prev.x, prev.y);
-                	place(prev,(int) x,(int) y);
-                	captured = prev.hasCaptured();
-                	moved = true;
-                	prev = null;
-                	} else if (p != null && p.isFire() && canSelect((int) x, (int) y)){
-                	prev = p;
-                	}
-                } else{
-                	if (p==null && prev == null){
-                	System.out.println("invalid choice");
-               	 } else if (p==null && !p.isFire() && canSelect((int) x, (int) y)){
-                	removed = remove(prev.x, prev.y);
-                	place(prev,(int) x,(int) y);
-                	captured = prev.hasCaptured();
-                	moved = true;
-                	prev = null;
-                	System.out.println("stuck in the middle");
-                	} else if (p != null && !prev.isFire() && canSelect((int) x, (int) y)){
-                	prev = p;
-                	}
-                }          
+
+                if (turn % 2 ==0){
+	               	 if (p==null && prev == null){
+	                	System.out.println("invalid choice");
+	               	 } else if (p==null && prev.isFire() && canSelect((int) x, (int) y)){
+	                	removed = remove(prev.x, prev.y);
+	                	place(prev,(int) x,(int) y);
+	                	captured = prev.hasCaptured();
+	                	moved = true;
+	                	prev = null;
+	                } else if (p != null && p.isFire() && canSelect((int) x, (int) y)){
+	                	prev = p;
+	                	}
+	            } else{
+	                	if (p==null && prev == null){
+	                	System.out.println("invalid choice");
+	               	 } else if (p==null && !prev.isFire() && canSelect((int) x, (int) y)){
+	                	removed = remove(prev.x, prev.y);
+	                	place(prev,(int) x,(int) y);
+	                	captured = prev.hasCaptured();
+	                	moved = true;
+	                	prev = null;
+	                } else if (p != null && !p.isFire() && canSelect((int) x, (int) y)){
+	                	prev = p;
+	                	}
+	                }          
             }
             if (canEndTurn()){
             	endturn();
@@ -172,9 +170,11 @@ public class Board {
 							} else if(prev.y +1 == y){
 								return true;
 							}
-						}	else if(prev.x == x+2 && prev.y == y +2 && pieceAt(prev.x +1 ,prev.y +1) != null && !pieceAt(prev.x+1,prev.y+1).isFire()){
+						} else if(prev.x +2 == x && prev.y +2 == y  && pieceAt(prev.x +1 ,prev.y +1) != null && !pieceAt(prev.x+1,prev.y+1).isFire()){
+							remove(prev.x+1,prev.y +1);
 							return true;
-						} else if (prev.x == x-2 && prev.y == y+2 && pieceAt(prev.x -1 ,prev.y +1) != null && !pieceAt(prev.x-1,prev.y+1).isFire()){
+						} else if (prev.x -2== x && prev.y +2 == y && pieceAt(prev.x -1 ,prev.y +1) != null && !pieceAt(prev.x-1,prev.y+1).isFire()){
+							remove(prev.x -1, prev.y +1);
 						return true;
 					}
 						return false;
@@ -185,9 +185,11 @@ public class Board {
 							} else if(prev.y -1 == y){ // add King issues
 								return true;
 							}
-						} else if (prev.x == x-2 && prev.y == y -2 && pieceAt(prev.x-1 ,prev.y-1) != null && pieceAt(prev.x-1,prev.y-1).isFire()){
+						} else if (prev.x -2 == x && prev.y -2 == y && pieceAt(prev.x-1 ,prev.y-1) != null && pieceAt(prev.x-1,prev.y-1).isFire()){
+							remove(prev.x-1,prev.y-1);
 							return true;
-						} else if (prev.x == x+2 && prev.y == y -2 && pieceAt(prev.x+1 ,prev.y-1) != null && pieceAt(prev.x+1,prev.y-1).isFire()){
+						} else if (prev.x +2== x && prev.y -2== y  && pieceAt(prev.x+1 ,prev.y-1) != null && pieceAt(prev.x+1,prev.y-1).isFire()){
+							remove(prev.x+1,prev.y-1);
 							return true;
 					}
 						return false;
@@ -295,11 +297,8 @@ public class Board {
 	}
 
 	public static void endturn(){
-
-		if (canEndTurn()){
-			System.out.println("next turn");
-			winner();
-		}
+		System.out.println("next turn");
+		winner();
 		p = null;
 		prev = null;
 		turn += 1;
