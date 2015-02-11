@@ -26,13 +26,13 @@ public class Piece {
 
 	public int side(){
 		if (isFire() == true){
-			return 0;
-		}
-		else{
 			return 1;
 		}
+		else{
+			return 0;
+		}
 	}
-	
+
 	public String type(){
 		return type;
 	}
@@ -94,10 +94,11 @@ public class Piece {
 	}
 
 	public boolean hasCaptured(){
-
-		if (Math.abs(b.removed.x - x) == 2){
-			if (Math.abs(b.removed.y -y)==2) {
-				return true;
+		if (b.removed != null){
+			if (Math.abs(b.removed.x - x) == 2){
+				if (Math.abs(b.removed.y -y)==2) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -11,12 +11,14 @@ public class Board {
 	private static boolean moved;
 	private static boolean captured;
 	private static Piece selected;
+	private static int turn;
 
 	public static void main(String[] args) {
         int N = 8;
         StdDrawPlus.setXscale(0, N);
         StdDrawPlus.setYscale(0, N);
         players = new Piece[N][N];
+        int turn = 0;
 
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
@@ -29,24 +31,35 @@ public class Board {
                 double y = StdDrawPlus.mouseY();
                 p = pieceAt((int) x, (int) y);
                 System.out.println(prev);
-                if (p==null && prev == null){
+                if (turn%2 ==0){
+               	 if (p==null && prev == null){
                 	System.out.println("invalid choice");
-                } else if (p == null && canSelect((int) x, (int) y)){
+               	 } else if (p==null && prev.isFire() && canSelect((int) x, (int) y)){
+                	removed = remove(prev.x, prev.y);
                 	place(prev,(int) x,(int) y);
                 	captured = prev.hasCaptured();
+                	moved = true;
+                	prev = null;
+                	} else if (p != null && p.isFire() && canSelect((int) x, (int) y)){
+                	prev = p;
+                	}
+                } else{
+                	if (p==null && prev == null){
+                	System.out.println("invalid choice");
+               	 } else if (p==null && !p.isFire() && canSelect((int) x, (int) y)){
                 	removed = remove(prev.x, prev.y);
+                	place(prev,(int) x,(int) y);
+                	captured = prev.hasCaptured();
                 	moved = true;
                 	prev = null;
                 	System.out.println("stuck in the middle");
-                  
-                } else if (p != null && canSelect((int) x, (int) y)) {
-
+                	} else if (p != null && !prev.isFire() && canSelect((int) x, (int) y)){
                 	prev = p;
-                	System.out.println(p.type());
-            		
-
-            	}
-          
+                	}
+                }          
+            }
+            if (canEndTurn()){
+            	endturn();
             }  
             StdDrawPlus.show(100);
         }
@@ -205,79 +218,75 @@ public class Board {
 	}
 
 	public static void place(Piece p, int x, int y){
-		//p.move(x,y);
 		players[x][y] = p;
 		players[x][y].move(x,y);
-			if (p.type() == "pawn" && p.isFire()){
-				if (p.isKing()){
-					StdDrawPlus.picture(x + .5, y +.5, "img/pawn-fire-crowned.png",1,1);
-				} else { StdDrawPlus.picture(x +.5, y +.5, "img/pawn-fire.png");
+		drawBoard(8);
+		for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+        	Piece dPiece = players[i][j];
+        	if (dPiece != null){
+			if (dPiece.type() == "pawn" && dPiece.isFire()){
+				if (dPiece.isKing()){
+					StdDrawPlus.picture(dPiece.x + .5, dPiece.y +.5, "img/pawn-fire-crowned.png",1,1);
+				} else { StdDrawPlus.picture(dPiece.x +.5, dPiece.y + .5, "img/pawn-fire.png",1,1);
 				}
 			}
-			else if (p.type() == "shield" && p.isFire()){
-				if (p.isKing()){
-					StdDrawPlus.picture(x +.5, y +.5, "img/shield-fire-crowned.png",1,1);
+			else if (dPiece.type() == "shield" && dPiece.isFire()){
+				if (dPiece.isKing()){
+					StdDrawPlus.picture(dPiece.x +.5, dPiece.y +.5, "img/shield-fire-crowned.png",1,1);
 				} else {
-					StdDrawPlus.picture(x +.5, y+.5, "img/shield-fire.png",1,1);
+					StdDrawPlus.picture(players[i][j].x +.5, dPiece.y+.5, "img/shield-fire.png",1,1);
 				}
 			}
-			else if (p.type() == "bomb" && p.isFire()){
-				if (p.isKing()){
-					StdDrawPlus.picture(x +.5, y +.5, "img/bomb-fire-crowned.png",1,1);
+			else if (players[i][j].type() == "bomb" && players[i][j].isFire()){
+				if (dPiece.isKing()){
+					StdDrawPlus.picture(dPiece.x +.5, dPiece.y +.5, "img/bomb-fire-crowned.png",1,1);
 				} else {
-					StdDrawPlus.picture(x + .5, y +.5, "img/bomb-fire.png",1,1);
+					StdDrawPlus.picture(dPiece.x + .5, dPiece.y +.5, "img/bomb-fire.png",1,1);
 				}
 			}
-			else if (p.type() == "bomb"){
-				if (p.isKing()){
-					StdDrawPlus.picture(x + .5, y +.5, "img/bomb-water-crowned.png",1,1);
-				}
-				else{
-				StdDrawPlus.picture(x + .5, y +.5, "img/bomb-water.png",1,1);
-			}
-			}
-			else if (p.type() == "shield"){
-				if (p.isKing()){
-					StdDrawPlus.picture(x +.5, y + .5, "img/shield-water-crowned.png",1,1);
+			else if (dPiece.type() == "bomb"){
+				if (dPiece.isKing()){
+					StdDrawPlus.picture(dPiece.x + .5, dPiece.y +.5, "img/bomb-water-crowned.png",1,1);
 				}
 				else{
-				StdDrawPlus.picture(x +.5, y + .5, "img/shield-water.png",1,1);
+				StdDrawPlus.picture(dPiece.x + .5, dPiece.y +.5, "img/bomb-water.png",1,1);
 			}
 			}
-			else if (p.type() == "pawn"){
-				if (p.isKing()){
-					StdDrawPlus.picture(x + .5, y +.5, "img/pawn-water-crowned.png",1,1);
+			else if (dPiece.type() == "shield"){
+				if (dPiece.isKing()){
+					StdDrawPlus.picture(dPiece.x +.5, dPiece.y + .5, "img/shield-water-crowned.png",1,1);
 				}
 				else{
-				StdDrawPlus.picture(x + .5, y +.5, "img/pawn-water.png",1,1);
+				StdDrawPlus.picture(dPiece.x +.5, dPiece.y + .5, "img/shield-water.png",1,1);
+			}
+			}
+			else if (dPiece.type() == "pawn"){
+				if (dPiece.isKing()){
+					StdDrawPlus.picture(dPiece.x + .5, dPiece.y +.5, "img/pawn-water-crowned.png",1,1);
+				}
+				else{
+				StdDrawPlus.picture(dPiece.x + .5, dPiece.y +.5, "img/pawn-water.png",1,1);
 			}
 			}
 		}
+	}
+	}
+}
 	
 
 	public static Piece remove(int x, int y){
-	// 	for(int i = 0; i < 8; ++i){
-	// 		for(int j = 0; j < 8; ++j){
-
-	// 		if (players[i][j].x == x && players[i][j].y ==y){
-	// 			p = players[i][j];
-
-	// 		}
-	// 	}
-
-
-	// }
 	Piece pp = pieceAt(x,y);
 	players[x][y] = null;
 	return pp;
 }
 
-	public boolean canEndTurn(){
+	public static boolean canEndTurn(){
 
 		if (moved && captured){
 			return true;
 		}else if (moved){
-				return true;
+			return true;
 		} else {
 			return false;
 		}
@@ -285,15 +294,20 @@ public class Board {
 		
 	}
 
-	public void endturn(){
+	public static void endturn(){
 
 		if (canEndTurn()){
 			System.out.println("next turn");
 			winner();
 		}
+		p = null;
+		prev = null;
+		turn += 1;
+		moved = false;
+		captured = false;
 	}
 
-	public String winner(){
+	public static String winner(){
 		String win = "";
 		int countFire =0;
 		int countWater =0;
