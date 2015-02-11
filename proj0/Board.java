@@ -171,9 +171,11 @@ public class Board {
 								return true;
 							}
 						} else if(prev.x +2 == x && prev.y +2 == y  && pieceAt(prev.x +1 ,prev.y +1) != null && !pieceAt(prev.x+1,prev.y+1).isFire()){
+							bomb(x,y);
 							remove(prev.x+1,prev.y +1);
 							return true;
 						} else if (prev.x -2== x && prev.y +2 == y && pieceAt(prev.x -1 ,prev.y +1) != null && !pieceAt(prev.x-1,prev.y+1).isFire()){
+							bomb(x,y);
 							remove(prev.x -1, prev.y +1);
 						return true;
 					}
@@ -186,9 +188,11 @@ public class Board {
 								return true;
 							}
 						} else if (prev.x -2 == x && prev.y -2 == y && pieceAt(prev.x-1 ,prev.y-1) != null && pieceAt(prev.x-1,prev.y-1).isFire()){
+							bomb(x,y);
 							remove(prev.x-1,prev.y-1);
 							return true;
 						} else if (prev.x +2== x && prev.y -2== y  && pieceAt(prev.x+1 ,prev.y-1) != null && pieceAt(prev.x+1,prev.y-1).isFire()){
+							bomb(x,y);
 							remove(prev.x+1,prev.y-1);
 							return true;
 					}
@@ -206,7 +210,29 @@ public class Board {
 		}
 		return false;
 	}
+	private static void bomb(int x, int y){
+		Piece rightT = pieceAt(x+1,y+1);
+		Piece rightB = pieceAt(x-1,y+1);
+		Piece leftT = pieceAt(x+1,y-1);
+		Piece leftB = pieceAt(x-1,y-1);
+		if(prev.isBomb()){
+			if (rightT != null && !rightT.isShield()){
+				remove(rightT.x,rightT.y);
+			}
+			if (rightB != null && !rightB.isShield()){
+				remove(rightB.x,rightB.y);
+			}
+			if (leftB != null && !leftB.isShield()){
+				remove(leftB.x,leftB.y);
+			}
+			if (leftT != null && !leftT.isShield()){
+				remove(leftT.x,leftT.y);
+			}
+			remove(x,y);
 
+								
+	}
+	}
 
 	public boolean validMove(int xi, int yi, int xf, int yf){
 		return canSelect(xi,yi);
