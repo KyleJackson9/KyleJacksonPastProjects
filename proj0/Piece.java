@@ -7,6 +7,7 @@ public class Piece {
 	public int y;
 	private String type;
 	public boolean king;
+	private boolean capture;
 
 
 	public Piece(boolean isFire, Board board, int xx, int yy, String typee){
@@ -60,25 +61,28 @@ public class Piece {
 	}
 
 	public void move(int xx, int yy){
+
+			if (Math.abs(xx - x) == 2){
+				if (Math.abs(yy -y)==2) {
+					capture = true;
+				}
+			
+		} else{
+			capture = false;
+		}
+		
 		x = xx; 
 		y = yy;
 	}
 
 	public boolean hasCaptured(){
-		// if (b.removed != null){
-		// 	if (Math.abs(b.removed.x - x) == 2){
-		// 		if (Math.abs(b.removed.y -y)==2) {
-		// 			return true;
-		// 		}
-		// 	}
-		// }
-		// return false;
-		return b.captured;
+
+		return capture;
 	}
 
 	public void doneCapturing(){
 		while (hasCaptured()){
-			b.captured = false;
+			move(0,0);
 		}
 
 	}

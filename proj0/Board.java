@@ -2,28 +2,24 @@
 
 public class Board {
 
-	private static Piece p;
-	private static Piece prev;
-	private static Piece[][] players;
-	public static boolean selection;
-	private static Board b;
-	public static Piece removed;
-	private static boolean moved;
-	public static boolean captured;
-	private static Piece selected;
-	private static int turn;
+	private  Piece p;
+	private  Piece prev;
+	private  Piece[][] players;
+	public  boolean selection;
+	private Board b;
+	public  Piece removed;
+	private  boolean moved;
+	public  boolean captured;
+	private  Piece selected;
+	private  int turn;
 
 	public static void main(String[] args) {
         int N = 8;
         StdDrawPlus.setXscale(0, N);
         StdDrawPlus.setYscale(0, N);
-        players = new Piece[N][N];
-
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
-
-       //b.drawBoard(N);
-       b = new Board(true);
+       	Board b = new Board(true);
         while(true) {
 
             if (StdDrawPlus.mousePressed()) {
@@ -32,7 +28,7 @@ public class Board {
                 b.p = b.pieceAt((int) x, (int) y);
                 if (b.canEndTurn()){
 	               	 	b.endturn();
-	             } else if (turn % 2 ==0){
+	             } else if (b.turn % 2 ==0){
 
                 	System.out.println("Fire's turn");
 	               	 if (b.p==null && b.prev == null){
@@ -128,6 +124,7 @@ public class Board {
 		if(shouldBeEmpty) {
 			drawBoard(8);
 		}
+		players = new Piece[8][8];
 		    for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
 		        if(y==0 && x%2 == 0){
