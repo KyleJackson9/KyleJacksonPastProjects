@@ -8,7 +8,7 @@ public class Board {
 	private  boolean selection;
 	private  Piece removed;
 	private  boolean moved;
-	public  boolean captured;
+	private  boolean captured;//make private
 	private  Piece selected;
 	private  int turn;
 
@@ -290,8 +290,11 @@ public class Board {
 			if (leftT != null && !leftT.isShield()){
 				remove(leftT.x,leftT.y);
 			}
-		remove(prev.x,prev.y);
-		remove(x,y);
+			if (prev.isBomb()){
+				remove(prev.x,prev.y);
+				remove(x,y);	
+			}
+
 	}
 
 	}
