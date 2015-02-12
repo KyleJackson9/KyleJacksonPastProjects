@@ -9,7 +9,7 @@ public class Board {
 	private static Board b;
 	public static Piece removed;
 	private static boolean moved;
-	private static boolean captured;
+	public static boolean captured;
 	private static Piece selected;
 	private static int turn;
 
@@ -21,78 +21,57 @@ public class Board {
 
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
-       drawBoard(N);
-       b = new Board(false);
+
+       //b.drawBoard(N);
+       b = new Board(true);
         while(true) {
 
             if (StdDrawPlus.mousePressed()) {
                 double x = StdDrawPlus.mouseX();
                 double y = StdDrawPlus.mouseY();
-                p = pieceAt((int) x, (int) y);
+                b.p = b.pieceAt((int) x, (int) y);
 
                 if (turn % 2 ==0){
-	               	 if (p==null && prev == null){
+                	System.out.println("Fire's turn");
+	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
-	               	 } else if (p==null && prev.isFire() && canSelect((int) x, (int) y)){
-	                	removed = remove(prev.x, prev.y);
-	                	place(prev,(int) x,(int) y);
-	                	captured = prev.hasCaptured();
-	                	moved = true;
-	                	prev = null;
-	                } else if (p != null && p.isFire() && canSelect((int) x, (int) y)){
-	                	prev = p;
+	               	 }else if (b.canEndTurn()){
+	               	 	b.endturn();
+	               	 } else if (b.p==null && b.prev.isFire() && b.canSelect((int) x, (int) y)){
+	                	b.removed = b.remove(prev.x, prev.y);
+	                	b.place(prev,(int) x,(int) y);
+	                	b.drawUpdate();
+	                	b.captured = b.prev.hasCaptured();
+	                	b.moved = true;
+	                	b.prev = null;
+	                } else if (b.p != null && b.p.isFire() && b.canSelect((int) x, (int) y)){
+	                	b.prev = b.p;
 	                	}
-	            } else{
-	                	if (p==null && prev == null){
+	            } else{ System.out.println("Water's turn");	
+	                	if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
-	               	 } else if (p==null && !prev.isFire() && canSelect((int) x, (int) y)){
-	                	removed = remove(prev.x, prev.y);
-	                	place(prev,(int) x,(int) y);
-	                	captured = prev.hasCaptured();
-	                	moved = true;
-	                	prev = null;
-	                } else if (p != null && !p.isFire() && canSelect((int) x, (int) y)){
-	                	prev = p;
+	               	 } else if (b.p==null && !b.prev.isFire() && b.canSelect((int) x, (int) y)){
+	                	b.removed = b.remove(prev.x, prev.y);
+	                	// if (prev.isBomb() && prev.hasCaptured()){
+	                	// 	prev = null;
+	                	// }else if (prev != null){
+
+	                	b.place(prev,(int) x,(int) y);
+	                	b.drawUpdate();
+	                   	b.captured = b.prev.hasCaptured();
+	                	b.moved = true;
+	                	b.prev = null;
+	                } else if (b.p != null && !b.p.isFire() && b.canSelect((int) x, (int) y)){
+	                	b.prev = b.p;
 	                	}
 	                }
-	            }
-	           // if (captured){
-	           // 	if (StdDrawPlus.mousePressed()) {
-            //     double x2 = StdDrawPlus.mouseX();
-            //     double y2 = StdDrawPlus.mouseY();
-            //     p = pieceAt((int) x2, (int) y2);
+	            } else if (StdDrawPlus.isSpacePressed()){
+	            	         if (b.canEndTurn()){
+            				b.endturn();
+            				} 
 
-	           //      	if (turn % 2 ==0){
-	           //     	 if (p==null && prev == null){
-	           //      	System.out.println("invalid move");
-	           //     	 } else if (p==null && prev.isFire() && canSelect((int) x2, (int) y2)){
-	           //      	removed = remove(prev.x, prev.y);
-	           //      	place(prev,(int) x2,(int) y2);
-	           //      	captured = prev.hasCaptured();
-	           //      	moved = true;
-	           //      	prev = null;
-	           //      } else if (p != null && p.isFire() && canSelect((int) x2, (int) y2)){
-	           //      	prev = p;
-	           //      	}
-	           //  } else{
-	           //      	if (p==null && prev == null){
-	           //      	System.out.println("invalid move");
-	           //     	 } else if (p==null && !prev.isFire() && canSelect((int) x2, (int) y2)){
-	           //      	removed = remove(prev.x, prev.y);
-	           //      	place(prev,(int) x2,(int) y2);
-	           //      	captured = prev.hasCaptured();
-	           //      	moved = true;
-	           //      	prev = null;
-	           //      } else if (p != null && !p.isFire() && canSelect((int) x2, (int) y2)){
-	           //      	prev = p;
-	           //      	}
-	           //      }
-	           //  }
-	           //      }         
+	            }
             
-            if (canEndTurn()){
-            	endturn();
-            }  
             StdDrawPlus.show(100);
         }
         
@@ -103,7 +82,7 @@ public class Board {
 
 
 
-    private static void drawOriginal(int N){
+    private void drawOriginal(int N){
     	    for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
             if (players[i][j] == null){
@@ -131,7 +110,7 @@ public class Board {
             }
     }
 
-    private static void drawBoard(int N) {
+    private void drawBoard(int N) {
      	    for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if ((i + j) % 2 == 0) StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
@@ -177,7 +156,7 @@ public class Board {
 	}
 
 
-	public static Piece pieceAt(int x, int y){
+	public Piece pieceAt(int x, int y){
 		Piece pp;
 		for(int i = 0; i < 8; ++i){
 			for (int j =0; j < 8; ++j){
@@ -192,57 +171,67 @@ public class Board {
 		return null;
 	}
 	
-	private static boolean killerKing(Piece k, int x, int y){
-		if(k.x +1 == x && k.y -1 ==y || k.x -1 ==x && k.y +1 == y || k.y - 1 ==y && k.x -1 ==x || k.x +1 == x && k.y +1== y){
-					return true;
-		}else if(k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && !pieceAt(k.x+1,k.y+1).isFire()){
+	private  boolean killerKing(Piece k, int x, int y){
+		if (x>=0 && y>=0 && x<8 && y<8){
+		 if(k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && !pieceAt(k.x+1,k.y+1).isFire()){
 				bomb(x,y);
 				remove(k.x+1,k.y +1);
+				captured = true;
 				return true;
 		} else if (k.isFire() && k.x -2== x && k.y +2 == y && pieceAt(k.x -1 ,k.y +1) != null && !pieceAt(k.x-1,k.y+1).isFire()){
 						bomb(x,y);
 						remove(k.x -1, k.y +1);
+						captured = true;
 						return true;
 		}else if (k.isFire() && k.x -2 == x && k.y -2 == y && pieceAt(k.x-1 ,k.y-1) != null && !pieceAt(k.x-1,k.y-1).isFire()){
 							bomb(x,y);
 							remove(k.x-1,k.y-1);
+							captured = true;
 							return true;
 		} else if (k.isFire() && k.x +2== x && k.y -2== y  && pieceAt(k.x+1 ,k.y-1) != null && !pieceAt(k.x+1,k.y-1).isFire()){
 							bomb(x,y);
 							remove(k.x+1,k.y-1);
+							captured = true;
 							return true;
 		}else if(!k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && pieceAt(k.x+1,k.y+1).isFire()){
 							bomb(x,y);
 							remove(k.x+1,k.y +1);
+							captured =true;
 							return true;
 		} else if (!k.isFire() && k.x -2== x && k.y +2 == y && pieceAt(k.x -1 ,k.y +1) != null && pieceAt(k.x-1,k.y+1).isFire()){
 						bomb(x,y);
 						remove(k.x -1, k.y +1);
+						captured =true;
 						return true;
 		}else if (!k.isFire() && k.x -2 == x && k.y -2 == y && pieceAt(k.x-1 ,k.y-1) != null && pieceAt(k.x-1,k.y-1).isFire()){
 							bomb(x,y);
 							remove(k.x-1,k.y-1);
+							captured = true;
 							return true;
 		} else if (!k.isFire() && k.x +2== x && k.y -2== y  && pieceAt(k.x+1 ,k.y-1) != null && pieceAt(k.x+1,k.y-1).isFire()){
 							bomb(x,y);
 							remove(k.x+1,k.y-1);
+							captured =true;
 							return true;
-					}
+		} if (k.x +1 == x && k.y -1 ==y || k.x -1 ==x && k.y +1 == y || k.y - 1 ==y && k.x -1 ==x || k.x +1 == x && k.y +1== y){
+					return true;
+		}
+				}
 	
 	return false;
 }
 
-	public static boolean canSelect(int x, int y){
+	public boolean canSelect(int x, int y){
 		Piece select = players[x][y];
 		if (select == null){
 			if (prev != null){
 				checkKing(prev);
 				if (x>=0 && y>=0 && x<8 && y<8){
-					if (prev.isFire()){
+					if (prev.isKing()){
+						return killerKing(prev,x,y);
+					} else if (prev.isFire()){
 						if(prev.x +1 == x || prev.x -1 ==x){
-							if (prev.isKing()){
-								return killerKing(prev,x,y);
-							} else if(prev.y +1 == y){
+							 if(prev.y +1 == y){
 								return true;
 							}
 						} else if(prev.x +2 == x && prev.y +2 == y  && pieceAt(prev.x +1 ,prev.y +1) != null && !pieceAt(prev.x+1,prev.y+1).isFire()){
@@ -254,14 +243,12 @@ public class Board {
 							bomb(x,y);
 							remove(prev.x -1, prev.y +1);
 							captured = true;
-						return true;
+							return true;
 					}
 						return false;
 					} else if (!prev.isFire()){
 						if (prev.x == x-1 || prev.x -1 == x){
-							if(prev.isKing()){
-								return killerKing(prev,x,y);
-							} else if(prev.y -1 == y){ 
+							 if(prev.y -1 == y){ 
 								return true;
 							}
 						} else if (prev.x -2 == x && prev.y -2 == y && pieceAt(prev.x-1 ,prev.y-1) != null && pieceAt(prev.x-1,prev.y-1).isFire()){
@@ -289,7 +276,7 @@ public class Board {
 		}
 		return false;
 	}
-	private static void bomb(int x, int y){
+	private  void bomb(int x, int y){
 		Piece rightT = pieceAt(x+1,y+1);
 		Piece rightB = pieceAt(x-1,y+1);
 		Piece leftT = pieceAt(x+1,y-1);
@@ -312,7 +299,7 @@ public class Board {
 	}
 
 	}
-	private static void checkKing(Piece k){
+	private  void checkKing(Piece k){
 		if (k.isKing()){
 			k.king = true;
 		}
@@ -355,10 +342,12 @@ public class Board {
 		
 	}
 
-	public static void place(Piece p, int x, int y){
+	public void place(Piece p, int x, int y){
 		players[x][y] = p;
 		players[x][y].move(x,y);
 		drawBoard(8);
+	}
+	private void drawUpdate(){
 		for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
         	Piece dPiece = players[i][j];
@@ -413,13 +402,13 @@ public class Board {
 }
 	
 
-	public static Piece remove(int x, int y){
+	public Piece remove(int x, int y){
 	Piece pp = pieceAt(x,y);
 	players[x][y] = null;
 	return pp;
 }
 
-	public static boolean canEndTurn(){
+	public boolean canEndTurn(){
 
 		if (moved && captured){
 			return true;
@@ -432,7 +421,7 @@ public class Board {
 		
 	}
 
-	public static void endturn(){
+	public void endturn(){
 		System.out.println("next turn");
 		winner();
 		p = null;
@@ -442,7 +431,7 @@ public class Board {
 		captured = false;
 	}
 
-	public static String winner(){
+	public  String winner(){
 		String win = "";
 		int countFire =0;
 		int countWater =0;
