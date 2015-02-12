@@ -5,9 +5,8 @@ public class Board {
 	private  Piece p;
 	private  Piece prev;
 	private  Piece[][] players;
-	public  boolean selection;
-	private Board b;
-	public  Piece removed;
+	private  boolean selection;
+	private  Piece removed;
 	private  boolean moved;
 	public  boolean captured;
 	private  Piece selected;
@@ -128,22 +127,22 @@ public class Board {
 		    for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
 		        if(y==0 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, b, (int) x,(int) y,"pawn");
+                players[(int) x][(int) y] = new Piece (true, this, (int) x,(int) y,"pawn");
             	}
             	else if (y == 1 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (true, b, (int) x, (int) y,"shield");            		
+                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"shield");            		
             	}
             	else if (y == 2 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, b, (int) x, (int) y,"bomb");
+                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"bomb");
             	}
             	else if (y == 5 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, b, (int) x, (int) y,"bomb");            		
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"bomb");            		
             	}
             	else if (y == 6 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (false, b, (int) x, (int) y,"shield");            		
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"shield");            		
             	}
             	else if (y == 7 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, b, (int) x, (int) y,"pawn");            		
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"pawn");            		
             	}
             }
         }
