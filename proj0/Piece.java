@@ -55,6 +55,11 @@ public class Piece {
 	
 		return king;
 	}
+	private void explode(int x, int y){
+			if (isBomb() && hasCaptured()){
+				b.remove(x,y);	
+			}
+	}
 
 	public  boolean isBomb(){
 		if (type == "bomb"){
@@ -87,6 +92,7 @@ public class Piece {
 		
 		x = xx; 
 		y = yy;
+		explode(x,y);
 
 	}
 

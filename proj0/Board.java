@@ -39,6 +39,7 @@ public class Board {
 	                	b.captured = b.prev.hasCaptured();
 	                	b.moved = true;
 	                	b.prev = null;
+	                	
 	                } else if (b.p != null && b.p.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.prev = b.p;
 	                	}
@@ -284,17 +285,14 @@ public class Board {
 			if (leftT != null && !leftT.isShield()){
 				remove(leftT.x,leftT.y);
 			}
-			if (prev.isBomb()){
-				remove(prev.x,prev.y);
-				remove(x,y);	
-			}
+
 
 	}
 
 	}
 
 
-	public boolean validMove(int xi, int yi, int xf, int yf){
+	private boolean validMove(int xi, int yi, int xf, int yf){
 		return canSelect(xi,yi);
 	}
 
