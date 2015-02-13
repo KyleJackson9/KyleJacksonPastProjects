@@ -284,8 +284,10 @@ public class Board {
 					return false;
 				} else if (moved && prev.isKing()){
 					return false;
-				} else if (prev == select){
+				} else if (prev == select && !prev.hasCaptured()){
 					return true;
+				} else if (prev == select) {
+					return false;
 				}else if (!prev.hasCaptured()){
 					if (turn % 2 == 0 && select.isFire() ){
 						return true;
