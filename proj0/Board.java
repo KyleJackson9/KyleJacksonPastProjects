@@ -180,6 +180,9 @@ public class Board {
 
 	public boolean canSelect(int x, int y){
 		Piece select = players[x][y];
+		// if (select != null && select == prev){
+		// 	return true;
+		// }
 		if (select != null && prev != null && prev.hasCaptured()){
 			return false;
 		}
@@ -284,7 +287,7 @@ public class Board {
 			}else {
 				return false;
 			}
-		} else if (prev == null) {
+		} else {//(prev == null) {
 			if (turn % 2 == 0 && select.isFire() ){
 				return true;
 			} else if (turn % 2 == 1 && !select.isFire()){
@@ -307,6 +310,8 @@ public class Board {
 		
 		if (pieceAt(x,y) != null){
 			prev = players[x][y];
+			prevX = x;
+			prevY =y; 
 		} else{
 			if (prev != null){
 				prev.move(x,y);
