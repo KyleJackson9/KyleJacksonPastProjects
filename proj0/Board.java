@@ -167,42 +167,39 @@ public class Board {
 	private boolean killerKing(Piece k, int x, int y){
 		if (x>=0 && y>=0 && x<8 && y<8){
 		 if(k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && !pieceAt(k.x+1,k.y+1).isFire()){
-				//bomb(x,y);
+				
 				remove(k.x+1,k.y +1);
 				captured = true;
 				return true;
 		} else if (k.isFire() && k.x -2== x && k.y +2 == y && pieceAt(k.x -1 ,k.y +1) != null && !pieceAt(k.x-1,k.y+1).isFire()){
-						//bomb(x,y);
+						
 						remove(k.x -1, k.y +1);
 						captured = true;
 						return true;
 		}else if (k.isFire() && k.x -2 == x && k.y -2 == y && pieceAt(k.x-1 ,k.y-1) != null && !pieceAt(k.x-1,k.y-1).isFire()){
-							//bomb(x,y);
+							
 							remove(k.x-1,k.y-1);
 							captured = true;
 							return true;
 		} else if (k.isFire() && k.x +2== x && k.y -2== y  && pieceAt(k.x+1 ,k.y-1) != null && !pieceAt(k.x+1,k.y-1).isFire()){
-							//bomb(x,y);
+							
 							remove(k.x+1,k.y-1);
 							captured = true;
 							return true;
 		}else if(!k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && pieceAt(k.x+1,k.y+1).isFire()){
-							//bomb(x,y);
+							
 							remove(k.x+1,k.y +1);
 							captured =true;
 							return true;
 		} else if (!k.isFire() && k.x -2== x && k.y +2 == y && pieceAt(k.x -1 ,k.y +1) != null && pieceAt(k.x-1,k.y+1).isFire()){
-						//bomb(x,y);
 						remove(k.x -1, k.y +1);
 						captured =true;
 						return true;
 		}else if (!k.isFire() && k.x -2 == x && k.y -2 == y && pieceAt(k.x-1 ,k.y-1) != null && pieceAt(k.x-1,k.y-1).isFire()){
-							//bomb(x,y);
 							remove(k.x-1,k.y-1);
 							captured = true;
 							return true;
 		} else if (!k.isFire() && k.x +2== x && k.y -2== y  && pieceAt(k.x+1 ,k.y-1) != null && pieceAt(k.x+1,k.y-1).isFire()){
-							//bomb(x,y);
 							remove(k.x+1,k.y-1);
 							captured =true;
 							return true;
@@ -227,12 +224,12 @@ public class Board {
 								return true;
 							}
 						} else if(prev.x +2 == x && prev.y +2 == y  && pieceAt(prev.x +1 ,prev.y +1) != null && !pieceAt(prev.x+1,prev.y+1).isFire()){
-							//bomb(x,y);
+							
 							remove(prev.x+1,prev.y +1);
 							captured = true;
 							return true;
 						} else if (prev.x -2== x && prev.y +2 == y && pieceAt(prev.x -1 ,prev.y +1) != null && !pieceAt(prev.x-1,prev.y+1).isFire()){
-							//bomb(x,y);
+							
 							remove(prev.x -1, prev.y +1);
 							captured = true;
 							return true;
@@ -244,12 +241,12 @@ public class Board {
 								return true;
 							}
 						} else if (prev.x -2 == x && prev.y -2 == y && pieceAt(prev.x-1 ,prev.y-1) != null && pieceAt(prev.x-1,prev.y-1).isFire()){
-							//bomb(x,y);
+							
 							remove(prev.x-1,prev.y-1);
 							captured = true;
 							return true;
 						} else if (prev.x +2== x && prev.y -2== y  && pieceAt(prev.x+1 ,prev.y-1) != null && pieceAt(prev.x+1,prev.y-1).isFire()){
-							//bomb(x,y);
+							
 							remove(prev.x+1,prev.y-1);
 							captured = true;
 							return true;
@@ -370,9 +367,9 @@ public class Board {
 	
 
 	public Piece remove(int x, int y){
-	Piece pp = pieceAt(x,y);
+	//Piece pp = pieceAt(x,y);
 	players[x][y] = null;
-	return pp;
+	return null;
 	}
 
 	public boolean canEndTurn(){
