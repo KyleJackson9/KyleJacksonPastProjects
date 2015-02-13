@@ -223,30 +223,6 @@ public class Board {
 		}
 		return false;
 	}
-	private  void bomb(int x, int y){
-		Piece rightT = pieceAt(x+1,y+1);
-		Piece rightB = pieceAt(x-1,y+1);
-		Piece leftT = pieceAt(x+1,y-1);
-		Piece leftB = pieceAt(x-1,y-1);
-		if(prev != null && prev.isBomb() && captured){
-			if (rightT != null && !rightT.isShield()){
-				remove(x+1,y+1);
-			}
-			if (rightB != null && !rightB.isShield()){
-				remove(x-1,y+1);
-			}
-			if (leftB != null && !leftB.isShield()){
-				remove(x-1,y-1);
-			}
-			if (leftT != null && !leftT.isShield()){
-				remove(x+1,y-1);
-			}
-
-
-	}
-
-	}
-
 
 	private boolean validMove(int xi, int yi, int xf, int yf){
 		return canSelect(xi,yi);
@@ -258,7 +234,6 @@ public class Board {
 			prev = players[x][y];
 		} else{
 			if (prev != null){
-				bomb(x,y);
 				prev.move(x,y);
 			}
 		}
@@ -360,7 +335,7 @@ public class Board {
 		captured = false;
 	}
 
-	public  String winner(){
+	public String winner(){
 		String win = "";
 		int countFire =0;
 		int countWater =0;
@@ -375,9 +350,9 @@ public class Board {
         	}
         }
     }
-    	if (countWater <= 1){
+    	if (countWater == 0){
 		win = "Fire";
-	} else if (countFire <= 1){
+	} else if (countFire == 0){
 		win = "Water";
 	} else if (countWater == countFire){
 		win = "No one";
