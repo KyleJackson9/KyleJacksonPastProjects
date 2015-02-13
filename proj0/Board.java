@@ -139,22 +139,22 @@ public class Board {
 		    for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
 		        if(y==0 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x,(int) y,"pawn");
+                players[x][y] = new Piece (true, this, x, y,"pawn");
             	}
             	else if (y == 1 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"shield");            		
+                players[x][y] = new Piece (true, this, x, y,"shield");            		
             	}
             	else if (y == 2 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"bomb");
+                players[x][y] = new Piece (true, this, x, y,"bomb");
             	}
             	else if (y == 5 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"bomb");            		
+                players[x][y] = new Piece (false, this, x,  y,"bomb");            		
             	}
             	else if (y == 6 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"shield");            		
+                players[x][y] = new Piece (false, this, x, y,"shield");            		
             	}
             	else if (y == 7 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"pawn");            		
+                players[x][y] = new Piece (false, this, x, y,"pawn");            		
             	}
             }
         }
@@ -275,7 +275,7 @@ public class Board {
 			} else{
 				return false;
 			}
-		} else {
+		} else if (x>=0 && y>=0 && x<8 && y<8){
 			if (prev !=null && !prev.hasCaptured()){
 			if (turn % 2 == 0 && select.isFire() ){
 				return true;
