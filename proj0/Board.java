@@ -33,7 +33,7 @@ public class Board {
 	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
 	               	 } else if (b.p==null && b.prev.isFire() && b.canSelect((int) x, (int) y)){
-	                	b.removed = b.remove(b.prev.x, b.prev.y);
+	                	b.remove(b.prev.x, b.prev.y);
 	                    b.place(b.prev,(int) x,(int) y);
 	                	b.drawUpdate();
 	                	b.captured = b.prev.hasCaptured();
@@ -46,7 +46,7 @@ public class Board {
 	                	if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
 	               	 } else if (b.p==null && !b.prev.isFire() && b.canSelect((int) x, (int) y)){
-	                	b.removed = b.remove(b.prev.x, b.prev.y);
+	                	b.remove(b.prev.x, b.prev.y);
 	                	b.place(b.prev,(int) x,(int) y);
 	                	b.drawUpdate();
 	                   	b.captured = b.prev.hasCaptured();
@@ -70,9 +70,7 @@ public class Board {
 
 
 
-	// private void makeOriginal(){
 
-	// }
 
 
     private void drawOriginal(int N){
@@ -120,7 +118,7 @@ public class Board {
 		if(shouldBeEmpty) {
 			drawBoard(8);
 		}
-		//makeOriginal();
+
 			players = new Piece[8][8];
 		    for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -218,7 +216,6 @@ public class Board {
 		Piece select = players[x][y];
 		if (select == null){
 			if (prev != null){
-				checkKing(prev);
 				if (x>=0 && y>=0 && x<8 && y<8){
 					if (prev.isKing()){
 						return killerKing(prev,x,y);
@@ -263,7 +260,7 @@ public class Board {
 		} else {
 			if (prev == null) {
 				return true;
-			}else if (prev != null && !prev.hasCaptured()){
+			}else if (!prev.hasCaptured()){
 				return true;
 			}
 		}
@@ -295,37 +292,7 @@ public class Board {
 	}
 
 	}
-	private  void checkKing(Piece k){
-		if (k.isKing()){
-			k.king = true;
-		}
-		else{
-		if (k.isFire() && k.x==7 && k.y ==7) {
-			k.king = true;
-		}
-		else if (k.isFire() && k.x==5 && k.y ==7) {
-			k.king = true;
-		}
-		else if (k.isFire() && k.x==3 && k.y ==7) {
-			k.king = true;
-		}
-		else if (k.isFire() && k.x==1 && k.y ==7) {
-			k.king = true;
-		}
-		else if (!k.isFire() && k.x==0 && k.y ==0) {
-			k.king = true;
-		}
-		else if (!k.isFire() && k.x==2 && k.y ==0) {
-			k.king = true;
-		}
-		else if (!k.isFire() && k.x==4 && k.y ==0) {
-			k.king = true;
-		}
-		else if (!k.isFire() && k.x==6 && k.y ==0) {
-			k.king = true;
-		}
-	}
-	}
+
 
 	public boolean validMove(int xi, int yi, int xf, int yf){
 		return canSelect(xi,yi);

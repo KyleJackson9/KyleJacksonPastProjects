@@ -46,6 +46,13 @@ public class Piece {
 	}
 
 	public boolean isKing(){
+		if  (isFire() && y ==7) {
+			king = true;
+		}
+		else if (!isFire() && y ==0) {
+			king = true;
+		}
+	
 		return king;
 	}
 
@@ -80,6 +87,7 @@ public class Piece {
 		
 		x = xx; 
 		y = yy;
+
 	}
 
 	public boolean hasCaptured(){
@@ -87,7 +95,7 @@ public class Piece {
 		return capture;
 	}
 
-	public void doneCapturing(){
+	public void doneCapturing(){ //needs work
 		while (hasCaptured()){
 			move(0,0);
 		}
