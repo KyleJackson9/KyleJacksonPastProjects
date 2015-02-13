@@ -180,6 +180,9 @@ public class Board {
 
 	public boolean canSelect(int x, int y){
 		Piece select = players[x][y];
+		if (select != null && prev.hasCaptured()){
+			return false;
+		}
 		if (select == null){
 			if (prev != null){
 				if (x>=0 && y>=0 && x<8 && y<8){
