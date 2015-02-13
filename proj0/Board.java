@@ -28,11 +28,7 @@ public class Board {
                 double x = StdDrawPlus.mouseX();
                 double y = StdDrawPlus.mouseY();
                 b.p = b.pieceAt((int) x, (int) y);
-                 if (b.canEndTurn()){
-            				b.endTurn();
-            				 
-
-	            } else if (b.turn % 2 ==0){
+                if (b.turn % 2 ==0){
                 	System.out.println("Fire's turn");
 	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
@@ -106,8 +102,7 @@ public class Board {
             for (int j = 0; j < N; j++) {
             if (players[i][j] == null){
 
-            }
-            else if (players[i][j].y == 0){ 
+            } else if (players[i][j].y == 0){ 
 					StdDrawPlus.picture(players[i][j].x + 0.5, players[i][j].y + 0.5, "img/pawn-fire.png",1,1);
 			}
 				else if (players[i][j].y == 1){

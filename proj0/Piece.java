@@ -20,6 +20,13 @@ public class Piece {
 
 
 	}
+	private int x(){
+		return x;
+	}
+
+	private int y(){
+		return y;
+	}
 
 	public boolean isFire(){
 		return isFire;
@@ -62,9 +69,9 @@ public class Piece {
 
 	public void move(int xx, int yy){
 
-			if (Math.abs(xx - x) == 2){
-				if (Math.abs(yy -y)==2) {
-					capture = true;
+		if (Math.abs(xx - x) == 2){
+			if (Math.abs(yy -y)==2) {
+				capture = true;
 				}
 			
 		} else{
