@@ -19,7 +19,13 @@ public class Board {
         StdDrawPlus.setYscale(0, N);
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
-       	Board b = new Board(true);
+        boolean check = false;
+       	Board b = new Board(check);
+
+       	if (check){
+       		b.drawBoard(8);
+       	}
+       	else{
        	
        	b.drawOriginal(8);
 
@@ -71,6 +77,7 @@ public class Board {
             
             StdDrawPlus.show(100);
         }
+    }
         
 }
 
@@ -88,6 +95,7 @@ public class Board {
 
     private void drawOriginal(int N){
     	Piece a;
+    	drawBoard(8);
     	    for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
             a = players[i][j];
@@ -129,11 +137,6 @@ public class Board {
 	
 
 	public Board (boolean shouldBeEmpty){
-		
-		if(shouldBeEmpty) {
-			drawBoard(8);
-		}
-
 			players = new Piece[8][8];
 		    for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -174,49 +177,7 @@ public class Board {
 		return null;
 	}
 	
-	private boolean killerKing(Piece k, int x, int y){
-		if (x>=0 && y>=0 && x<8 && y<8){
-		 if(k.isFire() && prevX +2 == x && prevY +2 == y  && pieceAt(prevX +1 ,prevY +1) != null && !pieceAt(prevX+1,prevY+1).isFire()){
-				remove(prevX+1,prevY +1);
-				captured = true;
-				return true;
-		} else if (k.isFire() && prevX -2== x && prevY +2 == y && pieceAt(prevX -1 ,prevY +1) != null && !pieceAt(prevX-1,prevY+1).isFire()){
-						remove(prevX -1, prevY +1);
-						captured = true;
-						return true;
-		}else if (k.isFire() && prevX -2 == x && prevY -2 == y && pieceAt(prevX-1 ,prevY-1) != null && !pieceAt(prevX-1,prevY-1).isFire()){
-							
-							remove(prevX-1,prevY-1);
-							captured = true;
-							return true;
-		} else if (k.isFire() && prevX +2== x && prevY -2== y  && pieceAt(prevX+1 ,prevY-1) != null && !pieceAt(prevX+1,prevY-1).isFire()){
-							
-							remove(prevX+1,prevY-1);
-							captured = true;
-							return true;
-		}else if(!k.isFire() && prevX +2 == x && prevY +2 == y  && pieceAt(prevX +1 ,prevY +1) != null && pieceAt(prevX+1,prevY+1).isFire()){
-							remove(prevX+1,prevY +1);
-							captured =true;
-							return true;
-		} else if (!k.isFire() && prevX -2== x && prevY +2 == y && pieceAt(prevX -1 ,prevY +1) != null && pieceAt(prevX-1,prevY+1).isFire()){
-						remove(prevX -1, prevY +1);
-						captured =true;
-						return true;
-		}else if (!k.isFire() && prevX -2 == x && prevY -2 == y && pieceAt(prevX-1 ,prevY-1) != null && pieceAt(prevX-1,prevY-1).isFire()){
-							remove(prevX-1,prevY-1);
-							captured = true;
-							return true;
-		} else if (!k.isFire() && prevX +2== x && prevY -2== y  && pieceAt(prevX+1 ,prevY-1) != null && pieceAt(prevX+1,prevY-1).isFire()){
-							remove(prevX+1,prevY-1);
-							captured =true;
-							return true;
-		} if (prevX +1 == x && prevY -1 ==y || prevX -1 ==x && prevY +1 == y || prevY - 1 ==y && prevX -1 ==x || prevX +1 == x && prevY +1== y){
-					return true;
-		}
-				}
-	
-	return false;
-}
+
 
 	public boolean canSelect(int x, int y){
 		Piece select = players[x][y];
@@ -224,19 +185,15 @@ public class Board {
 			if (prev != null){
 				if (x>=0 && y>=0 && x<8 && y<8){
 					if (prev.isKing()){
-						return killerKing(prev,x,y);
+						return true;
 					} else if (prev.isFire()){
 						if(prevX +1 == x || prevX -1 ==x){
 							 if(prevY +1 == y){
 								return true;
 							}
 						} else if(prevX +2 == x && prevY +2 == y  && pieceAt(prevX +1 ,prevY +1) != null && !pieceAt(prevX+1,prevY+1).isFire()){
-							remove(prevX+1,prevY +1);
-							captured = true;
 							return true;
 						} else if (prevX -2== x && prevY +2 == y && pieceAt(prevX -1 ,prevY +1) != null && !pieceAt(prevX-1,prevY+1).isFire()){
-							remove(prevX -1, prevY +1);
-							captured = true;
 							return true;
 					}
 						return false;
@@ -246,12 +203,10 @@ public class Board {
 								return true;
 							}
 						} else if (prevX -2 == x && prevY -2 == y && pieceAt(prevX-1 ,prevY-1) != null && pieceAt(prevX-1,prevY-1).isFire()){
-							remove(prevX-1,prevY-1);
-							captured = true;
+
 							return true;
 						} else if (prevX +2== x && prevY -2== y  && pieceAt(prevX+1 ,prevY-1) != null && pieceAt(prevX+1,prevY-1).isFire()){
-							remove(prevX+1,prevY-1);
-							captured = true;
+
 							return true;
 					}
 						return false;
