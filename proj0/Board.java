@@ -273,10 +273,6 @@ public class Board {
 				return false;
 			}
 		} else {
-			if (prev != null && prev.hasCaptured()){
-				return false;
-			}
-			if (x>=0 && y>=0 && x<8 && y<8){
 			if (prev !=null && !prev.hasCaptured()){
 			if (turn % 2 == 0 && select.isFire() ){
 				return true;
@@ -285,9 +281,7 @@ public class Board {
 			}else {
 				return false;
 			}
-		}
 		} else if (prev == null) {
-			if (x>=0 && y>=0 && x<8 && y<8){
 			if (turn % 2 == 0 && select.isFire() ){
 				return true;
 			} else if (turn % 2 == 1 && !select.isFire()){
@@ -296,7 +290,6 @@ public class Board {
 				return false;
 			}
 		}
-	}
 
 		}
 		return false;
