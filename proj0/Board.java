@@ -280,15 +280,12 @@ public class Board {
 				}
 		} else if (x>=0 && y>=0 && x<8 && y<8){
 				if (prev != null){
-					if(prev == select){
-						return true;
-					}
 					if(prev.hasCaptured()){
 					return false;
 				} else if (moved && prev.isKing()){
 					return false;
 				} else if (prev == select){
-					return false;
+					return true;
 				}else if (!prev.hasCaptured()){
 					if (turn % 2 == 0 && select.isFire() ){
 						return true;
