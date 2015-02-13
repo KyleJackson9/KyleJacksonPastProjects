@@ -55,7 +55,7 @@ public class Board {
 	                }
 	            } else if (StdDrawPlus.isSpacePressed()){
 	            	         if (b.canEndTurn()){
-            				b.endturn();
+            				b.endTurn();
             				} 
 
 	            }
@@ -413,7 +413,7 @@ public class Board {
 		
 	}
 
-	public void endturn(){
+	public void endTurn(){
 		System.out.println("next turn");
 		winner();
 		p = null;
