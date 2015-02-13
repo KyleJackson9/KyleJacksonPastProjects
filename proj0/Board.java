@@ -19,13 +19,20 @@ public class Board {
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
        	Board b = new Board(true);
+       	b.makeOriginal();
+       	b.drawOriginal(8);
+
         while(true) {
 
             if (StdDrawPlus.mousePressed()) {
                 double x = StdDrawPlus.mouseX();
                 double y = StdDrawPlus.mouseY();
                 b.p = b.pieceAt((int) x, (int) y);
-                if (b.turn % 2 ==0){
+                 if (b.canEndTurn()){
+            				b.endTurn();
+            				 
+
+	            } else if (b.turn % 2 ==0){
                 	System.out.println("Fire's turn");
 	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
@@ -67,7 +74,31 @@ public class Board {
 
 
 
-
+	private void makeOriginal(){
+			players = new Piece[8][8];
+		    for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+		        if(y==0 && x%2 == 0){
+                players[(int) x][(int) y] = new Piece (true, this, (int) x,(int) y,"pawn");
+            	}
+            	else if (y == 1 && x%2 == 1){
+                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"shield");            		
+            	}
+            	else if (y == 2 && x%2 == 0){
+                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"bomb");
+            	}
+            	else if (y == 5 && x%2 == 1){
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"bomb");            		
+            	}
+            	else if (y == 6 && x%2 == 0){
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"shield");            		
+            	}
+            	else if (y == 7 && x%2 == 1){
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"pawn");            		
+            	}
+            }
+        }
+	}
 
 
     private void drawOriginal(int N){
@@ -116,30 +147,7 @@ public class Board {
 		if(shouldBeEmpty) {
 			drawBoard(8);
 		}
-		players = new Piece[8][8];
-		    for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-		        if(y==0 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x,(int) y,"pawn");
-            	}
-            	else if (y == 1 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"shield");            		
-            	}
-            	else if (y == 2 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"bomb");
-            	}
-            	else if (y == 5 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"bomb");            		
-            	}
-            	else if (y == 6 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"shield");            		
-            	}
-            	else if (y == 7 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"pawn");            		
-            	}
-            }
-        }
-        drawOriginal(8);
+
 		selection = false;
 
 	}
