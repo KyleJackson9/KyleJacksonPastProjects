@@ -3,10 +3,10 @@
 public class Piece {
 	private boolean isFire;
 	private Board b;
-	public int x;
-	public int y;
+	private int x;
+	private int y;
 	private String type;
-	public boolean king;
+	private boolean king;
 	private boolean capture;
 
 
@@ -19,13 +19,6 @@ public class Piece {
 		king = false;
 
 
-	}
-	private int x(){
-		return x;
-	}
-
-	private int y(){
-		return y;
 	}
 
 	public boolean isFire(){
@@ -41,7 +34,7 @@ public class Piece {
 		}
 	}
 
-	public String type(){
+	private String type(){
 		return type;
 	}
 
@@ -108,9 +101,7 @@ public class Piece {
 	}
 
 	public void doneCapturing(){ //needs work
-		while (hasCaptured()){
-			move(0,0);
-		}
+		capture = false;
 
 	}
 }
