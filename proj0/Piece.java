@@ -30,10 +30,10 @@ public class Piece {
 
 	public int side(){
 		if (isFire() == true){
-			return 1;
+			return 0;
 		}
 		else{
-			return 0;
+			return 1;
 		}
 	}
 
