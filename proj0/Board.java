@@ -5,11 +5,9 @@ public class Board {
 	private  Piece p;
 	private  Piece prev;
 	private  Piece[][] players;
-	private  boolean selection;
 	private  Piece removed;
 	private  boolean moved;
 	private  boolean captured;
-	private  Piece selected;
 	private  int turn;
 	private int prevX;
 	private int prevY;
@@ -159,7 +157,6 @@ public class Board {
             	}
             }
         }
-		selection = false;
 
 	}
 
@@ -234,12 +231,10 @@ public class Board {
 								return true;
 							}
 						} else if(prevX +2 == x && prevY +2 == y  && pieceAt(prevX +1 ,prevY +1) != null && !pieceAt(prevX+1,prevY+1).isFire()){
-							
 							remove(prevX+1,prevY +1);
 							captured = true;
 							return true;
 						} else if (prevX -2== x && prevY +2 == y && pieceAt(prevX -1 ,prevY +1) != null && !pieceAt(prevX-1,prevY+1).isFire()){
-							
 							remove(prevX -1, prevY +1);
 							captured = true;
 							return true;
@@ -251,12 +246,10 @@ public class Board {
 								return true;
 							}
 						} else if (prevX -2 == x && prevY -2 == y && pieceAt(prevX-1 ,prevY-1) != null && pieceAt(prevX-1,prevY-1).isFire()){
-							
 							remove(prevX-1,prevY-1);
 							captured = true;
 							return true;
 						} else if (prevX +2== x && prevY -2== y  && pieceAt(prevX+1 ,prevY-1) != null && pieceAt(prevX+1,prevY-1).isFire()){
-							
 							remove(prevX+1,prevY-1);
 							captured = true;
 							return true;
@@ -377,9 +370,16 @@ public class Board {
 	
 
 	public Piece remove(int x, int y){
-	Piece pp = pieceAt(x,y);
-	players[x][y] = null;
-	return pp;
+
+		Piece pp = pieceAt(x,y);
+		if (pp == null){
+			return null;
+		} else if (x>7 || x<0 || y>7 || y<0){
+			return null;
+		} else{
+		players[x][y] = null;
+		return pp;
+	}
 	}
 
 	public boolean canEndTurn(){
@@ -424,8 +424,10 @@ public class Board {
 		win = "Fire";
 	} else if (countFire <= 1){
 		win = "Water";
-	} else{
+	} else if (countWater == countFire){
 		win = "No one";
+	} else{
+		return null;
 	}
 	return win;
 	}
