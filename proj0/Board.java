@@ -8,7 +8,7 @@ public class Board {
 	private  boolean selection;
 	private  Piece removed;
 	private  boolean moved;
-	private  boolean captured;//make private
+	private  boolean captured;
 	private  Piece selected;
 	private  int turn;
 
@@ -25,10 +25,7 @@ public class Board {
                 double x = StdDrawPlus.mouseX();
                 double y = StdDrawPlus.mouseY();
                 b.p = b.pieceAt((int) x, (int) y);
-                if (b.canEndTurn()){
-	               	 	b.endturn();
-	             } else if (b.turn % 2 ==0){
-
+                if (b.turn % 2 ==0){
                 	System.out.println("Fire's turn");
 	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
@@ -47,10 +44,6 @@ public class Board {
 	                	System.out.println("invalid move");
 	               	 } else if (b.p==null && !b.prev.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.removed = b.remove(b.prev.x, b.prev.y);
-	                	// if (prev.isBomb() && prev.hasCaptured()){
-	                	// 	prev = null;
-	                	// }else if (prev != null){
-
 	                	b.place(b.prev,(int) x,(int) y);
 	                	b.drawUpdate();
 	                   	b.captured = b.prev.hasCaptured();
