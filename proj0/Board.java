@@ -29,7 +29,7 @@ public class Board {
        	
        	b.drawOriginal(8);
 
-        while(true) {
+        while(b.winner() == null) {
 
             if (StdDrawPlus.mousePressed()) {
                 double x = StdDrawPlus.mouseX();
@@ -77,6 +77,10 @@ public class Board {
 	            }
             
             StdDrawPlus.show(100);
+        }
+
+        if (b.winner() != null){
+        	System.out.println(b.winner());
         }
     }
         
