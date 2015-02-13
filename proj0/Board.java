@@ -2,13 +2,13 @@
 
 public class Board {
 
-	private  Piece p;
-	private  Piece prev;
-	private  Piece[][] players;
-	private  Piece removed;
-	private  boolean moved;
-	private  boolean captured;
-	private  int turn;
+	private Piece p;
+	private Piece prev;
+	private Piece[][] players;
+	private Piece removed;
+	private boolean moved;
+	private boolean captured;
+	private int turn;
 	private int prevX;
 	private int prevY;
 
@@ -87,11 +87,6 @@ public class Board {
 		prevX =x;
 		prevY =y;
 	}
-
-	// private void canCapture(){ //checks double jump
-
-	// }
-
 
 
     private void drawOriginal(int N){
@@ -217,9 +212,21 @@ public class Board {
 							} 
 							return false;
 						}
-					} else if (prev.isKing()){
-
-						return true;
+					} else if (prev.isKing()){//should check for a king movin
+						if(prevX +1 == x || prevX -1 ==x){
+							if (prevY +1 == y || prevY -1 == y){
+								return true;
+							}
+						} 	if (prevX +2 ==x && prevY +2 ==y){
+								return true;
+							} else if (prevX -2 ==x && prevY +2 ==y){
+								return true;
+							} else if(prevX - 2 ==x && prevY -2 ==y){
+								return true;
+							} else if (prevX +2 ==x && prevY -2 ==y){
+								return true;
+							}
+						return false;
 					} else if (prev.isFire()){
 						if(prevX +1 == x || prevX -1 ==x){
 							 if(prevY +1 == y){
@@ -247,15 +254,21 @@ public class Board {
 					} 
 				}
 
+			} else{
+				return false;
 			}
 		} else {
-			if (prev == null) {
+			if (turn % 2 == 0 && select.isFire()){
 				return true;
-			}else if (!prev.hasCaptured()){
+			} else if (turn % 2 == 1 && !select.isFire()){
 				return true;
+			}else {
+				return false;
 			}
+
 		}
 		return false;
+		
 	}
 
 	private boolean validMove(int xi, int yi, int xf, int yf){
@@ -375,7 +388,6 @@ public class Board {
 	}
 
 	public String winner(){
-		String win = "";
 		int countFire =0;
 		int countWater =0;
 		for (int i = 0; i < 8; i++) {
@@ -389,15 +401,18 @@ public class Board {
         	}
         }
     }
-    	if (countWater == 0){
-		win = "Fire";
-	} else if (countFire == 0){
-		win = "Water";
-	} else if (countWater == countFire && countFire == 0){
-		win = "No one";
-	} else{
+    if (countWater == countFire && countFire == 0){
+		return "No one";
+	}
+    if (countWater == 0){
+		return "Fire";
+	} 
+	 if (countFire == 0){
+		return "Water";
+	} 
+ else{
 		return null;
 	}
-	return win;
-	}
+}
+	
 }
