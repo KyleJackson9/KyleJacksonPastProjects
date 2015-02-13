@@ -137,7 +137,9 @@ public class Board {
 	
 
 	public Board (boolean shouldBeEmpty){
-			players = new Piece[8][8];
+		players = new Piece[8][8];	
+		if (!shouldBeEmpty){
+
 		    for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
 		        if(y==0 && x%2 == 0){
@@ -160,6 +162,7 @@ public class Board {
             	}
             }
         }
+    }
 
 	}
 
@@ -326,13 +329,16 @@ public class Board {
 	}
 
 	public void endTurn(){
+		if (canEndTurn()){
 		System.out.println("next turn");
 		winner();
+		prev.doneCapturing();
 		p = null;
 		prev = null;
 		turn += 1;
 		moved = false;
 		captured = false;
+	}
 	}
 
 	public String winner(){
