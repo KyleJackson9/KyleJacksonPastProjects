@@ -35,18 +35,21 @@ public class Board {
                 double x = StdDrawPlus.mouseX();
                 double y = StdDrawPlus.mouseY();
                 b.p = b.pieceAt((int) x, (int) y);
-                if (b.turn % 2 ==0 && !b.moved){
+                if (b.p == null && b.prev != null && b.prev.hasCaptured() && b.canSelect((int) x, (int) y)){
+	               	 	b.select((int) x, (int) y);
+	               	 	b.drawUpdate();
+	               	 	b.captured = b.prev.hasCaptured();
+
+	              } else if (b.turn % 2 ==0 && !b.moved){
                 	System.out.println("Fire's turn");
 	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
-	               	 } else if (b.p==null && b.prev.isFire() && b.canSelect((int) x, (int) y)){
+	               	 }  else if (b.p==null && b.prev.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.select((int) x, (int) y); 
 	                	b.drawUpdate();
 	                	b.captured = b.prev.hasCaptured();
-	                	b.moved = true;
-	                	b.prev = null;
-	                	b.p = null;
-	                	
+
+
 	                } else if (b.p != null && b.p.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.prev = b.p;
 	                	b.storeXY((int) x, (int) y);
@@ -59,9 +62,7 @@ public class Board {
 	                	b.select((int) x, (int) y); 
 	                	b.drawUpdate();
 	                   	b.captured = b.prev.hasCaptured();
-	                	b.moved = true;
-	                	b.prev = null;
-	                	b.p = null;
+	          
 	                } else if (b.p != null && !b.p.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.prev = b.p;
 	                	b.storeXY((int) x, (int) y);
@@ -187,7 +188,37 @@ public class Board {
 		if (select == null){
 			if (prev != null){
 				if (x>=0 && y>=0 && x<8 && y<8){
-					if (prev.isKing()){
+					if (prev.hasCaptured()){
+						
+						if (prev.isKing()){
+							if (prevX +2 ==x && prevY +2 ==y){
+								return true;
+							} else if (prevX -2 ==x && prevY +2 ==y){
+								return true;
+							} else if(prevX - 2 ==x && prevY -2 ==y){
+								return true;
+							} else if (prevX +2 ==x && prevY -2 ==y){
+								return true;
+							}
+							return false;
+
+						} else if (prev.isFire()){
+							if (prevX +2 ==x && prevY +2 ==y){
+								return true;
+							} else if (prevX -2 ==x && prevY +2 ==y){
+								return true;
+							}
+							return false;
+						} else {
+							if (prevX -2 ==x && prevY -2 ==y){
+								return true;
+							} else if (prevX +2 ==x && prevY -2 ==y){
+								return true;
+							} 
+							return false;
+						}
+					} else if (prev.isKing()){
+
 						return true;
 					} else if (prev.isFire()){
 						if(prevX +1 == x || prevX -1 ==x){
@@ -238,8 +269,12 @@ public class Board {
 		} else{
 			if (prev != null){
 				prev.move(x,y);
+				prevX = x;
+				prevY = y;
+				moved = true;
 			}
 		}
+
 		
 	}
 
@@ -317,9 +352,7 @@ public class Board {
 
 	public boolean canEndTurn(){
 
-		if (moved && captured){
-			return true;
-		}else if (moved){
+		if (moved){
 			return true;
 		} else {
 			return false;
@@ -360,7 +393,7 @@ public class Board {
 		win = "Fire";
 	} else if (countFire == 0){
 		win = "Water";
-	} else if (countWater == countFire){
+	} else if (countWater == countFire && countFire == 0){
 		win = "No one";
 	} else{
 		return null;
