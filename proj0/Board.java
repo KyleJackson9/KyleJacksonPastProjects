@@ -5,9 +5,7 @@ public class Board {
 	private Piece p;
 	private Piece prev;
 	private Piece[][] players;
-	private Piece removed;
 	private boolean moved;
-	private boolean captured;
 	private int turn;
 	private int prevX;
 	private int prevY;
@@ -38,7 +36,6 @@ public class Board {
                 if (b.p == null && b.prev != null && b.prev.hasCaptured() && b.canSelect((int) x, (int) y)){
 	               	 	b.select((int) x, (int) y);
 	               	 	b.drawUpdate();
-	               	 	b.captured = b.prev.hasCaptured();
 
 	              } else if (b.turn % 2 ==0 && !b.moved){
                 	System.out.println("Fire's turn");
@@ -47,7 +44,6 @@ public class Board {
 	               	 }  else if (b.p==null && b.prev.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.select((int) x, (int) y); 
 	                	b.drawUpdate();
-	                	b.captured = b.prev.hasCaptured();
 
 
 	                } else if (b.p != null && b.p.isFire() && b.canSelect((int) x, (int) y)){
@@ -61,7 +57,7 @@ public class Board {
 	               	 } else if (b.p==null && !b.prev.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.select((int) x, (int) y); 
 	                	b.drawUpdate();
-	                   	b.captured = b.prev.hasCaptured();
+
 	          
 	                } else if (b.p != null && !b.p.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.prev = b.p;
@@ -216,7 +212,22 @@ public class Board {
 							} 
 							return false;
 						}
-					} else if (prev.isKing()){//should check for a king movin
+					} else if (prev.isKing() && prev.isFire()){
+						if(prevX +1 == x || prevX -1 ==x){
+							if (prevY +1 == y || prevY -1 == y){
+								return true;
+							}
+						} 	if (prevX +2 ==x && prevY +2 ==y){
+								return true;
+							} else if (prevX -2 ==x && prevY +2 ==y){
+								return true;
+							} else if(prevX - 2 ==x && prevY -2 ==y){
+								return true;
+							} else if (prevX +2 ==x && prevY -2 ==y){
+								return true;
+							}
+						return false;
+					}else if (prev.isKing() && !prev.isFire()){
 						if(prevX +1 == x || prevX -1 ==x){
 							if (prevY +1 == y || prevY -1 == y){
 								return true;
@@ -262,13 +273,23 @@ public class Board {
 				return false;
 			}
 		} else {
-			if (turn % 2 == 0 && select.isFire()){
+			if (prev !=null && !prev.hasCaptured()){
+			if (turn % 2 == 0 && select.isFire() ){
 				return true;
 			} else if (turn % 2 == 1 && !select.isFire()){
 				return true;
 			}else {
 				return false;
 			}
+		} else if (prev == null) {
+			if (turn % 2 == 0 && select.isFire() ){
+				return true;
+			} else if (turn % 2 == 1 && !select.isFire()){
+				return true;
+			}else {
+				return false;
+			}
+		}
 
 		}
 		return false;
@@ -279,7 +300,7 @@ public class Board {
 		return canSelect(xi,yi);
 	}
 
-	public void select(int x, int y){//check for clicking teammate
+	public void select(int x, int y){
 		
 		if (pieceAt(x,y) != null){
 			prev = players[x][y];
@@ -387,7 +408,6 @@ public class Board {
 		prev = null;
 		turn += 1;
 		moved = false;
-		captured = false;
 	}
 	}
 
