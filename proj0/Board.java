@@ -19,7 +19,7 @@ public class Board {
         /** Monitors for mouse presses. Wherever the mouse is pressed,
             a new piece appears. */
        	Board b = new Board(true);
-       	b.makeOriginal();
+       	//b.makeOriginal();
        	b.drawOriginal(8);
 
         while(true) {
@@ -70,31 +70,9 @@ public class Board {
 
 
 
-	private void makeOriginal(){
-			players = new Piece[8][8];
-		    for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-		        if(y==0 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x,(int) y,"pawn");
-            	}
-            	else if (y == 1 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"shield");            		
-            	}
-            	else if (y == 2 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"bomb");
-            	}
-            	else if (y == 5 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"bomb");            		
-            	}
-            	else if (y == 6 && x%2 == 0){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"shield");            		
-            	}
-            	else if (y == 7 && x%2 == 1){
-                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"pawn");            		
-            	}
-            }
-        }
-	}
+	// private void makeOriginal(){
+
+	// }
 
 
     private void drawOriginal(int N){
@@ -142,7 +120,30 @@ public class Board {
 		if(shouldBeEmpty) {
 			drawBoard(8);
 		}
-
+		//makeOriginal();
+			players = new Piece[8][8];
+		    for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+		        if(y==0 && x%2 == 0){
+                players[(int) x][(int) y] = new Piece (true, this, (int) x,(int) y,"pawn");
+            	}
+            	else if (y == 1 && x%2 == 1){
+                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"shield");            		
+            	}
+            	else if (y == 2 && x%2 == 0){
+                players[(int) x][(int) y] = new Piece (true, this, (int) x, (int) y,"bomb");
+            	}
+            	else if (y == 5 && x%2 == 1){
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"bomb");            		
+            	}
+            	else if (y == 6 && x%2 == 0){
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"shield");            		
+            	}
+            	else if (y == 7 && x%2 == 1){
+                players[(int) x][(int) y] = new Piece (false, this, (int) x, (int) y,"pawn");            		
+            	}
+            }
+        }
 		selection = false;
 
 	}
