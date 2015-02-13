@@ -280,13 +280,13 @@ public class Board {
 				}
 		} else if (x>=0 && y>=0 && x<8 && y<8){
 				if (prev != null){
-					if(prev.hasCaptured()){
+				if(prev.hasCaptured()){ //if capture & chose any piece false
 					return false;
-				} else if (moved && prev.isKing()){
+				} else if (moved && prev.isKing()){ //move and king
 					return false;
-				} else if (prev == select && !prev.hasCaptured()){
+				} else if (prev == select && !moved) { // if same piece & no move good //!prev.hasCaptured()){
 					return true;
-				} else if (prev == select) {
+				} else if (prev == select) { //if same false
 					return false;
 				}else if (!prev.hasCaptured()){
 					if (turn % 2 == 0 && select.isFire() ){
