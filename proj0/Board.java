@@ -33,12 +33,13 @@ public class Board {
 	               	 if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
 	               	 } else if (b.p==null && b.prev.isFire() && b.canSelect((int) x, (int) y)){
-	                	b.remove(b.prev.x, b.prev.y);
-	                    b.place(b.prev,(int) x,(int) y);
+	                	b.select((int) x, (int) y); //b.remove(b.prev.x, b.prev.y);
+	                    //b.place(b.prev,(int) x,(int) y);
 	                	b.drawUpdate();
 	                	b.captured = b.prev.hasCaptured();
 	                	b.moved = true;
 	                	b.prev = null;
+	                	b.p = null;
 	                	
 	                } else if (b.p != null && b.p.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.prev = b.p;
@@ -47,12 +48,12 @@ public class Board {
 	                	if (b.p==null && b.prev == null){
 	                	System.out.println("invalid move");
 	               	 } else if (b.p==null && !b.prev.isFire() && b.canSelect((int) x, (int) y)){
-	                	b.remove(b.prev.x, b.prev.y);
-	                	b.place(b.prev,(int) x,(int) y);
+	                	b.select((int) x, (int) y); 
 	                	b.drawUpdate();
 	                   	b.captured = b.prev.hasCaptured();
 	                	b.moved = true;
 	                	b.prev = null;
+	                	b.p = null;
 	                } else if (b.p != null && !b.p.isFire() && b.canSelect((int) x, (int) y)){
 	                	b.prev = b.p;
 	                	}
@@ -159,49 +160,49 @@ public class Board {
 				 return pp;
 			}
 		}
-	}
+		}
 		return null;
 	}
 	
-	private  boolean killerKing(Piece k, int x, int y){
+	private boolean killerKing(Piece k, int x, int y){
 		if (x>=0 && y>=0 && x<8 && y<8){
 		 if(k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && !pieceAt(k.x+1,k.y+1).isFire()){
-				bomb(x,y);
+				//bomb(x,y);
 				remove(k.x+1,k.y +1);
 				captured = true;
 				return true;
 		} else if (k.isFire() && k.x -2== x && k.y +2 == y && pieceAt(k.x -1 ,k.y +1) != null && !pieceAt(k.x-1,k.y+1).isFire()){
-						bomb(x,y);
+						//bomb(x,y);
 						remove(k.x -1, k.y +1);
 						captured = true;
 						return true;
 		}else if (k.isFire() && k.x -2 == x && k.y -2 == y && pieceAt(k.x-1 ,k.y-1) != null && !pieceAt(k.x-1,k.y-1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(k.x-1,k.y-1);
 							captured = true;
 							return true;
 		} else if (k.isFire() && k.x +2== x && k.y -2== y  && pieceAt(k.x+1 ,k.y-1) != null && !pieceAt(k.x+1,k.y-1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(k.x+1,k.y-1);
 							captured = true;
 							return true;
 		}else if(!k.isFire() && k.x +2 == x && k.y +2 == y  && pieceAt(k.x +1 ,k.y +1) != null && pieceAt(k.x+1,k.y+1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(k.x+1,k.y +1);
 							captured =true;
 							return true;
 		} else if (!k.isFire() && k.x -2== x && k.y +2 == y && pieceAt(k.x -1 ,k.y +1) != null && pieceAt(k.x-1,k.y+1).isFire()){
-						bomb(x,y);
+						//bomb(x,y);
 						remove(k.x -1, k.y +1);
 						captured =true;
 						return true;
 		}else if (!k.isFire() && k.x -2 == x && k.y -2 == y && pieceAt(k.x-1 ,k.y-1) != null && pieceAt(k.x-1,k.y-1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(k.x-1,k.y-1);
 							captured = true;
 							return true;
 		} else if (!k.isFire() && k.x +2== x && k.y -2== y  && pieceAt(k.x+1 ,k.y-1) != null && pieceAt(k.x+1,k.y-1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(k.x+1,k.y-1);
 							captured =true;
 							return true;
@@ -226,12 +227,12 @@ public class Board {
 								return true;
 							}
 						} else if(prev.x +2 == x && prev.y +2 == y  && pieceAt(prev.x +1 ,prev.y +1) != null && !pieceAt(prev.x+1,prev.y+1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(prev.x+1,prev.y +1);
 							captured = true;
 							return true;
 						} else if (prev.x -2== x && prev.y +2 == y && pieceAt(prev.x -1 ,prev.y +1) != null && !pieceAt(prev.x-1,prev.y+1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(prev.x -1, prev.y +1);
 							captured = true;
 							return true;
@@ -243,12 +244,12 @@ public class Board {
 								return true;
 							}
 						} else if (prev.x -2 == x && prev.y -2 == y && pieceAt(prev.x-1 ,prev.y-1) != null && pieceAt(prev.x-1,prev.y-1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(prev.x-1,prev.y-1);
 							captured = true;
 							return true;
 						} else if (prev.x +2== x && prev.y -2== y  && pieceAt(prev.x+1 ,prev.y-1) != null && pieceAt(prev.x+1,prev.y-1).isFire()){
-							bomb(x,y);
+							//bomb(x,y);
 							remove(prev.x+1,prev.y-1);
 							captured = true;
 							return true;
@@ -272,7 +273,7 @@ public class Board {
 		Piece rightB = pieceAt(x-1,y+1);
 		Piece leftT = pieceAt(x+1,y-1);
 		Piece leftB = pieceAt(x-1,y-1);
-		if(prev != null && prev.isBomb()){
+		if(prev != null && prev.isBomb() && captured){
 			if (rightT != null && !rightT.isShield()){
 				remove(rightT.x,rightT.y);
 			}
@@ -297,18 +298,23 @@ public class Board {
 	}
 
 	public void select(int x, int y){
-		if (canSelect(x,y)){
-			selected = players[x][y];
+		
+		if (pieceAt(x,y) != null){
+			prev = players[x][y];
+		} else{
+			if (prev != null){
+				bomb(x,y);
+				prev.move(x,y);
+			}
 		}
 		
 	}
 
 	public void place(Piece p, int x, int y){
 		players[x][y] = p;
-		players[x][y].move(x,y);
-		drawBoard(8);
 	}
 	private void drawUpdate(){
+		drawBoard(8);
 		for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
         	Piece dPiece = players[i][j];
@@ -358,16 +364,16 @@ public class Board {
 			}
 			}
 		}
+		}
+		}
 	}
-	}
-}
 	
 
 	public Piece remove(int x, int y){
 	Piece pp = pieceAt(x,y);
 	players[x][y] = null;
 	return pp;
-}
+	}
 
 	public boolean canEndTurn(){
 
@@ -407,10 +413,12 @@ public class Board {
         	}
         }
     }
-    	if (countWater == 1){
-		win = "Winner: Fire";
-	} else if (countFire == 1){
-		win = "Winner: Water";
+    	if (countWater <= 1){
+		win = "Fire";
+	} else if (countFire <= 1){
+		win = "Water";
+	} else{
+		win = "No one";
 	}
 	return win;
 	}

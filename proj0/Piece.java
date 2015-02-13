@@ -89,10 +89,16 @@ public class Piece {
 		} else{
 			capture = false;
 		}
-		
+		int holdX = x;
+		int holdY = y;
+	
 		x = xx; 
 		y = yy;
+		b.remove(holdX,holdY);
+		b.place(this,x,y);
+		if (capture){
 		explode(x,y);
+		}
 
 	}
 
