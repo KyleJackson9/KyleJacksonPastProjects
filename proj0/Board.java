@@ -190,7 +190,7 @@ public class Board {
 			return false;
 		}
 		if (select == null){
-				if (prev != null){
+				if (prev != null ){
 					if (x>=0 && y>=0 && x<8 && y<8){
 						if (prev.hasCaptured()){
 							if (prev.isKing() && prev.isFire()){
@@ -218,21 +218,21 @@ public class Board {
 								return false;
 
 							} else if (prev.isFire()){
-								if (prevX +2 ==x && prevY +2 ==y){
+								if (prevX +2 ==x && prevY +2 ==y && pieceAt(prevX +1,prevY +1) != null && !pieceAt(prevX +1,prevY +1).isFire()){
 									return true;
-								} else if (prevX -2 ==x && prevY +2 ==y){
+								} else if (prevX -2 ==x && prevY +2 ==y && pieceAt(prevX -1,prevY +1) != null && !pieceAt(prevX -1,prevY +1).isFire()){
 									return true;
 								}
 								return false;
 							} else {
-								if (prevX -2 ==x && prevY -2 ==y){
+								if (prevX -2 ==x && prevY -2 ==y && pieceAt(prevX -1,prevY -1) != null && pieceAt(prevX -1,prevY -1).isFire()){
 									return true;
-								} else if (prevX +2 ==x && prevY -2 ==y){
+								} else if (prevX +2 ==x && prevY -2 ==y && pieceAt(prevX +1,prevY -1) != null && pieceAt(prevX +1,prevY -1).isFire()){
 									return true;
 								} 
 								return false;
 							}
-						} else if (prev.isKing() && prev.isFire()){
+						} else if (prev.isKing() && prev.isFire() && !moved){
 							if(prevX +1 == x || prevX -1 ==x){
 								if (prevY +1 == y || prevY -1 == y){
 									return true;
