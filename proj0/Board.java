@@ -183,7 +183,7 @@ public class Board {
 		if (x<0 && y<0 && x>=8 && y>=8){
 			return false;
 		}
-		if (prev != null && !prev.isKing() && !prev.hasCaptured() && moved){
+		if (prev != null && prev.isKing() && !prev.hasCaptured() && moved){
 			return false;
 		}
 		if (select != null && prev != null && prev.hasCaptured()){
