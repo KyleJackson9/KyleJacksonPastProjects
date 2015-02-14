@@ -41,14 +41,7 @@ public class Piece {
 		return type;
 	}
 
-	public boolean isKing(){
-		if  (isFire() && y ==7) {
-			king = true;
-		}
-		else if (!isFire() && y ==0) {
-			king = true;
-		}
-	
+	public boolean isKing(){	
 		return king;
 	}
 	private void explode(int x, int y){
@@ -102,9 +95,13 @@ public class Piece {
 		prevY = y;
 		x = xx; 
 		y = yy;
-
-
-				if (x>=0 && y>=0 && x<8 && y<8){
+		if  (isFire() && y ==7) {
+			king = true;
+		}
+		else if (!isFire() && y ==0) {
+			king = true;
+		}
+		if (x>=0 && y>=0 && x<8 && y<8){
 					if (isKing()){
 						 killerKing(this,x,y);
 					} else if (isFire()){
@@ -134,6 +131,7 @@ public class Piece {
 					}
 				
 				}
+
 		b.remove(holdX,holdY);
 		if (capture && isBomb()){
 			explode(x,y);
