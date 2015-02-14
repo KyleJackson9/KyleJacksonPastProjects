@@ -191,14 +191,26 @@ public class Board {
 				if (prev != null){
 					if (x>=0 && y>=0 && x<8 && y<8){
 						if (prev.hasCaptured()){
-							if (prev.isKing()){
-								if (prevX +2 ==x && prevY +2 ==y){
+							if (prev.isKing() && prev.isFire()){
+								if (prevX +2 ==x && prevY +2 ==y && pieceAt(prevX +1,prevY +1) != null && !pieceAt(prevX +1,prevY +1).isFire()){
 									return true;
-								} else if (prevX -2 ==x && prevY +2 ==y){
+								} else if (prevX -2 ==x && prevY +2 ==y && pieceAt(prevX -1,prevY +1) != null && !pieceAt(prevX -1,prevY +1).isFire()){
 									return true;
-								} else if(prevX - 2 ==x && prevY -2 ==y){
+								} else if(prevX - 2 ==x && prevY -2 ==y && pieceAt(prevX -1,prevY -1) != null && !pieceAt(prevX -1,prevY -1).isFire()){
 									return true;
-								} else if (prevX +2 ==x && prevY -2 ==y){
+								} else if (prevX +2 ==x && prevY -2 ==y && pieceAt(prevX +1,prevY -1) != null && !pieceAt(prevX +1,prevY -1).isFire()){
+									return true;
+								}
+								return false;
+
+							} else if (prev.isKing() && !prev.isFire()){
+								if (prevX +2 ==x && prevY +2 ==y && pieceAt(prevX +1,prevY +1) != null && pieceAt(prevX +1,prevY +1).isFire()){
+									return true;
+								} else if (prevX -2 ==x && prevY +2 ==y && pieceAt(prevX -1,prevY +1) != null && pieceAt(prevX -1,prevY +1).isFire()){
+									return true;
+								} else if(prevX - 2 ==x && prevY -2 ==y && pieceAt(prevX -1,prevY -1) != null && pieceAt(prevX -1,prevY -1).isFire()){
+									return true;
+								} else if (prevX +2 ==x && prevY -2 ==y && pieceAt(prevX +1,prevY -1) != null && pieceAt(prevX +1,prevY -1).isFire()){
 									return true;
 								}
 								return false;
