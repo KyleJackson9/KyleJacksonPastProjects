@@ -1,4 +1,6 @@
-
+/* authored by Kyle Jackson
+  talked out ideas with Lab Assistant Courtney Pasco
+  and friends Finn Howell & Clay Smyth*/
 
 public class Board {
 
@@ -180,7 +182,7 @@ public class Board {
 
 	public boolean canSelect(int x, int y){
 		Piece select = players[x][y];
-		if (x<0 && y<0 && x>=8 && y>=8){
+		if (x<0 || y<0 || x>=8 || y>=8){
 			return false;
 		}
 		if (prev != null && prev.isKing() && !prev.hasCaptured() && moved){
@@ -237,32 +239,32 @@ public class Board {
 								if (prevY +1 == y || prevY -1 == y){
 									return true;
 								}
-							} 	if (prevX +2 ==x && prevY +2 ==y){
+							} 	if (prevX +2 ==x && prevY +2 ==y && pieceAt(prevX +1,prevY +1) != null && !pieceAt(prevX +1,prevY +1).isFire()){
 									return true;
-								} else if (prevX -2 ==x && prevY +2 ==y){
+								} else if (prevX -2 ==x && prevY +2 ==y && pieceAt(prevX -1,prevY +1) != null && !pieceAt(prevX -1,prevY +1).isFire()){
 									return true;
-								} else if(prevX - 2 ==x && prevY -2 ==y){
+								} else if(prevX - 2 ==x && prevY -2 ==y && pieceAt(prevX -1,prevY -1) != null && !pieceAt(prevX -1,prevY -1).isFire()){
 									return true;
-								} else if (prevX +2 ==x && prevY -2 ==y){
+								} else if (prevX +2 ==x && prevY -2 ==y && pieceAt(prevX +1,prevY -1) != null && !pieceAt(prevX +1,prevY -1).isFire()){
 									return true;
 								}
 							return false;
-						}else if (prev.isKing() && !prev.isFire()){
+						}else if (prev.isKing() && !prev.isFire() && !moved){
 							if(prevX +1 == x || prevX -1 ==x){
 								if (prevY +1 == y || prevY -1 == y){
 									return true;
 								}
-							} 	if (prevX +2 ==x && prevY +2 ==y){
+							} 	if (prevX +2 ==x && prevY +2 ==y && pieceAt(prevX +1,prevY +1) != null && pieceAt(prevX +1,prevY +1).isFire()){
 									return true;
-								} else if (prevX -2 ==x && prevY +2 ==y){
+								} else if (prevX -2 ==x && prevY +2 ==y && pieceAt(prevX -1,prevY +1) != null && pieceAt(prevX -1,prevY +1).isFire()){
 									return true;
-								} else if(prevX - 2 ==x && prevY -2 ==y){
+								} else if(prevX - 2 ==x && prevY -2 ==y && pieceAt(prevX -1,prevY -1) != null && pieceAt(prevX -1,prevY -1).isFire()){
 									return true;
-								} else if (prevX +2 ==x && prevY -2 ==y){
+								} else if (prevX +2 ==x && prevY -2 ==y && pieceAt(prevX +1,prevY -1) != null && pieceAt(prevX +1,prevY -1).isFire()){
 									return true;
 								}
 							return false;
-						} else if (prev.isFire()){
+						} else if (prev.isFire() && !moved){
 							if(prevX +1 == x || prevX -1 ==x){
 								 if(prevY +1 == y){
 									return true;
@@ -273,7 +275,7 @@ public class Board {
 								return true;
 						}
 							return false;
-						} else if (!prev.isFire()){
+						} else if (!prev.isFire() && !moved){
 							if (prevX == x-1 || prevX -1 == x){
 								 if(prevY -1 == y){ 
 									return true;
@@ -294,13 +296,13 @@ public class Board {
 				}
 		} else if (x>=0 && y>=0 && x<8 && y<8){
 				if (prev != null){
-				if(prev.hasCaptured()){ //if capture & chose any piece false
+				if(prev.hasCaptured()){ 
 					return false;
-				} else if (moved && prev.isKing()){ //move and king
+				} else if (moved && prev.isKing()){ 
 					return false;
-				} else if (prev == select && !moved) { // if same piece & no move good //!prev.hasCaptured()){
+				} else if (prev == select && !moved) { 
 					return true;
-				} else if (prev == select) { //if same false
+				} else if (prev == select) { 
 					return false;
 				}else if (!prev.hasCaptured()){
 					if (turn % 2 == 0 && select.isFire() ){
