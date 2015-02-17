@@ -57,13 +57,19 @@ public class SortedComparableList {
 
     /** Adds every item in THAT to this list. */
     public void extend(SortedComparableList that) {
-        SortedComparableList x = that;
+    //     SortedComparableList x = that;
 
-        while (x.tail != null){
-            this.insert(x.head);
-            x = x.tail;
+    //     while (x.tail != null){
+    //         this.insert(x.head);
+    //         x = x.tail;
+    //     }
+
+    // }
+            SortedComparableList curr = that;
+        while (curr != null) {
+            insert(curr.head);
+            curr = curr.tail;
         }
-
     }
 
     /** Returns a list consisting of the elements of L starting from
@@ -142,6 +148,9 @@ public class SortedComparableList {
             x = x.tail;
           }
         }
+        if (x.head = x.tail.head && x.tail.head != null){
+          x.tail =null;
+        }
     }
 
     /** Duplicates each Comparable so that for every original
@@ -156,7 +165,7 @@ public class SortedComparableList {
      **/
     public void twin() {
         SortedComparableList x = this;
-        while (x.tail != null){
+        while (x != null){
           x.tail = new SortedComparableList(x.head, x.tail);
           x = x.tail.tail;
         }
