@@ -24,11 +24,11 @@ public class ApplicableIntList{
 
     /** Inserts int i into its correct location, doesn't handle cycles. */
     public void insert(int i) {
-        ApplicableIntList x = this;
+        //ApplicableIntList x = this;
         
-          if (i < x.head){
-            x.tail = new ApplicableIntList(x.head, x.tail);
-            x.head = i;
+          if (i < head){
+            tail = new ApplicableIntList(head, tail);
+            head = i;
           }
           else {
             ApplicableIntList curr = this;
@@ -65,6 +65,8 @@ public class ApplicableIntList{
             newList.insert(f.apply(x.tail.head));
             x = x.tail;
         }
+        head = newList.head;
+        tail = newList.tail;
     }
 
     /** Returns NULL if no cycle exists, else returns cycle location. */
