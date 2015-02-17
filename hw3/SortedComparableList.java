@@ -139,17 +139,32 @@ public class SortedComparableList {
      **/
     public void squish() {
         
-        SortedComparableList x = this;
+    //     SortedComparableList x = this;
 
-        while (x.tail.tail != null){
-          if (x.head.equals(x.tail.head)){
-            x.tail = x.tail.tail;
-          } else{
-            x = x.tail;
-          }
-        }
-        if (x.head = x.tail.head && x.tail.head != null){
-          x.tail =null;
+    //     while (x.tail.tail != null){
+    //       if (x.head.equals(x.tail.head)){
+    //         x.tail = x.tail.tail;
+    //       } else{
+    //         x = x.tail;
+    //       }
+    //     }
+    //     if (x.head = x.tail.head && x.tail.head != null){
+    //       x.tail =null;
+    //     }
+    // }
+              if (tail != null) {
+            SortedComparableList prev = this;
+            SortedComparableList curr = tail;
+            while (curr != null) {
+                if (prev.head.equals(curr.head)) {
+                    prev.tail = curr.tail;
+                    curr = prev.tail;
+                }
+                else {
+                    prev = prev.tail;
+                    curr = prev.tail;
+                }
+            }
         }
     }
 
