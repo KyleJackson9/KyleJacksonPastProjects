@@ -84,7 +84,7 @@ public class SortedComparableList {
         }
         return x;
         }
-        return x;
+       
     }
 
     /** Returns the sublist consisting of LEN items from list L,
@@ -94,15 +94,23 @@ public class SortedComparableList {
      *  Assume START and END are >= 0.
      */
     public static SortedComparableList sublist(SortedComparableList L, int start, int len) {
-        if (len == 0){
-          return null;
+        // if (len == 0){
+        //   return null;
+        // }
+        // SortedComparableList x = subTail(L,start);
+        // expungeTail(x,len);
+        // return x;
+          if (len == 0) {
+            
+            return null;
         }
-        SortedComparableList x = subTail(L,start);
-        expungeTail(x,len);
-        return x;
-        
-
+        else if (start > 0) {
+            return sublist(L.tail, start - 1, len);
+        }
+        return new SortedComparableList(L.head, sublist(L.tail, 0, len - 1));
     }
+
+    
 
     /** Removes items from L at position len+1 and later. */
     public static void expungeTail(SortedComparableList L, int len) {

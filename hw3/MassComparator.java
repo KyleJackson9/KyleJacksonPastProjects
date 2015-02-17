@@ -7,11 +7,13 @@ import java.util.Comparator;
 public class MassComparator implements Comparator<Planet> {
 
     public MassComparator() {
+    	super();
     }
 
     /** Returns the difference in mass as an int.
      *  Round after calculating the difference. */
     public int compare(Planet planet1, Planet planet2) {
-        // REPLACE THIS LINE WITH YOUR SOLUTION
+        double x = Math.abs(planet1.mass() - planet2.mass());
+        return (int) x;
     }
 }
