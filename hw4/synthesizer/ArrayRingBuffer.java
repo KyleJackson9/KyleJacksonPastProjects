@@ -52,18 +52,18 @@ public class ArrayRingBuffer extends AbstractBoundedQueue {
     if (fillCount == 0){
         throw new RuntimeException("Ring buffer underflow");
     } else if ( first != capacity-1){ 
-       
+       double x = rb[first];
       first = first +1;
       fillCount = fillCount -1;
-      return rb[first-1];
+      return x;
     } else {
-      
+      double x = rb[first];
       first = 0;
       fillCount = fillCount -1;
-      return rb[capacity-1];
+      return x;
     }
     
-      // TODO: Dequeue the first item. Don't forget to decrease fillCount and update first.
+      
   }
 
   /** Return oldest item, but don't remove it. */
