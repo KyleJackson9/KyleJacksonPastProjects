@@ -39,12 +39,13 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K> {
     public V get(K key) { 
         if (front == null){
             return null;
-        }
-        for (Entry x = front; !x.equals(null); x=x.next){
+        } else {
+            for (Entry x = front; x != null; x=x.next){
             if (key.equals(x.key)){
                 return (V) x.val;
             }
         }
+    }
         return null;
 
     }
@@ -55,7 +56,7 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K> {
         Entry f = front;
         if(containsKey(key)){
             old = (V) f.get(key).val;
-            while (!f.equals(null)){
+            while (f != null){
                 if (f.val.equals(old)){
                     f.val = val;
                     break;
