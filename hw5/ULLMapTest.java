@@ -32,7 +32,7 @@ public class ULLMapTest {
         um.put(1, "one");
         um.put(2, "two");
         ULLMap<String, Integer> u = um.invert(um);
-        System.out.println(u.next());
+        System.out.println(u);
     }
 
     

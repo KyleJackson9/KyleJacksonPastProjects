@@ -17,20 +17,22 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K> {
     private Entry front;
     private int size;
 
-    public static <K,V> ULLMap<K,V> invert(ULLMap<K,V> map){
+    public static <K,V> ULLMap<V,K> invert(ULLMap<K,V> map){
         int size = map.size();
-        K value;
-        V key;
+        V value;
+        K key;
         ULLMap<K,V> map2 = map;
-        map.clear();
+        ULLMap<V,K> map3 = new ULLMap<V,K>();
+
+        
         while (size != 0){
             size -=1;
-            value = (K) map2.front.val;
-            key = (V) map2.front.key;
-            map.put(value,key);
+            value = (V) map2.front.val;
+            key = (K) map2.front.key;
+            map3.put(value,key);
             map2.front = map2.front.next;
         }
-        return map;
+        return map3;
     }
 
     @Override
