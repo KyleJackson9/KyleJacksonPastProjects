@@ -14,6 +14,9 @@ import java.util.AbstractList;
 	}
 
 	public ArrayList61B(int initialCapacity) {
+		if (initialCapacity <=0){
+			throw new IllegalArgumentException();
+		}
 		items = (E[]) new Object[initialCapacity];
 		size = 0;
 	}
@@ -38,6 +41,9 @@ import java.util.AbstractList;
 	// }
 
 	public E get(int i) {
+		if (i <=0 || i > size){
+			throw new IllegalArgumentException();
+		}
 		return items[i];
 	}
 

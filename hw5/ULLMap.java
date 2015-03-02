@@ -37,6 +37,9 @@ public class ULLMap<K, V> implements Map61B<K, V>, Iterable<K> {
 
     @Override
     public V get(K key) { 
+        if (front == null){
+            return null;
+        }
         for (Entry x = front; !x.equals(null); x=x.next){
             if (key.equals(x.key)){
                 return (V) x.val;
