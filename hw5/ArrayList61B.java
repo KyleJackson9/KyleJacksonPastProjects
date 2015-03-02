@@ -41,7 +41,7 @@ import java.util.AbstractList;
 	// }
 
 	public E get(int i) {
-		if (i <=0 || i >= size){
+		if (i <0 || i >= size){
 			throw new IllegalArgumentException();
 		} else{
 		return items[i];
