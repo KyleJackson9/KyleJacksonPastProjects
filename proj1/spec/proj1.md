@@ -31,9 +31,9 @@ To get started, use the ever fun to type ```git pull skeleton master```. You'll 
 
 Part of the grade for this project will include following the [course style guidelines](http://berkeley-cs61b.github.io/public_html/materials/guides/style-guide.html). As noted, you should not try to read these rules, though they may be a useful reference. It will be much easier to simply run the style checker. You can do this by running the style61b.py script provided in the lib folder (you may need to pull from skeleton again if you don't see it). For example, on my machine, I can run it as follows.
 
-    $ python /Users/jug/work/61b/course-materials/lib/style61b.py \*.java
+    $ python /Users/jug/work/61b/course-materials/lib/style61b.py *.java
 
-There are no secret tests for the style checker, though we reserve the right to grade you holistically on your overall code composition. 
+There are no secret tests for the style checker, though we reserve the right to grade you holistically on your overall code composition. We will only style check the required .java files, i.e. those in the MethodSignatures file / javadocs.
 
 Similarly, time permitting, we will be allocating a small portion of your grade to the thoroughness of your JUnit tests. We hope that we've convinced you that tests are easy to write and can save you a ton of time if done properly. 
 
@@ -65,15 +65,15 @@ The WordNet digraph
 
 To store the WordNet dataset, you'll need to use at least two data structures. One of these will be a data structure we haven't discussed in class yet called a Digraph (short for Directed Graph). 
 
-A small subgraph of the WordNet Digraph is illustrated below. In our copy of the dataset (and in the graph below), words that belong to the same synset are separated by spaces (not commas as in the figure above), and collocations use underscores instead of spaces (e.g. "car_pool" instead of "car pool", same as the figure above). 
+A small subgraph of the WordNet Digraph is illustrated below. In our copy of the dataset (and in the graph below), words that belong to the same synset are separated by spaces (not commas as in the figure above), and collocations use underscores instead of spaces (e.g. "car\_pool" instead of "car pool", same as the figure above). 
 
 ![WordNet](wordnet-fig2.png "WordNet")
 
 A graph consists of a set of V vertices and E edges (represented by arrows in the above figure) between vertices. For example, in the graph above, V = 23 and E = 23. One of these edegs is from "increase" to "jump leap", indicating that the synset "increase" is a hypernym of "jump leap". 
 
-Your first task in this assignment is to read in the provided synset and hypernym datafiles (see further down on this page for the structure of the synset and hypernym files). To represent the arrows, we'll be using a class from the ```edu.princeton.cs.algs4``` package called Digraph (which you can import with ```edu.princeton.cs.algs4.Digraph```. You can think of this class as having only a constructor and an addEdge method.
+Your first task in this assignment is to read in the provided synset and hyponym datafiles (see further down on this page for the structure of the synset and hyponym files). To represent the arrows, we'll be using a class from the ```edu.princeton.cs.algs4``` package called Digraph (which you can import with ```edu.princeton.cs.algs4.Digraph```. You can think of this class as having only a constructor and an addEdge method (it actually has more, but you won't be using them directly, as you'll instead be relying on a provided GraphHelper class, described further below):
 
-    public Digraph() {
+    public class Digraph() {
         /** Creates a new Digraph with V vertices. */
         public Digraph(int V)
 
@@ -90,7 +90,7 @@ Note that the Digraph class requires us to know the number of vertices in advanc
 
 This might seem like an annoying limitation of our Digraph class. However, even if the Digraph class allowed such convenient syntax, it wouldn't work for WordNet, because there can be multiple Synsets that have the exact same String. For example there are two synsets represented by exactly the String ["American"](http://wordnetweb.princeton.edu/perl/webwn?s=American&sub=Search+WordNet&o2=&o0=1&o8=1&o1=1&o7=&o5=&o9=&o6=&o3=&o4=&h=0), each with their own hypernyms. 
 
-To avoid this ambiguity, the synsets and hypernyms files have a special structure, described in the next section.
+To avoid this ambiguity, the synsets and hyponyms files have a special structure, described in the next section.
 
 The WordNet input file formats.
 ------
@@ -102,7 +102,7 @@ We now describe the two data files that you will use to create the wordnet digra
 
     means that the synset ```{ AND_circuit, AND_gate }``` has an id number of 36 and its definition is "a circuit in a computer that fires only when all of its inputs fire". The individual nouns that comprise a synset are separated by spaces (and a synset element is not permitted to contain a space). The S synset ids are numbered 0 through S − 1; the id numbers will appear consecutively in the synset file. You will not (officially) use the definitions in this project, though you're welcome to create public subclasses of WordNet that do use them in some interesting way.
 
-  - List of hyponyms. The file hyponyms.txt (and other smaller files with hypernym in the name) contains the hyponym relationships: The first field is a synset id; subsequent fields are the id numbers of the synset's direct hyponyms. For example, the following line
+  - List of hyponyms. The file hyponyms.txt (and other smaller files with hyponym in the name) contains the hyponym relationships: The first field is a synset id; subsequent fields are the id numbers of the synset's direct hyponyms. For example, the following line
 
         79537,38611,9007
 
@@ -123,7 +123,7 @@ You're allowed to discuss designs with other students, **but we request that you
 
 To see the exact API that you must follow for WordNet, see the [WordNet javadocs](javadocs/index.html?ngordnet/WordNet.html). Make sure to take advantage of the MethodSignatures file provided with the skeleton. **You may not add additional public or protected methods to WordNet.java or any other required files in this project. You may add additional package protected or private methods as you please. You may add additional public classes (with public methods).** There are no restrictions on the libraries that you use. Note that if you want to use something from the Princeton Standard library, you'll need to import it (since your Ngordnet code is not part of the anonymous package). You can import `In`, for example, using `import edu.princeton.cs.introcs.In;`.
 
-See the demos/GraphDemo.java file for an example using the Digraph class. 
+See the demos/GraphDemo.java file for an example using the Digraph class. The GraphHelper class provides a descendants method that finds all descendants of a given item in a graph. You are not required to use GraphHelper. In fact, you are not required to use the Digraph class.
 
 Almost all of the work is going to be in the constructor. It is very easy to go down the wrong path while writing the constructor. You should not be afraid to scrap your work if your original design does not work out. Before you even begin writing your constructor, we suggest writing out what your ADTs should look like after reading in the files ```synsets11.txt``` and ```hyponyms11.txt```. You might also consider what methods of these ADTs you'll need to call in order to support the isNoun() and hyponyms() methods.
 
@@ -138,7 +138,7 @@ The [Google Ngram dataset](http://storage.googleapis.com/books/ngrams/books/data
 
 Our next task will be to allow for the visualization of this historical data on our own terms. Ultimately, we'll combine this dataset with the WordNet dataset to be able to ask new and interesting questions that I don't think have ever been asked before this assignment was created (cool!). 
 
-Over the weekend, I'll be releasing an overview video, as well as [project 1 slides](not yet available) that provide a top-down view of the Ngordnet system. The written spec below should be sufficient to complete the spec, so don't wait if you're eager to continue.
+Over the weekend, I'll be releasing an overview video, as well as [project 1 slides](https://docs.google.com/presentation/d/1KqBKvX6ZOp-8lvKcrE-wTg7_7ZFeeu9cGtH_SHtL4qg/pub?start=false&loop=false&delayms=3000) that provide a top-down view of the Ngordnet system. The written spec below should be sufficient to complete the spec, so don't wait if you're eager to continue.
 
 3: TimeSeries
 =====
@@ -164,7 +164,7 @@ Our ultimate goal is to make usage of the xChart plotting library easy. Since xC
 
 As throughout this assignment, the MethodSignatures file provided in the skeleton gives the exact class definition and signatures that you'll need. Likewise, see the TimeSeriesDemo class for a more thorough example of the behavior of the class. See the [TimeSeries javadocs](javadocs/index.html?ngordnet/TimeSeries.html) for a more detailed technical specification of your class.
 
-As with everything in this assignment you should not create additional public or protected methods. Additional public classes are fine.
+As with everything in this assignment you should not create additional public or protected methods. Additional public classes are fine. It is OK to override existing public methods (e.g. equals). 
 
 Warning: It is very easy to run into issues with generics. Compile frequently. Do not dare write more than one of these methods at a time.
 
@@ -187,14 +187,20 @@ The YearlyRecord class will also provide utility methods to make data analysis a
  - count(String word): Returns the count of word in this year.
  - size(): Returns the number of words recorded this year.
  - words(): Returns all words in ascending order of count.
- - counts(): Returns all words in ascending order of count.
- - rank(String word): Gives the rank of word, with 1 being the most popular word.
+ - counts(): Returns all counts in ascending order of count.
+ - rank(String word): Gives the rank of word, with 1 being the most popular word. If two words have the same rank, break ties arbitrarily. No two words should have the same rank.
 
-Revised (friendlier) performance requirements (2/28/15): This one will be a bit more involved than TimeSeries. The rank, size, and count methods should all be very fast, no matter how many words are in the database. Specifically, on a "frozen" YearlyRecord, their runtime should be about the same no matter how large the YearlyRecord, where a frozen YearlyRecord is defined as one for which no additional put operations occur. That means no looping, recursion, or similar. You can achieve this through judicious use of the right data structures. You may assume that the get methods of a map take about the same time no matter how large the map. You may not assume this about the get methods of lists.    
+Revised (friendlier) performance requirements (2/28/15): This one will be a bit more involved than TimeSeries. The rank, size, and count methods should all be very fast, no matter how many words are in the database. Specifically, on a "frozen" YearlyRecord, their runtime should be about the same on average no matter how large the YearlyRecord, where a frozen YearlyRecord is defined as one for which no additional put operations occur. That means that typical calls to these methods cannot use looping, recursion, sorting, or similar. However, it is OK if one or more of these techniques is used rarely. See <a href="https://docs.google.com/presentation/d/1KqBKvX6ZOp-8lvKcrE-wTg7_7ZFeeu9cGtH_SHtL4qg/edit#slide=id.g7be664e68_15117">this example</a> for more.
+
+You can achieve this through judicious use of the right data structures. You may assume that the get methods of a map take about the same time no matter how large the map. You may not assume this about the get methods of lists. 
+
+Revised (stricter) performance revision (3/3/15): For 0.1 points of extra credit, your put method should be fast no matter how large the datafiles. This will also make the plotting part of the assignment more interesting since you'll be able to read all\_words.csv.
+
+**See the provided YearlyRecordTimeTest.java.freetest file for a timing test.** You'll need to rename this file to have a .java extension before it can be compiled.
 
 See the [YearlyRecord javadocs](javadocs/index.html?ngordnet/YearlyRecord.html) for a more precise technical specification, and YearlyRecordDemo for additional examples showing typical use.
 
-**The basics autograder will cover up through this point in the project. Your project 1 bonus point will depend on how many AG tests you have completed by March 6th. The basics autograder will begin running the weekend of February 28th. It is intended as a basic sanity check only, and will not be a thorough test.**
+**The basics autograder will cover up through this point in the project. Your project 1 bonus point will depend on how many AG tests you have completed by March 6th at 11:59 PM. It is intended as a basic sanity check only, and will not be a thorough test.**
 
 5: NGramMap
 =====
@@ -203,7 +209,7 @@ The [NGramMap (javadocs)](javadocs/index.html?ngordnet/NGramMap.html) type will 
 
 Most significantly, the NGramMap class will provides methods to look up a TimeSeries for a given word or the YearlyRecord for a given year. For example, we might request the relative popularity of the word "fish" since the year 1850 until 1933, as shown below:
 
-    NGramMap ngm = new NGramMap("./ngrams/all_words", 
+    NGramMap ngm = new NGramMap("./ngrams/all_words.csv", 
                                 "./ngrams/total_counts.csv");
 
     TimeSeries<Double> fishWeight = ngm.weightHistory("fish", 1850, 1933);
@@ -223,6 +229,8 @@ You should not yet implement the ```processedHistory``` methods for this part of
 As with WordNet, most of the work will be in the constructor. Make sure to pick your data structures carefully.
 
 As with our other classes, see the [NGramMap (javadocs)](javadocs/index.html?ngordnet/NGramMap.html) for a more detailed technical specification, and see NGramMapDemo for example usages.
+
+Revision (3/3/2015): Your code should be fast enough that you can create an NGramMap using all_words.csv. Loading should take less than 20 seconds.
 
 The NGram Input File Formats
 ------
@@ -275,7 +283,7 @@ In this part, you'll create a UI with the following commands:
  - help: Provides a list of commands.
  - range [start] [end]: resets the start and end years to the values provided.
  - count [word] [year]: print the count of word in the given year.
- - hyponyms [word]: prints all hyponyms of the given word separated by spaces.
+ - hyponyms [word]: prints all hyponyms of the given word using the default Set string representation (see below).
  - history [words...]: plots relative frequency of all words from start to end.
  - hypohist [words...]: plots relative frequency of all hyponyms of words from start to end.
 
