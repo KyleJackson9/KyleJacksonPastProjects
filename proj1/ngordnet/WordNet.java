@@ -10,21 +10,21 @@ import java.io.*;
 
 
 public class WordNet {
-	public String synset;
-	public String hyponym;
-	public HashMap<Integer,String[]> nouns;
-	public HashMap<String, Integer> opposite;
-	public Digraph g;// directed graph for hyponyms have descent point to jump point to glide etc
-	public Iterator<String> n;
-	public Iterator<Integer> n1;
-	public Iterator<String[]> n3;
-	public In in1;
-	public In in2;
-	public Set<String> nounResult;
-	public Set<String[]> hy;
-	public Set<Integer> syResult;
-	public Set<Integer> h;
-	public Set<Integer> sHypo;
+	private String synset;
+	private String hyponym;
+	private HashMap<Integer,String[]> nouns;
+	private HashMap<String, Integer> opposite;
+	private Digraph g;// directed graph for hyponyms have descent point to jump point to glide etc
+	private Iterator<String> n;
+	private Iterator<Integer> n1;
+	private Iterator<String[]> n3;
+	private In in1;
+	private In in2;
+	private Set<String> nounResult;
+	private Set<String[]> hy;
+	private Set<Integer> syResult;
+	private Set<Integer> h;
+	private Set<Integer> sHypo;
 
 
 	public WordNet(String synsetFilename, String hyponymFilename){
@@ -127,15 +127,6 @@ public class WordNet {
 		}
 		//do I also need to add in the descendants of the descendants or did it to that itself?
 		//need to get everything out of String[] hy Set
-		// String[] hype = hy.toArray(new String[0]);
-		// String[] both;
-		// for (int i = 0; i < hype.length; i++){
-		// 	 both = concatAll(both, hype[i]);//add String[]
-		// }
-		// Set<String> result = new HashSet<String>(Arrays.asList(hype)); 
-		   		//makes set of synsets Integers
-
-		// Set<String[]> syOut = hy.keySet();
 		 n3 = hy.iterator(); 
     	Set<String> syResult = new HashSet<String>();
     	while (n3.hasNext()) {

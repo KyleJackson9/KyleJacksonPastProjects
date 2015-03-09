@@ -35,15 +35,14 @@ public class WordNetTest {
      @Test
     public void testInvert() {
 
-        System.out.println("Hypnoyms of increase:");
-        System.out.println(wn.opposite.get("increase"));
+        System.out.println("Hypnoyms of increase:"); //worked
         for (String noun : wn.hyponyms("increase")) {
             System.out.println(noun);
         }
 
         /* The code below should print the following (maybe not in this order): 
             Hypnoyms of jump:
-            parachuting
+            parachuting (didn't get this one)
             leap
             jump
         */
