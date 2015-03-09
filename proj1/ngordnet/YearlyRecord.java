@@ -40,7 +40,16 @@ public class YearlyRecord {
 
     /** Records that WORD occurred COUNT times in this year. */
     public void put(String word, int count) {//remove when add a word thats already in there
+      if (map.containsKey(word)){
+        for (int i : opposite.keySet()){
+          if (opposite.get(i).indexOf(word) != -1){
+            opposite.get(i).remove(word);
+
+          }
+        }
+      }
         map.put(word,count);
+
         if (opposite.containsKey(count)){
           opposite.get(count).add(word);//need to re-sort but it should on its own
         } else{

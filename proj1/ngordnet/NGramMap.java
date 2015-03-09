@@ -10,9 +10,9 @@ public class NGramMap {
     public YearlyRecord year;
     private In in1;
     private In in2;
-    public TimeSeries<Double> time;
+    //public TimeSeries<Double> time;
     public HashMap<String, HashMap<Integer,Integer>> yMap;
-    public HashMap<Integer, Integer> timeMap;
+    public HashMap<Long, Long> timeMap;
     
     
 
@@ -21,8 +21,8 @@ public class NGramMap {
          year = new YearlyRecord();
          yMap = new HashMap<String,HashMap<Integer,Integer>>();
          
-         timeMap = new HashMap<Integer,Integer>();
-         time = new TimeSeries<Double>();
+         timeMap = new HashMap<Long,Long>();
+         //time = new TimeSeries<Double>();
         in1 = new In(wordsFilename); 
         String line;
         while (in1.hasNextLine()) { //read each line by enters
@@ -38,8 +38,8 @@ public class NGramMap {
         while (in2.hasNextLine()) { //read each line by enters
             line1 = in2.readLine();
            String[] number = line1.split(",");
-            time.put(Integer.parseInt(number[0]), Double.parseDouble(number[1]));// constructs time series  
-            timeMap.put(Integer.parseInt(number[0]), Integer.parseInt(number[1]));
+            //time.put(Integer.parseInt(number[0]), Double.parseDouble(number[1]));// constructs time series  
+            timeMap.put(Long.parseLong(number[0]), Long.parseLong(number[1]));
         }
 
     }
@@ -67,8 +67,12 @@ public class NGramMap {
     }
 
     /** Returns the total number of words recorded in all volumes. */
-    public TimeSeries<Long> totalCountHistory(){// year then number
+    public TimeSeries<Long> totalCountHistory(){// int year then number of counts
         TimeSeries<Long> time = new TimeSeries<Long>();
+        for (long i : timeMap.keySet()){
+            time.put((int) i, timeMap.get(i));
+        }
+
         return time;
 
     }
