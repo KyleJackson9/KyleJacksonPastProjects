@@ -23,7 +23,7 @@ public class WordNet {
 	private Set<String> nounResult;
 	private Set<String[]> hy;
 	private Set<Integer> syResult;
-	private Set<Integer> h;
+
 	private Set<Integer> sHypo;
 
 
@@ -114,9 +114,22 @@ public class WordNet {
 	public Set<String> hyponyms(String word){//does not grab enough
 		 sHypo = new HashSet<Integer>();
 		 hy = new HashSet<String[]>();
+
+		 // need to loop through everything then add it to a set
+
+		 // for (Integer i : nouns.keySet()){
+		 // 	Integer key = opposite.get(i);
+		 // 	String[] x = nouns.get(i);
+		 // 	for (int j = 0; j < x.length; j++){
+		 // 	if (x[j].equals(word)){
+		 // 		sHypo.add(key);
+		 // 	}
+		 // }
+		 // }
+
 		sHypo.add(opposite.get(word));//should use word as a key and return its value (Integer)
 		 /** Returns the set of all vertex numbers reachable from the start vertices. */
-		h = GraphHelper.descendants(g,sHypo);//takes entire digraph & checks it against result
+		Set<Integer> h = GraphHelper.descendants(g,sHypo);//takes entire digraph & checks it against result
 
 		
 		//returns a set of integers

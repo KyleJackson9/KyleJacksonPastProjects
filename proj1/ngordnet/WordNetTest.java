@@ -12,7 +12,7 @@ import ngordnet.WordNet;
 
 public class WordNetTest {
     WordNet wn = new WordNet("./wordnet/synsets11.txt", "./wordnet/hyponyms11.txt");
-    // String x = "one,two,three";
+
 
     @Test
     public void testBasic() {

@@ -40,7 +40,11 @@ public class YearlyRecord {
     /** Records that WORD occurred COUNT times in this year. */
     public void put(String word, int count) {//works
         map.put(word,count);
+        if (opposite.containsKey(count)){
+          opposite.put(count+1,word);//need to re-sort but it should on its own
+        } else{
         opposite.put(count,word);//need to re-sort but it should on its own
+      }
 
 
     }
@@ -71,7 +75,7 @@ public class YearlyRecord {
       * No two words should have the same rank.
       */
     public int rank(String word) {
-      List mapKeys = new ArrayList(opposite.values());
+        List mapKeys = new ArrayList(opposite.values());
       for (int i = 0; i < mapKeys.size(); i++){
         if (mapKeys.get(i).equals(word)){
             return mapKeys.size() - i; 
