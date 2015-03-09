@@ -8,28 +8,28 @@ import java.io.*;
 
 public class YearlyRecord {
     /** Creates a new empty YearlyRecord. */
-    public TreeMap<String, Integer> map;
-    public TreeMap<Integer, String> opposite;
+    public HashMap<String, Integer> map;
+    public TreeMap<Integer, ArrayList<String>> opposite;
 
     public YearlyRecord(){
-        map = new TreeMap<String,Integer>();
-        opposite = new TreeMap<Integer,String>();
+        map = new HashMap<String,Integer>();
+        opposite = new TreeMap<Integer,ArrayList<String>>();
     }
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
-        HashMap<String,Integer> map2 = otherCountMap;
-        opposite = new TreeMap<Integer,String>();
+        //HashMap<String,Integer> map2 = otherCountMap;
+        opposite = new TreeMap<Integer,ArrayList<String>>();
+        map = otherCountMap;
 
-        List mapKeys = new ArrayList(map2.keySet());
-       List mapValues = new ArrayList(map2.values());
-      
+        List mapKeys = new ArrayList(map.keySet());
+       List mapValues = new ArrayList(map.values());
 
        for (int i = 0; i < mapValues.size(); i++){
-        opposite.put((int)mapValues.get(i), (String) mapKeys.get(i));
-        map.put((String)mapKeys.get(i), (int) mapValues.get(i));
-       }
-        
+        ArrayList<String> copy = new ArrayList<String>();
+        copy.add((String) mapKeys.get(i));
+        opposite.put((int)mapValues.get(i), copy);
+       }    
     }
 
     /** Returns the number of times WORD appeared in this year. */
@@ -39,17 +39,20 @@ public class YearlyRecord {
     }
 
     /** Records that WORD occurred COUNT times in this year. */
-    public void put(String word, int count) {//works
+    public void put(String word, int count) {//remove when add a word thats already in there
         map.put(word,count);
         if (opposite.containsKey(count)){
-          opposite.put(count+1,word);//need to re-sort but it should on its own
+          opposite.get(count).add(word);//need to re-sort but it should on its own
         } else{
-        opposite.put(count,word);//need to re-sort but it should on its own
+         ArrayList<String> copy = new ArrayList<String>();
+        copy.add(word);
+
+        opposite.put(count,copy);//need to re-sort but it should on its own
       }
 
 
     }
-
+// treemap into array list; if duplicates append the array list of strings
     /** Returns the number of words recorded this year. */
     public int size(){ //works
         return map.size();
@@ -58,8 +61,16 @@ public class YearlyRecord {
 
     /** Returns all words in ascending order of count. */
     public Collection<String> words() { //works
+      ArrayList<String> mapster = new ArrayList<String>();
+      for (int i : opposite.keySet()){
+        ArrayList<String> copy = opposite.get(i);
+        for (int j = 0; j<copy.size(); j++){
+          mapster.add(copy.get(j));
+        }
 
-       return opposite.values();
+      }
+
+       return mapster;
 
 
     }
@@ -67,7 +78,6 @@ public class YearlyRecord {
     /** Returns all counts in ascending order of count. */
     public Collection<Number> counts() {//works
         List mapValues = new ArrayList(opposite.keySet());
-        
         return mapValues;
     }
 
@@ -77,14 +87,18 @@ public class YearlyRecord {
       */
     public int rank(String word) {
         List mapKeys = new ArrayList(opposite.values());
-      for (int i = 0; i < mapKeys.size(); i++){
-        if (mapKeys.get(i).equals(word)){
-            return mapKeys.size() - i; 
+        int k = 0;
+
+      for (int i : opposite.keySet()){
+        ArrayList<String> copy = opposite.get(i);
+        for(int j = 0; j < copy.size(); j++){
+
+        if (copy.get(j).equals(word)){
+            return map.size() - k; 
         }
+                  k +=1;
+      }
       }
         return 0;
-
-
-
     }
 } 
