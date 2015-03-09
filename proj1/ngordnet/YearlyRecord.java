@@ -9,17 +9,17 @@ import java.io.*;
 public class YearlyRecord {
     /** Creates a new empty YearlyRecord. */
     public HashMap<String, Integer> map;
-    public HashMap<Integer, String> opposite;
+    public TreeMap<Integer, String> opposite;
 
     public YearlyRecord(){
         map = new HashMap<String,Integer>();
-        opposite = new HashMap<Integer,String>();
+        opposite = new TreeMap<Integer,String>();
     }
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
         map = otherCountMap;
-        opposite = new HashMap<Integer,String>();
+        opposite = new TreeMap<Integer,String>();
        //  List mapKeys = new ArrayList(map.keySet());
        // List mapValues = new ArrayList(map.values());
        //  for (int i =0; i <= map.size(); i++){
