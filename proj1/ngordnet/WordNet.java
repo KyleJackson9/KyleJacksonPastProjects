@@ -111,17 +111,17 @@ public class WordNet {
       * Do not include hyponyms of synonyms.
       */
  
-	public Set<String> hyponyms(String word){
+	public Set<String> hyponyms(String word){//does not grab enough
 		 sHypo = new HashSet<Integer>();
 		 hy = new HashSet<String[]>();
-		  String w = word;
-		  Integer x = opposite.get(w);
-		sHypo.add(x);//should use word as a key and return its value (Integer)
+		sHypo.add(opposite.get(word));//should use word as a key and return its value (Integer)
 		 /** Returns the set of all vertex numbers reachable from the start vertices. */
 		h = GraphHelper.descendants(g,sHypo);//takes entire digraph & checks it against result
+
+		
 		//returns a set of integers
 		Integer[] h1 = h.toArray(new Integer[0]);
-		for (int i = 0; i< h.size(); i++) {
+		for (int i = 0; i< h1.length; i++) {
 			hy.add(nouns.get(h1[i]));//converts from int to string then gets the value(noun) associated with that synset
 			//gives me String[] of the synsets
 		}
@@ -132,7 +132,7 @@ public class WordNet {
     	while (n3.hasNext()) {
     		String[] xh = n3.next();
     		for (int i = 0; i < xh.length; i++){
-    	    syResult.add(xh[i]);
+    	    	syResult.add(xh[i]);
     	}
    		}
 		

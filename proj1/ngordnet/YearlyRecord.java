@@ -9,28 +9,38 @@ import java.io.*;
 public class YearlyRecord {
     /** Creates a new empty YearlyRecord. */
     public HashMap<String, Integer> map;
-    //public HashMap<Integer, String> opposite;
+    public HashMap<Integer, String> opposite;
 
     public YearlyRecord(){
         map = new HashMap<String,Integer>();
-        //opposite = new HashMap<Integer,String>();
+        opposite = new HashMap<Integer,String>();
     }
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
         map = otherCountMap;
-        // Collection<Integer> value = this.values();
-        // Set<String> key = this.keySet();
+        opposite = new HashMap<Integer,String>();
        //  List mapKeys = new ArrayList(map.keySet());
        // List mapValues = new ArrayList(map.values());
+       //  for (int i =0; i <= map.size(); i++){
+       //    opposite.put((Integer)mapValues.get(i),(String)mapKeys.get(i));
+       //  }
+        List mapKeys = new ArrayList(map.keySet());
+       List mapValues = new ArrayList(map.values());
+       List mapValues2 = new ArrayList(map.values());
+       Collections.sort(mapValues);
+       
+       int k = 0;
+  
+     for (int i = 0; i < mapValues.size(); i++){
+        for (int j = 0; j < mapValues.size(); j++){
 
-        // Iterator it = map.entrySet().iterator();
-
-        // while (it.hasNext()) {
-        //     Map.Entry pair = (Map.Entry)it.next();
-        //     opposite.put((Integer) pair.getValue(), (String) pair.getKey());
-            
-        // }
+        if (mapValues.get(i).equals(mapValues2.get(j))){
+            opposite.put(k, (String) mapKeys.get(j)); 
+            k += 1;
+        }
+       }
+   }
         
     }
 
@@ -43,7 +53,23 @@ public class YearlyRecord {
     /** Records that WORD occurred COUNT times in this year. */
     public void put(String word, int count) {//works
         map.put(word,count);
-        //opposite.put(count,word);
+        opposite.put(count,word);
+   //      List mapKeys = new ArrayList(map.keySet());
+   //     List mapValues = new ArrayList(map.values());
+   //     List mapValues2 = new ArrayList(map.values());
+   //     Collections.sort(mapValues);
+       
+   //     int k = 0;
+  
+   //   for (int i = 0; i < mapValues.size(); i++){
+   //      for (int j = 0; j < mapValues.size(); j++){
+
+   //      if (mapValues.get(i).equals(mapValues2.get(j))){
+   //          opposite.put((Integer)mapValues.get(i), (String) mapKeys.get(j)); 
+   //          k += 1;
+   //      }
+   //     }
+   // }
 
     }
 
@@ -55,32 +81,32 @@ public class YearlyRecord {
 
     /** Returns all words in ascending order of count. */
     public Collection<String> words() { //works
-        List mapKeys = new ArrayList(map.keySet());
-       List mapValues = new ArrayList(map.values());
-       List mapValues2 = new ArrayList(map.values());
-       Collections.sort(mapValues);
+   //      List mapKeys = new ArrayList(map.keySet());
+   //     List mapValues = new ArrayList(map.values());
+   //     List mapValues2 = new ArrayList(map.values());
+   //     Collections.sort(mapValues);
        
-       List answer = new ArrayList();
-       int k = 0;
+   //     List answer = new ArrayList();
+   //     int k = 0;
   
-     for (int i = 0; i < mapValues.size(); i++){
-        for (int j = 0; j < mapValues.size(); j++){
+   //   for (int i = 0; i < mapValues.size(); i++){
+   //      for (int j = 0; j < mapValues.size(); j++){
 
-        if (mapValues.get(i).equals(mapValues2.get(j))){
-            answer.add(k,mapKeys.get(j)); 
-            k += 1;
-        }
-       }
-   }
-       return answer;
+   //      if (mapValues.get(i).equals(mapValues2.get(j))){
+   //          answer.add(k,mapKeys.get(j)); 
+   //          k += 1;
+   //      }
+   //     }
+   // }
+       return opposite.values();
 
 
     }
 
     /** Returns all counts in ascending order of count. */
     public Collection<Number> counts() {//works
-        List mapValues = new ArrayList(map.values());
-        Collections.sort(mapValues);
+        List mapValues = new ArrayList(opposite.keySet());
+        
         return mapValues;
     }
 
@@ -92,9 +118,9 @@ public class YearlyRecord {
         List mapKeys = new ArrayList(this.words());
         for (int i = 0; i < mapKeys.size(); i++){
         if (mapKeys.get(i).equals(word)){
-            return mapKeys.size() - i; //always1
+            return mapKeys.size() - i; 
         }
-    }
+      }
         return 0;
 
 

@@ -48,7 +48,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts){ //ts bottom of division must have all years of time
 
       TimeSeries<Double> divMap = new TimeSeries<Double>();
-      if (this.start <= ts.start && this.end >= ts.end){
+      //if (this.start <= ts.start && this.end >= ts.end){
         for (int i : ts.keySet()){
           if (!ts.containsKey(i)){
             throw new IllegalArgumentException();
@@ -62,9 +62,9 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         } 
         }
         return divMap;
-      } else{
-        throw new IllegalArgumentException();
-      }
+      // } else{
+      //   throw new IllegalArgumentException();
+      // }
 
     }
 

@@ -22,6 +22,7 @@ public class WordNetTest {
         System.out.println(wn.isNoun("leap"));
         System.out.println(wn.isNoun("nasal_decongestant"));
 
+
     }
 
     
@@ -34,6 +35,7 @@ public class WordNetTest {
     }
      @Test
     public void testInvert() {
+        System.out.println();
 
         System.out.println("Hypnoyms of increase:"); //worked
         for (String noun : wn.hyponyms("increase")) {
@@ -46,6 +48,7 @@ public class WordNetTest {
             leap
             jump
         */
+            System.out.println();
 
         System.out.println("Hypnoyms of jump:");
         for (String noun : wn.hyponyms("jump")) {
@@ -65,14 +68,15 @@ public class WordNetTest {
             leap
             jump        
         */
-
+        System.out.println();
         /** From: http://goo.gl/EGLoys */
         System.out.println("Hypnoyms of change:");
 
         WordNet wn2 = new WordNet("./wordnet/synsets14.txt", "./wordnet/hyponyms14.txt");
         for (String noun : wn2.hyponyms("change")) {
             System.out.println(noun);
-        } 
+        }
+        System.out.println(); 
     }
 
     
