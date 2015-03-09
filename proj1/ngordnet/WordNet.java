@@ -32,7 +32,7 @@ public class WordNet {
 		hyponym = hyponymFilename;
 		nouns = new HashMap<Integer, String[]>();
 		opposite = new HashMap<String, Integer>();
-		g = new Digraph(10000);
+		g = new Digraph(100000);
 			
 		in1 = new In(synset); 
 		String line;
@@ -117,23 +117,24 @@ public class WordNet {
 
 		 // need to loop through everything then add it to a set
 
-		 // for (Integer i : nouns.keySet()){
-		 // 	Integer key = opposite.get(i);
-		 // 	String[] x = nouns.get(i);
-		 // 	for (int j = 0; j < x.length; j++){
-		 // 	if (x[j].equals(word)){
-		 // 		sHypo.add(key);
-		 // 	}
-		 // }
-		 // }
+		 for (Integer i : nouns.keySet()){
+		 	String[] x = nouns.get(i);
+		 	for (int j = 0; j < x.length; j++){
+		 	if (x[j].equals(word)){
+		 		sHypo.add(i);
+		 	}
+		 }
+		 }
 
-		sHypo.add(opposite.get(word));//should use word as a key and return its value (Integer)
+		//sHypo.add(opposite.get(word));//should use word as a key and return its value (Integer)
 		 /** Returns the set of all vertex numbers reachable from the start vertices. */
 		Set<Integer> h = GraphHelper.descendants(g,sHypo);//takes entire digraph & checks it against result
 
-		
+		// for (Integer j : h){
+		// 	for (String noun : nouns.keySet())
+		// }
 		//returns a set of integers
-		Integer[] h1 = h.toArray(new Integer[0]);
+		Integer[] h1 = h.toArray(new Integer[h.size()]);
 		for (int i = 0; i< h1.length; i++) {
 			hy.add(nouns.get(h1[i]));//converts from int to string then gets the value(noun) associated with that synset
 			//gives me String[] of the synsets

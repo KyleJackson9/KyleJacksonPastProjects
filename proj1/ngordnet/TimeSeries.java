@@ -62,9 +62,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         } 
         }
         return divMap;
-      // } else{
-      //   throw new IllegalArgumentException();
-      // }
+
 
     }
 

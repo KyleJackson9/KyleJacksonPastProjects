@@ -8,25 +8,26 @@ import java.io.*;
 
 public class YearlyRecord {
     /** Creates a new empty YearlyRecord. */
-    public HashMap<String, Integer> map;
+    public TreeMap<String, Integer> map;
     public TreeMap<Integer, String> opposite;
 
     public YearlyRecord(){
-        map = new HashMap<String,Integer>();
+        map = new TreeMap<String,Integer>();
         opposite = new TreeMap<Integer,String>();
     }
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
-        map = otherCountMap;
+        HashMap<String,Integer> map2 = otherCountMap;
         opposite = new TreeMap<Integer,String>();
 
-        List mapKeys = new ArrayList(map.keySet());
-       List mapValues = new ArrayList(map.values());
+        List mapKeys = new ArrayList(map2.keySet());
+       List mapValues = new ArrayList(map2.values());
       
 
        for (int i = 0; i < mapValues.size(); i++){
         opposite.put((int)mapValues.get(i), (String) mapKeys.get(i));
+        map.put((String)mapKeys.get(i), (int) mapValues.get(i));
        }
         
     }
