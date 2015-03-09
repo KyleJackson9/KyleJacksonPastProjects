@@ -98,7 +98,7 @@ public class YearlyRecord {
         return 0;
     }
     public int rank(String word) {
-      return ranker(String word);
+      return ranker(word);
 
 
 
