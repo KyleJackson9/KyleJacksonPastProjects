@@ -20,24 +20,16 @@ public class YearlyRecord {
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
         map = otherCountMap;
         opposite = new TreeMap<Integer,String>();
-       //  List mapKeys = new ArrayList(map.keySet());
-       // List mapValues = new ArrayList(map.values());
-       //  for (int i =0; i <= map.size(); i++){
-       //    opposite.put((Integer)mapValues.get(i),(String)mapKeys.get(i));
-       //  }
+
         List mapKeys = new ArrayList(map.keySet());
        List mapValues = new ArrayList(map.values());
-       List mapValues2 = new ArrayList(map.values());
-       Collections.sort(mapValues);
-       
-       int k = 0;
-  
+       List mapValues2 = new ArrayList(map.values()); 
      for (int i = 0; i < mapValues.size(); i++){
         for (int j = 0; j < mapValues.size(); j++){
 
         if (mapValues.get(i).equals(mapValues2.get(j))){
-            opposite.put(k, (String) mapKeys.get(j)); 
-            k += 1;
+            opposite.put((Integer) mapValues.get(i), (String) mapKeys.get(j)); 
+            
         }
        }
    }
@@ -54,22 +46,6 @@ public class YearlyRecord {
     public void put(String word, int count) {//works
         map.put(word,count);
         opposite.put(count,word);
-   //      List mapKeys = new ArrayList(map.keySet());
-   //     List mapValues = new ArrayList(map.values());
-   //     List mapValues2 = new ArrayList(map.values());
-   //     Collections.sort(mapValues);
-       
-   //     int k = 0;
-  
-   //   for (int i = 0; i < mapValues.size(); i++){
-   //      for (int j = 0; j < mapValues.size(); j++){
-
-   //      if (mapValues.get(i).equals(mapValues2.get(j))){
-   //          opposite.put((Integer)mapValues.get(i), (String) mapKeys.get(j)); 
-   //          k += 1;
-   //      }
-   //     }
-   // }
 
     }
 
@@ -81,23 +57,7 @@ public class YearlyRecord {
 
     /** Returns all words in ascending order of count. */
     public Collection<String> words() { //works
-   //      List mapKeys = new ArrayList(map.keySet());
-   //     List mapValues = new ArrayList(map.values());
-   //     List mapValues2 = new ArrayList(map.values());
-   //     Collections.sort(mapValues);
-       
-   //     List answer = new ArrayList();
-   //     int k = 0;
-  
-   //   for (int i = 0; i < mapValues.size(); i++){
-   //      for (int j = 0; j < mapValues.size(); j++){
 
-   //      if (mapValues.get(i).equals(mapValues2.get(j))){
-   //          answer.add(k,mapKeys.get(j)); 
-   //          k += 1;
-   //      }
-   //     }
-   // }
        return opposite.values();
 
 

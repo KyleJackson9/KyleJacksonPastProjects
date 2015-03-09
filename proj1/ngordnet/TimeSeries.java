@@ -49,7 +49,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
 
       TimeSeries<Double> divMap = new TimeSeries<Double>();
       //if (this.start <= ts.start && this.end >= ts.end){
-        for (int i : ts.keySet()){
+        for (int i : this.keySet()){
           if (!ts.containsKey(i)){
             throw new IllegalArgumentException();
           }
