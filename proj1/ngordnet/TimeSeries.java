@@ -50,15 +50,16 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
       TimeSeries<Double> divMap = new TimeSeries<Double>();
       if (this.start <= ts.start && this.end >= ts.end){
         for (int i : ts.keySet()){
+          if (!ts.containsKey(i)){
+            throw new IllegalArgumentException();
+          }
         if (this.containsKey(i) && ts.containsKey(i)){
           divMap.put(i, (this.get(i).doubleValue()/(ts.get(i).doubleValue())));
         } else if (this.containsKey(i)){
           divMap.put(i,this.get(i).doubleValue());
         } else if (ts.containsKey(i)){
           divMap.put(i,ts.get(i).doubleValue());
-        } else {
-          throw new IllegalArgumentException();
-        }
+        } 
         }
         return divMap;
       } else{
