@@ -88,14 +88,18 @@ public class YearlyRecord {
       * If two words have the same rank, break ties arbitrarily. 
       * No two words should have the same rank.
       */
-    public int rank(String word) {
-        List mapKeys = new ArrayList(this.words());
+    private int ranker(String word){
+     List mapKeys = new ArrayList(this.words());
         for (int i = 0; i < mapKeys.size(); i++){
         if (mapKeys.get(i).equals(word)){
             return mapKeys.size() - i; //always1
         }
     }
         return 0;
+    }
+    public int rank(String word) {
+      return ranker(String word);
+
 
 
 
