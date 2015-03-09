@@ -74,9 +74,10 @@ public class YearlyRecordTest {
         rawData.put("puppetry", 191);
         YearlyRecord yr2 = new YearlyRecord(rawData);
         System.out.println(yr2.rank("auscultating")); // should print 4
-        yr2.put("hello",1);
+        yr2.put("hello",100000);
 
         System.out.println(yr2.rank("hello")); // should print 1
+        System.out.println(yr2.rank("puppetry")); // should print 3
     }
 
     

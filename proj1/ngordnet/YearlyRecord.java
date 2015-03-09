@@ -23,16 +23,11 @@ public class YearlyRecord {
 
         List mapKeys = new ArrayList(map.keySet());
        List mapValues = new ArrayList(map.values());
-       List mapValues2 = new ArrayList(map.values()); 
-     for (int i = 0; i < mapValues.size(); i++){
-        for (int j = 0; j < mapValues.size(); j++){
+      
 
-        if (mapValues.get(i).equals(mapValues2.get(j))){
-            opposite.put((Integer) mapValues.get(i), (String) mapKeys.get(j)); 
-            
-        }
+       for (int i = 0; i < mapValues.size(); i++){
+        opposite.put((int)mapValues.get(i), (String) mapKeys.get(i));
        }
-   }
         
     }
 
@@ -45,7 +40,8 @@ public class YearlyRecord {
     /** Records that WORD occurred COUNT times in this year. */
     public void put(String word, int count) {//works
         map.put(word,count);
-        opposite.put(count,word);
+        opposite.put(count,word);//need to re-sort but it should on its own
+
 
     }
 
@@ -75,8 +71,8 @@ public class YearlyRecord {
       * No two words should have the same rank.
       */
     public int rank(String word) {
-        List mapKeys = new ArrayList(this.words());
-        for (int i = 0; i < mapKeys.size(); i++){
+      List mapKeys = new ArrayList(opposite.values());
+      for (int i = 0; i < mapKeys.size(); i++){
         if (mapKeys.get(i).equals(word)){
             return mapKeys.size() - i; 
         }
