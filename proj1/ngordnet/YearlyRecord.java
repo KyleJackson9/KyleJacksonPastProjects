@@ -8,8 +8,8 @@ import java.io.*;
 
 public class YearlyRecord {
     /** Creates a new empty YearlyRecord. */
-    public HashMap<String, Integer> map;
-    public TreeMap<Integer, ArrayList<String>> opposite;
+    private HashMap<String, Integer> map;
+    private TreeMap<Integer, ArrayList<String>> opposite;
 
     public YearlyRecord(){
         map = new HashMap<String,Integer>();
@@ -18,7 +18,6 @@ public class YearlyRecord {
 
     /** Creates a YearlyRecord using the given data. */
     public YearlyRecord(HashMap<String, Integer> otherCountMap){
-        //HashMap<String,Integer> map2 = otherCountMap;
         opposite = new TreeMap<Integer,ArrayList<String>>();
         map = otherCountMap;
 
@@ -34,7 +33,10 @@ public class YearlyRecord {
 
     /** Returns the number of times WORD appeared in this year. */
     public int count(String word) {//works
-        return map.get(word);
+      if (map.containsKey(word)){
+          return map.get(word);
+      }
+        return 0;
 
     }
 
@@ -42,9 +44,8 @@ public class YearlyRecord {
     public void put(String word, int count) {//remove when add a word thats already in there
       if (map.containsKey(word)){
         for (int i : opposite.keySet()){
-          if (opposite.get(i).indexOf(word) != -1){
+          if (opposite.get(i).indexOf(word) != -1){//got help & ideas from Jake Moskowitz
             opposite.get(i).remove(word);
-
           }
         }
       }
@@ -55,7 +56,6 @@ public class YearlyRecord {
         } else{
          ArrayList<String> copy = new ArrayList<String>();
         copy.add(word);
-
         opposite.put(count,copy);//need to re-sort but it should on its own
       }
 
@@ -65,7 +65,6 @@ public class YearlyRecord {
     /** Returns the number of words recorded this year. */
     public int size(){ //works
         return map.size();
-
     }
 
     /** Returns all words in ascending order of count. */
@@ -76,12 +75,8 @@ public class YearlyRecord {
         for (int j = 0; j<copy.size(); j++){
           mapster.add(copy.get(j));
         }
-
       }
-
        return mapster;
-
-
     }
 
     /** Returns all counts in ascending order of count. */

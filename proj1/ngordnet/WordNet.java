@@ -155,7 +155,5 @@ public class WordNet {
 		return syResult;
 
 	}
-	public static void main(String[] args){	
-	}
 
 }

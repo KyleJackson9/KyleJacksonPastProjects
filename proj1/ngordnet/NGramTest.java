@@ -3,7 +3,6 @@ package ngordnet;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Iterator;
-import ngordnet.WordNet;
 import java.util.*;
 
 
@@ -19,9 +18,7 @@ public class NGramTest {
     public void testBasic() {
 
 
-            NGramMap ngm = new NGramMap("./ngrams/words_that_start_with_q.csv", 
-                                    "./ngrams/total_counts.csv");
-
+        NGramMap ngm = new NGramMap("./ngrams/words_that_start_with_q.csv", "./ngrams/total_counts.csv");
 
         System.out.println(ngm.countInYear("quantity", 1736)); // should print 139
         YearlyRecord yr = ngm.getRecord(1736);
@@ -38,8 +35,7 @@ public class NGramTest {
         TimeSeries<Double> weightHistory = ngm.weightHistory("quantity");
         System.out.println(weightHistory.get(1736));  // should print roughly 1.7267E-5
     
-        System.out.println((double) countHistory.get(1736) 
-                           / (double) totalCountHistory.get(1736)); 
+        System.out.println((double) countHistory.get(1736) / (double) totalCountHistory.get(1736));  // should print roughly 1.7267E-5 
 
         ArrayList<String> words = new ArrayList<String>();
         words.add("quantity");

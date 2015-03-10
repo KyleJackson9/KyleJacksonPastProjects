@@ -46,9 +46,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     /** Returns the quotient of this time series divided by the relevant value in ts.
       * If ts is missing a key in this time series, return an IllegalArgumentException. */
     public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts){ //ts bottom of division must have all years of time
-
       TimeSeries<Double> divMap = new TimeSeries<Double>();
-      //if (this.start <= ts.start && this.end >= ts.end){
         for (int i : this.keySet()){
           if (!ts.containsKey(i)){
             throw new IllegalArgumentException();
@@ -62,8 +60,6 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         } 
         }
         return divMap;
-
-
     }
 
     /** Returns the sum of this time series with the given ts. The result is a 
@@ -80,7 +76,6 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
           pMap.put(i,ts.get(i).doubleValue());
         }
       }
-
         return pMap;
       } 
      
@@ -91,7 +86,6 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
       ArrayList<Number> x = new ArrayList<Number>();
       x.addAll(year);
       return x;
-
     }
 
     // /** Returns all data for this time series. 
