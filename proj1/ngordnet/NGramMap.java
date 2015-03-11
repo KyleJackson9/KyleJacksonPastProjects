@@ -110,7 +110,7 @@ public class NGramMap {
                 time.put((int) year, (double) (long) timeMap.get(year));
             }
         }
-        return count.dividedBy(time);
+        return time.dividedBy(count);
 
     }
 
@@ -123,7 +123,7 @@ public class NGramMap {
                 time.put((int) year, (double) (long) timeMap.get(year));
             }
         }
-        return count.dividedBy(time);
+        return time.dividedBy(count);
 
     }
 
