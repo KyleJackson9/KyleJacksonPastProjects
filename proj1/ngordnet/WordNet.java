@@ -1,9 +1,7 @@
 package ngordnet;
 
-import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.DirectedDFS;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,8 +29,8 @@ public class WordNet {
 		hyponym = hyponymFilename;
 		nouns = new HashMap<Integer, String[]>();
 		opposite = new HashMap<String, Integer>();
-		g = new Digraph(100000);
-
+		int num = 100000;
+		g = new Digraph(num);
 		in1 = new In(synset);
 		String line;
 		while (in1.hasNextLine()) {
@@ -42,6 +40,7 @@ public class WordNet {
 			String[] words = number[1].split(" ");
 
 			nouns.put(Integer.parseInt(number[0]), words);
+
 			for (int i = 0; i < words.length; i++) {
 
 				opposite.put(words[i], Integer.parseInt(number[0]));
