@@ -20,8 +20,6 @@ public class WordNet {
     private In in2;
     private Set<String> nounResult;
     private Set<String[]> hy;
-    private Set<Integer> syResult;
-
     private Set<Integer> sHypo;
 
     public WordNet(String synsetFilename, String hyponymFilename) {
@@ -62,12 +60,12 @@ public class WordNet {
 
         }
 
-        Set<Integer> syOut = nouns.keySet();
-        n1 = syOut.iterator();
-        Set<Integer> syResult = new HashSet<Integer>();
-        while (n1.hasNext()) {
-            syResult.add((n1.next()));
-        }
+        // Set<Integer> syOut = nouns.keySet();
+        // n1 = syOut.iterator();
+        // Set<Integer> syResult = new HashSet<Integer>();
+        // while (n1.hasNext()) {
+        //     syResult.add((n1.next()));
+        // }
 
     }
 

@@ -53,7 +53,7 @@ public class NGramMap {
     }
 
     /** Returns a defensive copy of the YearlyRecord of WORD. */
-    public YearlyRecord getRecord(int year) {// needs to be defensive
+    public YearlyRecord getRecord(int year) {
         if (map.containsKey(year)) {
             YearlyRecord ans = map.get(year);
             return ans;
