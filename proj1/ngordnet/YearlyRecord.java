@@ -68,22 +68,8 @@ public class YearlyRecord {
         // Sort words by order of number of s
         Arrays.sort(words, new ZComparator());
         int last = map.get(words[0]);
-        rank.put(words[0], 0);
-        for (int i = 1; i < words.length; i += 1) {
-            int currentZCount = map.get(words[i]);
-            int numWordsLessZs;
-
-            if (currentZCount > last) {
-                numWordsLessZs = i;
-            } else {
-                numWordsLessZs = rank.get(words[i - 1]);
-            }
-
-            rank.put(words[i], numWordsLessZs);
-            last = currentZCount;
-        }
         for (int i = 0; i < words.length; i += 1) {
-            rank.put(words[i], map.size() - rank.get(words[i]));
+            rank.put(words[i], map.size() - i);
         }
         ranker = false;
     }

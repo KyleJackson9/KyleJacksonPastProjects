@@ -1,6 +1,5 @@
 package ngordnet;
 
-import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 import java.util.HashMap;
 import java.util.Collection;
@@ -46,7 +45,7 @@ public class NGramMap {
      * Returns the absolute count of WORD in the given YEAR. If the word did not
      * appear in the given year, return 0.
      */
-    public int countInYear(String word, int year) {// needs to be immutable for
+    public int countInYear(String word, int year) {
         // all
         YearlyRecord ans = getRecord(year);
         return ans.count(word);
@@ -62,7 +61,7 @@ public class NGramMap {
     }
 
     /** Returns the total number of words recorded in all volumes. */
-    public TimeSeries<Long> totalCountHistory() {// works on ag
+    public TimeSeries<Long> totalCountHistory() {
         TimeSeries<Long> time = new TimeSeries<Long>();
         for (long year : timeMap.keySet()) {
             time.put((int) year, timeMap.get(year));
@@ -72,7 +71,7 @@ public class NGramMap {
 
     /** Provides the history of WORD between STARTYEAR and ENDYEAR. */
     public TimeSeries<Integer> countHistory(String word, int startYear,
-            int endYear) {// works on ag
+            int endYear) {
         TimeSeries<Integer> time = new TimeSeries<Integer>();
         for (int year = startYear; year <= endYear; year++) {
             time.put(year, map.get(year).count(word));
@@ -82,7 +81,7 @@ public class NGramMap {
     }
 
     /** Provides a defensive copy of the history of WORD. */
-    public TimeSeries<Integer> countHistory(String word) { // works
+    public TimeSeries<Integer> countHistory(String word) {
         TimeSeries<Integer> time = new TimeSeries<Integer>();
         for (int year : map.keySet()) {
             time.put(year, map.get(year).count(word));
@@ -92,18 +91,18 @@ public class NGramMap {
 
     /** Provides the relative frequency of WORD between STARTYEAR and ENDYEAR. */
     public TimeSeries<Double> weightHistory(String word, int startYear,
-            int endYear) {// works
+            int endYear) {
         TimeSeries<Integer> count = this.countHistory(word, startYear, endYear);
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (int year = startYear; year <= endYear; year++) {
             time.put((int) year, (double) (long) timeMap.get(year));
         }
-        return count.dividedBy(time);// throws null
+        return count.dividedBy(time);
 
     }
 
     /** Provides the relative frequency of WORD. */
-    public TimeSeries<Double> weightHistory(String word) {// works
+    public TimeSeries<Double> weightHistory(String word) {
         TimeSeries<Integer> count = this.countHistory(word);
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (long year : timeMap.keySet()) {
