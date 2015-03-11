@@ -119,7 +119,9 @@ public class NGramMap {
         TimeSeries<Integer> count = countHistory(word);
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (long year : timeMap.keySet()) {
-            time.put((int) year, (double) (long) timeMap.get(year));
+            if (timeMap.containsKey(year)){
+                time.put((int) year, (double) (long) timeMap.get(year));
+            }
         }
         return count.dividedBy(time);
 
