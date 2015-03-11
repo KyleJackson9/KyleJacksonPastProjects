@@ -81,7 +81,9 @@ public class NGramMap {
             int endYear) {
         TimeSeries<Integer> countH = new TimeSeries<Integer>();
         for (int year = startYear; year <= endYear; year++) {
-            countH.put(year, map.get(year).count(word));
+            if (map.containsKey(year)){
+                countH.put(year, map.get(year).count(word));
+            }
         }
         return countH;
 
@@ -90,7 +92,6 @@ public class NGramMap {
     /** Provides a defensive copy of the history of WORD. */
     public TimeSeries<Integer> countHistory(String word) {
         TimeSeries<Integer> time = new TimeSeries<Integer>();
-        TimeSeries<Integer> time2 = new TimeSeries<Integer>();
         for (int year : map.keySet()) {
             time.put(year, map.get(year).count(word));
         }
@@ -130,8 +131,6 @@ public class NGramMap {
         HashMap<String, TimeSeries<Double>> hold = new HashMap<String, TimeSeries<Double>>();
         for (String word : words) {
             hold.put(word, weightHistory(word, startYear, endYear));
-        }
-        for (String word : words) {
             time = time.plus(hold.get(word));
         }
         return time;
@@ -144,8 +143,6 @@ public class NGramMap {
         HashMap<String, TimeSeries<Double>> hold = new HashMap<String, TimeSeries<Double>>();
         for (String word : words) {
             hold.put(word, weightHistory(word));
-        }
-        for (String word : words) {
             time = time.plus(hold.get(word));
         }
         return time;

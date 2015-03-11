@@ -89,7 +89,7 @@ public class NgordnetUI {
                     System.out.println("Sorry try that again!");
                     break;
                 }
-            case "history":// throws null
+            case "history":
                 try {
                     String[] wordy3 = tokens;
                     if (wordy3.length > 1) {
