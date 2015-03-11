@@ -20,13 +20,14 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     }
 
     public TimeSeries(TimeSeries<T> ts, int startYear, int endYear) {
-        super(ts);
         copy = new TimeSeries<T>();
         start = startYear;
         end = endYear;
         for (int i = start; i <= end; i++) {
+            this.put(i, ts.get(i));
             copy.put(i, ts.get(i));
         }
+
     }
 
     public TimeSeries(TimeSeries<T> ts) {

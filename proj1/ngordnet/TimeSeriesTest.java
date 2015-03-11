@@ -71,6 +71,8 @@ public class TimeSeriesTest {
         System.out.println(tQuotient.get(1991)); // should print 2.0
         TimeSeries<Double> ts30 = new TimeSeries<Double>();
         TimeSeries<Double> tpl = ts2.plus(ts30);
+        TimeSeries<Double> tt = new TimeSeries<Double>(ts3,1992,1993);
+        System.out.println(tt.data());
 
         /* The following would cause an IllegalArgumentException since ts2
          * does not include all years from ts, which is tantamount to a
