@@ -93,7 +93,9 @@ public class NGramMap {
     public TimeSeries<Integer> countHistory(String word) {
         TimeSeries<Integer> time = new TimeSeries<Integer>();
         for (int year : map.keySet()) {
-            time.put(year, map.get(year).count(word));
+            if (map.containsKey(year)){
+                time.put(year, map.get(year).count(word));
+            }
         }
         return time;
     }

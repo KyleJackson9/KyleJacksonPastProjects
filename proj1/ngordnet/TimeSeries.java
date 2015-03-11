@@ -7,24 +7,16 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
-    private int start;
-    private int end;
     private TimeSeries<T> copy;
-    private int go;
-    private int no;
 
     public TimeSeries() {
         super();
-        start = 0;
-        end = 0;
         copy = this;
     }
 
     public TimeSeries(TimeSeries<T> ts, int startYear, int endYear) {
         copy = new TimeSeries<T>();
-        start = startYear;
-        end = endYear;
-        for (int i = start; i <= end; i++) {
+        for (int i = startYear; i <= endYear; i++) {
             this.put(i, ts.get(i));
             copy.put(i, ts.get(i));
         }
@@ -40,11 +32,11 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         //got help from Jake Moskowitz for avoiding error throws
         TimeSeries<Double> divMap = new TimeSeries<Double>();
         HashSet<Integer> allYears = new HashSet<Integer>();
-        for (int i : this.keySet()){
+        for (int i : this.keySet()) {
             allYears.add(i);
         }
 
-        for (int i : ts.keySet()){
+        for (int i : ts.keySet()) {
             allYears.add(i);
         }
 
@@ -63,23 +55,12 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
 
     public TimeSeries<Double> plus(TimeSeries<? extends Number> ts) {
         TimeSeries<Double> pMap = new TimeSeries<Double>();
-        // if (this.isEmpty() && !ts.isEmpty()) {
-        //     for (int i : ts.keySet()) {
-        //         pMap.put(i, ts.get(i).doubleValue());
-        //     }
-        //     return pMap;
-        // } else if (!this.isEmpty() && ts.isEmpty()) {
-        //     for (int i : this.keySet()) {
-        //         pMap.put(i, this.get(i).doubleValue());
-        //     }
-        //     return pMap;
-        // }
         HashSet<Integer> allYears = new HashSet<Integer>();
-        for (int i : this.keySet()){
+        for (int i : this.keySet()) {
             allYears.add(i);
         }
 
-        for (int i : ts.keySet()){
+        for (int i : ts.keySet()) {
             allYears.add(i);
         }
         
