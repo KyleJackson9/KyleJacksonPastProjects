@@ -60,13 +60,6 @@ public class WordNet {
 
         }
 
-        // Set<Integer> syOut = nouns.keySet();
-        // n1 = syOut.iterator();
-        // Set<Integer> syResult = new HashSet<Integer>();
-        // while (n1.hasNext()) {
-        //     syResult.add((n1.next()));
-        // }
-
     }
 
     public Set<String> nouns() {
