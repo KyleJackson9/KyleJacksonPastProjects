@@ -3,7 +3,12 @@
 package ngordnet;
 import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
-import java.util.*;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 /** Provides a simple user interface for exploring WordNet and NGram data.
  *  @author Kyle Jackson
@@ -19,6 +24,7 @@ public class NgordnetUI {
         String hyponymFile = in.readString();
         NGramMap ng = new NGramMap(wordFile,countFile);
         WordNet wn = new WordNet(synsetFile,hyponymFile);
+        WordLengthProcessor yrp = new WordLengthProcessor();
         Plotter plot = new Plotter();
         int startDate = 0;
         int endDate = 0;
@@ -74,6 +80,10 @@ public class NgordnetUI {
                         plot.plotCategoryWeights(ng, wn, j, startDate, endDate);
                       }
                     }
+                    break;
+                case "wordlength":
+                    TimeSeries<Double> wod = ng.processedHistory(startDate,endDate,yrp);
+                    plot.plotTS(wod,"WordLengths","average letters per word", "years","Average");
                     break;
 
                 default:

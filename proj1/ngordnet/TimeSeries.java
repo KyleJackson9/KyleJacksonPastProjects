@@ -4,8 +4,12 @@ import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedDFS;
-import java.util.*;
-import java.io.*;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {    
     /** Constructs a new empty TimeSeries. */
@@ -29,7 +33,8 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     /** Creates a copy of TS, but only between STARTYEAR and ENDYEAR. 
      * inclusive of both end points. */
     public TimeSeries(TimeSeries<T> ts, int startYear, int endYear){
-      // copy = new TimeSeries<? extends Number>();
+      super(ts);
+      copy = new TimeSeries<T>();
       start = startYear;
       end = endYear;
       for (int i = start; i <= end; i++){
@@ -47,6 +52,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
       * If ts is missing a key in this time series, return an IllegalArgumentException. */
     public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts){ //ts bottom of division must have all years of time
       TimeSeries<Double> divMap = new TimeSeries<Double>();
+
         for (int i : this.keySet()){
           if (!ts.containsKey(i)){
             throw new IllegalArgumentException();
@@ -67,6 +73,17 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     }*/
     public TimeSeries<Double> plus(TimeSeries<? extends Number> ts){
       TimeSeries<Double> pMap = new TimeSeries<Double>();
+      if (this.keySet() == null && ts.years() != null){
+        for (int i : ts.keySet()){
+          pMap.put(i,ts.get(i).doubleValue());
+        }
+        return pMap;
+      } else if (this.keySet() != null && ts.years() == null){
+        for (int i: this.keySet()){
+          pMap.put(i,this.get(i).doubleValue());
+        }
+        return pMap;
+      }
       for (int i : ts.keySet()){
         if (this.containsKey(i) && ts.containsKey(i)){
           pMap.put(i, (this.get(i).doubleValue()+(ts.get(i).doubleValue())));

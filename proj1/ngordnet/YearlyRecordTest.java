@@ -23,10 +23,12 @@ public class YearlyRecordTest {
      
         yr.put("quayside", 95);        
         yr.put("surrogate", 340);
-        yr.put("merchantman", 181); 
+        yr.put("merchantman", 181);
+        
         System.out.println(yr.rank("surrogate")); // should print 1
         System.out.println(yr.rank("quayside")); // should print 3
-        System.out.println(yr.size()); // should print 3
+        System.out.println(yr.rank("merchantman")); // should print 2
+        System.out.println("This is size " + yr.size()); // should print 3 
         Collection<String> words = yr.words(); 
 
     }
@@ -76,7 +78,7 @@ public class YearlyRecordTest {
         System.out.println(yr2.rank("auscultating")); // should print 4
         yr2.put("hello",100000);
 
-        System.out.println(yr2.rank("hello")); // should print 1
+        System.out.println("wat" + yr2.rank("hello")); // should print 1
         System.out.println(yr2.rank("puppetry")); // should print 3
     }
 
