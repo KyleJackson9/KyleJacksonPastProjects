@@ -45,8 +45,6 @@ public class NgordnetUI {
             case "quit":
                 return;
             case "help":
-                // In in = new In("help.txt");
-                // String helpStr = in.readAll();
                 System.out
                 .println("choose either range, count, hyponyms, history, or hypohist");
                 System.out
@@ -123,10 +121,16 @@ public class NgordnetUI {
                 }
             case "wordlength":
                 try {
-                    TimeSeries<Double> wod = ng.processedHistory(startDate,
-                            endDate, yrp);
-                    plot.plotTS(wod, "WordLengths", "average letters per word",
-                            "years", "Average");
+                    if (startDate > 0 && endDate > 0){
+                        TimeSeries<Double> wod = ng.processedHistory(startDate,
+                                endDate, yrp);
+                        plot.plotTS(wod, "WordLengths", "average letters per word",
+                                "years", "Average");
+                    } else{
+                        TimeSeries<Double> wod = ng.processedHistory(yrp);
+                        plot.plotTS(wod, "WordLengths", "average letters per word",
+                                "years", "Average");
+                    }
                     break;
                 } catch (Throwable t) {
                     System.out

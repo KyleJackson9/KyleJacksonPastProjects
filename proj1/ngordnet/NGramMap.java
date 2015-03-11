@@ -157,7 +157,9 @@ public class NGramMap {
             YearlyRecordProcessor yrp) {
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (int year = startYear; year <= endYear; year++) {
-            time.put(year, yrp.process(map.get(year)));
+            if (map.containsKey(year)){
+                time.put(year, yrp.process(map.get(year)));
+            }
         }
         return time;
 
