@@ -39,16 +39,13 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         TimeSeries<Double> divMap = new TimeSeries<Double>();
 
         for (int i : this.keySet()) {
-            if (!ts.containsKey(i)) {
-                throw new IllegalArgumentException();
-            }
             if (this.containsKey(i) && ts.containsKey(i)) {
                 divMap.put(i,
                         (this.get(i).doubleValue() / (ts.get(i).doubleValue())));
-            } else if (this.containsKey(i)) {
-                divMap.put(i, this.get(i).doubleValue());
             } else if (ts.containsKey(i)) {
-                divMap.put(i, ts.get(i).doubleValue());
+                divMap.put(i, 0.0);
+            } else {
+                throw new IllegalArgumentException();
             }
         }
         return divMap;
