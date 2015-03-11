@@ -81,7 +81,7 @@ public class NGramMap {
             int endYear) {
         TimeSeries<Integer> countH = new TimeSeries<Integer>();
         for (int year = startYear; year <= endYear; year++) {
-            if (map.containsKey(year)){
+            if (map.containsKey(year)) {
                 countH.put(year, map.get(year).count(word));
             }
         }
@@ -101,7 +101,7 @@ public class NGramMap {
     /** Provides the relative frequency of WORD between STARTYEAR and ENDYEAR. */
     public TimeSeries<Double> weightHistory(String word, int startYear,
             int endYear) {
-        TimeSeries<Integer> count = this.countHistory(word, startYear, endYear);
+        TimeSeries<Integer> count = countHistory(word, startYear, endYear);
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (int year = startYear; year <= endYear; year++) {
             time.put((int) year, (double) (long) timeMap.get(year));
@@ -112,7 +112,7 @@ public class NGramMap {
 
     /** Provides the relative frequency of WORD. */
     public TimeSeries<Double> weightHistory(String word) {
-        TimeSeries<Integer> count = this.countHistory(word);
+        TimeSeries<Integer> count = countHistory(word);
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (long year : timeMap.keySet()) {
             time.put((int) year, (double) (long) timeMap.get(year));
@@ -157,7 +157,7 @@ public class NGramMap {
             YearlyRecordProcessor yrp) {
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (int year = startYear; year <= endYear; year++) {
-            if (map.containsKey(year)){
+            if (map.containsKey(year)) {
                 time.put(year, yrp.process(map.get(year)));
             }
         }
