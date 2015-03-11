@@ -34,7 +34,7 @@ public class NGramMap {
 
         In in2 = new In(countsFilename);
         String line1;
-        while (in2.hasNextLine()) { // read each line by enters
+        while (in2.hasNextLine()) { 
             line1 = in2.readLine();
             String[] number = line1.split(",");
             timeMap.put(Long.parseLong(number[0]), Long.parseLong(number[1]));
@@ -47,7 +47,7 @@ public class NGramMap {
      * appear in the given year, return 0.
      */
     public int countInYear(String word, int year) {// needs to be immutable for
-                                                    // all
+        // all
         YearlyRecord ans = getRecord(year);
         return ans.count(word);
     }
