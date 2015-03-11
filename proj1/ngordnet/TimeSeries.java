@@ -4,6 +4,7 @@ import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
+import java.util.HashSet;
 
 public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     private int start;
@@ -36,15 +37,24 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     }
 
     public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts) {
+        //got help from Jake Moskowitz for avoiding error throws
         TimeSeries<Double> divMap = new TimeSeries<Double>();
+        HashSet<Integer> allYears = new HashSet<Integer>();
+        for (int i : this.keySet()){
+            allYears.add(i);
+        }
 
-        for (int i : this.keySet()) {
-            if (this.containsKey(i) && ts.containsKey(i)) {
-                divMap.put(i,
-                        (this.get(i).doubleValue() / (ts.get(i).doubleValue())));
-            } else if (ts.containsKey(i)) {
-                divMap.put(i, 0.0);
-            } else {
+        for (int i : ts.keySet()){
+            allYears.add(i);
+        }
+
+        for (int year : allYears) {
+            if (this.containsKey(year) && ts.containsKey(year)) {
+                divMap.put(year,
+                        (this.get(year).doubleValue() / (ts.get(year).doubleValue())));
+            } else if (ts.containsKey(year)) {
+                divMap.put(year, 0.0);
+            } else if (!ts.containsKey(year)) {
                 throw new IllegalArgumentException();
             }
         }
