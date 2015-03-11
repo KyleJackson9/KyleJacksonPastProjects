@@ -1,10 +1,5 @@
 
 package ngordnet;
-import edu.princeton.cs.introcs.StdIn;
-import edu.princeton.cs.introcs.In;
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.DirectedDFS;
-import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +7,6 @@ import java.util.Collection;
 import java.util.Set;
 
 public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {    
-    /** Constructs a new empty TimeSeries. */
     private int start;
     private int end;
     private TimeSeries<T> copy;
@@ -26,13 +20,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
       copy = this;
     }
 
-    /** Returns the years in which this time series is valid. Doesn't really
-      * need to be a NavigableSet. This is a private method and you don't have 
-      * to implement it if you don't want to. */
-
-    /** Creates a copy of TS, but only between STARTYEAR and ENDYEAR. 
-     * inclusive of both end points. */
-    public TimeSeries(TimeSeries<T> ts, int startYear, int endYear){
+    public TimeSeries(TimeSeries<T> ts, int startYear, int endYear) {
       super(ts);
       copy = new TimeSeries<T>();
       start = startYear;
@@ -42,15 +30,12 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
       }
     }
 
-    /** Creates a copy of TS. */
-    public TimeSeries(TimeSeries<T> ts){
+    public TimeSeries(TimeSeries<T> ts) {
       super(ts);
        copy = ts;
     }
 
-    /** Returns the quotient of this time series divided by the relevant value in ts.
-      * If ts is missing a key in this time series, return an IllegalArgumentException. */
-    public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts){ //ts bottom of division must have all years of time
+    public TimeSeries<Double> dividedBy(TimeSeries<? extends Number> ts) {
       TimeSeries<Double> divMap = new TimeSeries<Double>();
 
         for (int i : this.keySet()){
@@ -71,14 +56,14 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     /** Returns the sum of this time series with the given ts. The result is a 
       * a Double time series (for simplicity). 
     }*/
-    public TimeSeries<Double> plus(TimeSeries<? extends Number> ts){
+    public TimeSeries<Double> plus(TimeSeries<? extends Number> ts) {
       TimeSeries<Double> pMap = new TimeSeries<Double>();
-      if (this.keySet() == null && ts.years() != null){
+      if (this.isEmpty() && !ts.isEmpty()){
         for (int i : ts.keySet()){
           pMap.put(i,ts.get(i).doubleValue());
         }
         return pMap;
-      } else if (this.keySet() != null && ts.years() == null){
+      } else if (!this.isEmpty() && ts.isEmpty()){
         for (int i: this.keySet()){
           pMap.put(i,this.get(i).doubleValue());
         }
@@ -96,18 +81,14 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
         return pMap;
       } 
      
-
-    /* Returns all years for this time series (in any order). */
-    public Collection<Number> years() {//works
+    public Collection<Number> years() {
       Set<Integer> year = this.keySet();
       ArrayList<Number> x = new ArrayList<Number>();
       x.addAll(year);
       return x;
     }
 
-    // /** Returns all data for this time series. 
-    //   * Must be in the same order as years(). */
-    public Collection<Number> data() {//works
+    public Collection<Number> data() {
       return (Collection<Number>) this.values();
     }
 }

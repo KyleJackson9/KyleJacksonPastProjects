@@ -86,53 +86,12 @@ public class YearlyRecord {
             
             rank.put(words[i], numWordsLessZs);
             last = currentZCount;
-          // rank.put(words[last],i);
-          // last += 1;
         }
         for (int i = 0; i < words.length; i += 1) {
           rank.put(words[i], map.size() - rank.get(words[i]));
         }
         ranker = false;
       }
-
-
-        //     int currentZCount = map.get(words[i]);
-        //     int numWordsLessZs;
-
-        //     if (currentZCount > lastZCount) {
-        //         numWordsLessZs = i;
-        //     } else {
-        //         numWordsLessZs = map.get(words[i-1]);
-        //     }
-            
-        //     rank.put(words[i], numWordsLessZs);
-        //     lastZCount = currentZCount;
-        // }
-        
-      // int size = 1;
-      // for (String word : map.keySet()){
-      //   rank.put(word, size);
-      //   size += 1;
-      //  }
-      //  ranker = true;
-    //   rank = new TreeMap<String,Integer>();
-    //   int size = 1;
-    //   int j =0;
-    //   String[] words = new String[map.size()];
-    //   for (int i : opposite.keySet()){
-    //     ArrayList<String> copy = opposite.get(i);
-    //     int s = copy.size();
-    //     for (int w =0; w < s; w++){
-    //     words[j] = copy.get(w);
-    //     j +=1;
-    //    }
-    //  }
-    //    for (String word : words){
-    //     rank.put(word, size);
-    //     size += 1;
-    //    }
-    //    ranker = true;
-    // }
 
     /** Records that WORD occurred COUNT times in this year. */
     public void put(String word, int count) {//remove when add a word thats already in there
@@ -193,77 +152,4 @@ public class YearlyRecord {
         }
         return rank.get(word);
     }
-
-      //   List mapKeys = new ArrayList(opposite.values());
-      //   int k = 0;
-
-      // for (int i : opposite.keySet()){
-      //   ArrayList<String> copy = opposite.get(i);
-      //   for(int j = 0; j < copy.size(); j++){
-
-      //   if (copy.get(j).equals(word)){
-      //       return map.size() - k; 
-      //   }
-      //             k +=1;
-      // }
-      // }
-      //   return 0;
-    //   if (!ranker){
-    //     this.rerank();
-    //   } 
-    //   return rank.get(word);
-    // }
-
-
-            /* Returns number of Zs or zs in x. */
-    // private int zCount(String x) {
-    //     int zCount = 0;
-    //     for (int i = 0; i < x.length(); i += 1) {
-    //         if (x.charAt(i) == 'z' || x.charAt(i) == 'Z') {
-    //             zCount += 1;
-    //         }
-    //     }
-    //     return zCount;
-    // }
-
-    /** Update sthe fewerZsCount map using sorting. */
-    // private void updateFewerZsCount() {
-        // rank = new TreeMap<String, Integer>();
-        // /** The slow approach:
-        //   * For every key, compare against all other keys, and count zs.
-        //   * O(N^2) -- slow compared to sorting. */
-
-        // /* Better approach: Sort the items! */
-        // /* After sorting: we get 'peel', 'zebra', 'zebras', 'zzzzzz'
-        // */
-
-        // String[] words = new String[map.size()];
-        // int cnt = 0;
-        // for (String word : map.keySet()) {
-        //     words[cnt] = word;
-        //     cnt += 1;
-        // }
-
-        // /* Sort words by order of number of Zs */
-        // Arrays.sort(words, new ZComparator());
-
-        // /* This is specific to this weird problem I've made up, not the
-        //  * project. */
-        // int lastZCount = 0;
-        // rank.put(words[0], 0);        
-        // for (int i = 1; i < words.length; i += 1) {
-        //     int currentZCount = map.get(words[i]);
-        //     int numWordsLessZs;
-
-        //     if (currentZCount > lastZCount) {
-        //         numWordsLessZs = i;
-        //     } else {
-        //         numWordsLessZs = map.get(words[i-1]);
-        //     }
-            
-        //     rank.put(words[i], numWordsLessZs);
-        //     lastZCount = currentZCount;
-        // }
-
-    // }
 } 

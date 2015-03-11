@@ -3,14 +3,7 @@ package ngordnet;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Iterator;
-import ngordnet.TimeSeries;
-
-import edu.princeton.cs.introcs.StdIn;
-import edu.princeton.cs.introcs.In;
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.DirectedDFS;
-import java.util.*;
-import java.io.*;
+import java.util.Collection;
 
 /**  You should write additional tests.
  *  @author Kyle Jackson
@@ -76,6 +69,8 @@ public class TimeSeriesTest {
         TimeSeries<Double> tQuotient = ts2.dividedBy(ts3);
 
         System.out.println(tQuotient.get(1991)); // should print 2.0
+        TimeSeries<Double> ts30 = new TimeSeries<Double>();
+        TimeSeries<Double> tpl = ts2.plus(ts30);
 
         /* The following would cause an IllegalArgumentException since ts2
          * does not include all years from ts, which is tantamount to a
