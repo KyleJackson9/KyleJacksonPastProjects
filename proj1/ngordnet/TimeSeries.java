@@ -46,7 +46,9 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
                         (this.get(year).doubleValue() / (ts.get(year).doubleValue())));
             } else if (ts.containsKey(year)) {
                 divMap.put(year, 0.0);
-            } else if (!ts.containsKey(year)) {
+            } else if (this.containsKey(year)) {
+                divMap.put(year, this.get(year).doubleValue());
+            } else {
                 throw new IllegalArgumentException();
             }
         }
