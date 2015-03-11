@@ -1,20 +1,20 @@
-
-
 package ngordnet;
+
 import edu.princeton.cs.introcs.StdIn;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedDFS;
-import java.util.*;
-import java.io.*;
-
+import java.util.Set;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.HashSet;
 
 public class WordNet {
 	private String synset;
 	private String hyponym;
-	private HashMap<Integer,String[]> nouns;
+	private HashMap<Integer, String[]> nouns;
 	private HashMap<String, Integer> opposite;
-	private Digraph g;// directed graph for hyponyms have descent point to jump point to glide etc
+	private Digraph g;
 	private Iterator<String> n;
 	private Iterator<Integer> n1;
 	private Iterator<String[]> n3;
@@ -26,131 +26,100 @@ public class WordNet {
 
 	private Set<Integer> sHypo;
 
-
-	public WordNet(String synsetFilename, String hyponymFilename){
+	public WordNet(String synsetFilename, String hyponymFilename) {
 		synset = synsetFilename;
 		hyponym = hyponymFilename;
 		nouns = new HashMap<Integer, String[]>();
 		opposite = new HashMap<String, Integer>();
 		g = new Digraph(100000);
-			
-		in1 = new In(synset); 
+
+		in1 = new In(synset);
 		String line;
-		while (in1.hasNextLine()) { //read each line by enters
-		   
+		while (in1.hasNextLine()) {
+
 			line = in1.readLine();
-		   String[] number = line.split(",");
-		   String[] words = number[1].split(" ");//cut each by spaces because multiple entries on synset sometimes
-		
+			String[] number = line.split(",");
+			String[] words = number[1].split(" ");
+
 			nouns.put(Integer.parseInt(number[0]), words);
-		   for (int i = 0; i < words.length; i++) {
-		   	//should fill each with synset as key and noun as value
-		  
-		   	opposite.put(words[i],Integer.parseInt(number[0])); // fills key as noun then value as number
+			for (int i = 0; i < words.length; i++) {
 
-		
-		   }
-		   
+				opposite.put(words[i], Integer.parseInt(number[0]));
+
+			}
+
 		}
 
-
-		in2 = new In(hyponym); 
+		in2 = new In(hyponym);
 		String line2;
-		while (in2.hasNextLine()) { //read each line by enters
+		while (in2.hasNextLine()) {
 			line2 = in2.readLine();
-		   String[] x = line2.split(",");//cut each by commas
-		  
+			String[] x = line2.split(",");
 
-		   
-		   for (int i = 1; i< x.length; i++) {
-		   	g.addEdge(Integer.parseInt(x[0]),Integer.parseInt(x[i]));//should have verticies synsets and edges of verticies hyponyms
-		   	
-		   }
-		   
+			for (int i = 1; i < x.length; i++) {
+				g.addEdge(Integer.parseInt(x[0]), Integer.parseInt(x[i]));
+
+			}
+
 		}
 
-
-   		//makes set of synsets Integers
 		Set<Integer> syOut = nouns.keySet();
-		 n1 = syOut.iterator(); 
-    	Set<Integer> syResult = new HashSet<Integer>();
-    	while (n1.hasNext()) {
-    	    syResult.add((n1.next()));
-   		}
-		
-
+		n1 = syOut.iterator();
+		Set<Integer> syResult = new HashSet<Integer>();
+		while (n1.hasNext()) {
+			syResult.add((n1.next()));
+		}
 
 	}
 
-	
-	public Set<String> nouns() {//works
+	public Set<String> nouns() {
 
-		//makes set of nouns (String)
+		Set<String> nounOut = opposite.keySet();
+		n = nounOut.iterator();
+		nounResult = new HashSet<String>();
+		while (n.hasNext()) {
+			nounResult.add(n.next());
+		}
 
-		Set<String> nounOut = opposite.keySet();//keyset gives null pointer must have added null keys
-		 n = nounOut.iterator(); 
-    	nounResult = new HashSet<String>();
-    	while (n.hasNext()) {
-    	    nounResult.add(n.next());
-   		}
-
-    	return nounResult;
+		return nounResult;
 
 	}
 
-
-	public boolean isNoun(String s){//works
+	public boolean isNoun(String s) {
 
 		return opposite.containsKey(s);
 
 	}
-	//The first field is a synset id; subsequent fields are the id numbers of the synset's direct hyponyms.
-	    /** Returns the set of all hyponyms of WORD as well as all synonyms of
-      * WORD. If WORD belongs to multiple synsets, return all hyponyms of
-      * all of these synsets. See http://goo.gl/EGLoys for an example.
-      * Do not include hyponyms of synonyms.
-      */
- 
-	public Set<String> hyponyms(String word){//does not grab enough
-		 sHypo = new HashSet<Integer>();
-		 hy = new HashSet<String[]>();
 
-		 // need to loop through everything then add it to a set
+	public Set<String> hyponyms(String word) {
+		sHypo = new HashSet<Integer>();
+		hy = new HashSet<String[]>();
 
-		 for (Integer i : nouns.keySet()){
-		 	String[] x = nouns.get(i);
-		 	for (int j = 0; j < x.length; j++){
-		 	if (x[j].equals(word)){
-		 		sHypo.add(i);
-		 	}
-		 }
-		 }
-
-		//sHypo.add(opposite.get(word));//should use word as a key and return its value (Integer)
-		 /** Returns the set of all vertex numbers reachable from the start vertices. */
-		Set<Integer> h = GraphHelper.descendants(g,sHypo);//takes entire digraph & checks it against result
-
-		// for (Integer j : h){
-		// 	for (String noun : nouns.keySet())
-		// }
-		//returns a set of integers
-		Integer[] h1 = h.toArray(new Integer[h.size()]);
-		for (int i = 0; i< h1.length; i++) {
-			hy.add(nouns.get(h1[i]));//converts from int to string then gets the value(noun) associated with that synset
-			//gives me String[] of the synsets
+		for (Integer i : nouns.keySet()) {
+			String[] x = nouns.get(i);
+			for (int j = 0; j < x.length; j++) {
+				if (x[j].equals(word)) {
+					sHypo.add(i);
+				}
+			}
 		}
-		//do I also need to add in the descendants of the descendants or did it to that itself?
-		//need to get everything out of String[] hy Set
-		 n3 = hy.iterator(); 
-    	Set<String> syResult = new HashSet<String>();
-    	while (n3.hasNext()) {
-    		String[] xh = n3.next();
-    		for (int i = 0; i < xh.length; i++){
-    	    	syResult.add(xh[i]);
-    	}
-   		}
-		
 
+		Set<Integer> h = GraphHelper.descendants(g, sHypo);
+
+		Integer[] h1 = h.toArray(new Integer[h.size()]);
+		for (int i = 0; i < h1.length; i++) {
+			hy.add(nouns.get(h1[i]));
+
+		}
+
+		n3 = hy.iterator();
+		Set<String> syResult = new HashSet<String>();
+		while (n3.hasNext()) {
+			String[] xh = n3.next();
+			for (int i = 0; i < xh.length; i++) {
+				syResult.add(xh[i]);
+			}
+		}
 
 		return syResult;
 

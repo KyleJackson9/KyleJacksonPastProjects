@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
 import java.util.Set;
+
 public class WordLengthProcessor implements YearlyRecordProcessor {
 	//Given a YearlyRecord, returns the average length of all words (in characters) from volumes in that year.
     public double process(YearlyRecord yearlyRecord) {
