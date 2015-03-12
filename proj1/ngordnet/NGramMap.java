@@ -107,7 +107,7 @@ public class NGramMap {
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (int year = startYear; year <= endYear; year++) {
             if (timeMap.containsKey(year) && count.containsKey(year)) {
-                time.put((int) year, timeMap.get(year).doubleValue());
+                time.put(year, timeMap.get(year).doubleValue());
             }
         }
         return count.dividedBy(time);
@@ -120,7 +120,7 @@ public class NGramMap {
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (long year : timeMap.keySet()) {
             if (timeMap.containsKey(year) && count.containsKey(year)) {
-                time.put((int) year, timeMap.get(year).doubleValue());
+                time.put((int) year, timeMap.get((int) year).doubleValue());
             }
         }
         return count.dividedBy(time);
