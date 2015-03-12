@@ -54,6 +54,7 @@ public class TimeSeries<T extends Number> extends TreeMap<Integer, T> {
     }
 
     public TimeSeries<Double> plus(TimeSeries<? extends Number> ts) {
+        //got help from Jake Moskowitz for avoiding error throws
         TimeSeries<Double> pMap = new TimeSeries<Double>();
         HashSet<Integer> allYears = new HashSet<Integer>();
         for (int i : this.keySet()) {

@@ -57,6 +57,7 @@ public class YearlyRecord {
     }
 
     private void rerank() {
+        //got idea for this from Josh Hug and Finn Howell
         rank = new TreeMap<String, Integer>();
         String[] words = new String[map.size()];
         int cnt = 0;

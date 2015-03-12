@@ -82,6 +82,7 @@ public class WordNet {
     }
 
     public Set<String> hyponyms(String word) {
+        //hints from Jake and some lab assistant
         sHypo = new HashSet<Integer>();
         hy = new HashSet<String[]>();
 
