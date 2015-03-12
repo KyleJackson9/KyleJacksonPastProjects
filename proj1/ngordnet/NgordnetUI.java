@@ -91,33 +91,23 @@ public class NgordnetUI {
                 try {
                     String[] wordy3 = tokens;
                     if (wordy3.length > 1) {
-                        plot.plotCategoryWeights(ng, wn, wordy3, startDate,
-                                endDate);
-                    } else {
-                        plot.plotCategoryWeights(ng, wn, wordy3[0], startDate,
-                                endDate);
-                    }
+                        plot.plotAllWords(ng, wordy3, startDate, endDate);
+                    }                     
                 } catch (Throwable t) {
-                    System.out.println("Sorry, maybe add some words");
+                    System.out.println("Sorry, maybe add some words or set range");
                     break;
                 }
+                    break;
             case "hypohist":
                 try {
                     String[] wordy4 = tokens;
-                    ArrayList<String> hold = new ArrayList<String>();
-                    String[] hyp;
-                    for (String i : wordy4) {
-                        hold.addAll(wn.hyponyms(i));
-                        for (String j : hold) {
-                            plot.plotCategoryWeights(ng, wn, j, startDate,
-                                    endDate);
-                        }
-                    }
+                    plot.plotCategoryWeights(ng, wn, wordy4, startDate,
+                                    endDate);                  
                     break;
                 } catch (Throwable t) {
                     System.out
-                    .println("Sorry that input did not work for hypohist");
-                            break;
+                    .println("Sorry, don't forget words or range");
+                    break;
                 }
             case "wordlength":
                 try {
