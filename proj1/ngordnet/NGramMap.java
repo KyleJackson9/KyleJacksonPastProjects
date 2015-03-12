@@ -81,7 +81,7 @@ public class NGramMap {
             int endYear) {
         TimeSeries<Integer> countH = new TimeSeries<Integer>();
         for (int year = startYear; year <= endYear; year++) {
-            if (map.containsKey(year)) {
+            if (map.containsKey(year) && map.get(year).count(word) > 0) {
                 countH.put(year, map.get(year).count(word));
             }
         }
@@ -93,7 +93,7 @@ public class NGramMap {
     public TimeSeries<Integer> countHistory(String word) {
         TimeSeries<Integer> time = new TimeSeries<Integer>();
         for (int year : map.keySet()) {
-            if (map.containsKey(year)) {
+            if (map.get(year).count(word) > 0) {
                 time.put(year, map.get(year).count(word));
             }
         }
@@ -106,7 +106,7 @@ public class NGramMap {
         TimeSeries<Integer> count = countHistory(word, startYear, endYear);
         TimeSeries<Double> time = new TimeSeries<Double>();
         for (int year = startYear; year <= endYear; year++) {
-            if (timeMap.containsKey(year)){
+            if (timeMap.containsKey(year)) {
                 time.put((int) year, (double) (long) timeMap.get(year));
             }
         }
