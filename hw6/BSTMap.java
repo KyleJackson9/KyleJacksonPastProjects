@@ -63,7 +63,10 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K, V>  {
 
    /* Returns the number of key-value mappings in this map. */
     public int size(){
-        return root.n;
+        if (root != null){
+            return root.n;
+        }
+        return 0;
     }
 
     /* Associates the specified value with the specified key in this map. */
@@ -103,13 +106,6 @@ public class BSTMap<K extends Comparable<K>,V> implements Map61B<K, V>  {
     }
 
     public void printInOrder() {
-        // String[] x = new String[];
-        // //int i = 0;
-
-        // for (int i : root.n){
-        //     x[i] = get(root, )
-
-        // }
         System.out.println(allkeys);
 
     }

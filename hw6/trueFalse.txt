@@ -1,0 +1,8 @@
+1. True should be
+2.True think so
+3.False not tight bound
+4.True faster
+5.True easily faster
+6. False think its higher
+7. True calls get which goes through everything
+8.
