@@ -22,11 +22,16 @@ public class Board {
 
 	@Override
 	public boolean equals(Object o) {
-        return true; // YOUR CODE HERE
+        if (o != null && o instanceof Board) {
+            Board other = (Board) o;
+            return pieces.length == other.pieces.length;
+         }
+        return false; // YOUR CODE HERE
+
 	}
 
     @Override
     public int hashCode() {
-        return 6; // YOUR CODE HERE
+        return pieces.length; // YOUR CODE HERE
     }
 }
