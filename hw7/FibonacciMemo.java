@@ -48,9 +48,9 @@ public class FibonacciMemo {
      * as the 47th Fibonacci number?
      */
     public static String why47() {
-        String answer = "potatoes";
-        answer += ", " + answer + " and tapioca";
-        return answer;
+        // String answer = "potatoes";
+        // answer += ", " + answer + " and tapioca";
+        return "stack overflow of how the number is larger than int can store and has slow and because of push pop";
     }
 
     public static void main(String[] args) {
