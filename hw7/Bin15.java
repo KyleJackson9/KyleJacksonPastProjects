@@ -36,12 +36,18 @@ public class Bin15 {
     
     @Override
     public boolean equals(Object o) {
-        return false; // YOUR CODE HERE
+        if (o != null && o instanceof Bin15) {
+            Bin15 other = (Bin15) o;
+            return Integer.parseInt(other.myBinStr) == Integer.parseInt(this.myBinStr);
+            // In other words, two Nana's are equal iff their myNums
+            // are the same value.
+        }
+        return false;
     }
     
     @Override
     public int hashCode() {
-        return -1; // YOUR CODE HERE
+        return Integer.parseInt(this.myBinStr); // YOUR CODE HERE
     }
 
     /* DO THIS LAST, AFTER IMPLEMENTING EVERYTHING
@@ -51,7 +57,7 @@ public class Bin15 {
     in the method followUpAnswer(). 
     */
     public static final int followUpAnswer() {
-        return 42; // YOUR CODE HERE. THIS MAY OR MAY NOT BE CORRECT.
+        return 32; // YOUR CODE HERE. THIS MAY OR MAY NOT BE CORRECT.
     }
     
     public static void main(String[] args) {
