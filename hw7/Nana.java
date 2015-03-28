@@ -129,7 +129,7 @@ public class Nana {
 
     // Is hashCodeD() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashD() {
-        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     // Is hashCodeE() a valid hash for Nana? Return "yes" or "no"
@@ -139,14 +139,14 @@ public class Nana {
 
     // Is hashCodeF() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashF() {
-        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     /**************************************************************/
     /************************ Question #1.3 ***********************/
 
     public static final String worst2Best() {
-        return "B, C, D, A"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "B, C, A, D"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     /**************************************************************/
