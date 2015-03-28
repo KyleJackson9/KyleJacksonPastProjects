@@ -91,7 +91,7 @@ public class Nana {
 
     // Is hashCodeC() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashC() {
-        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     // Is hashCodeD() a perfect hash for Nana? Return "yes" or "no"
@@ -114,7 +114,7 @@ public class Nana {
 
     // Is hashCodeA() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashA() {
-        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "no"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     // Is hashCodeB() a valid hash for Nana? Return "yes" or "no"
@@ -146,7 +146,7 @@ public class Nana {
     /************************ Question #1.3 ***********************/
 
     public static final String worst2Best() {
-        return "C, A, B, D"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "B, C, A, D"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     /**************************************************************/

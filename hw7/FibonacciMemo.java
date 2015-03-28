@@ -24,8 +24,22 @@ public class FibonacciMemo {
      * @return The nth fibonacci number
      */
     public static int fibMemo(int n) {
-        // YOUR CODE HERE
-        return 0;
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1){
+            return 1;
+        }
+        int result = 0;
+        int last = 1;
+        int lastlast = 0;
+        
+        for (int i = 2; i <= n; i++) {
+            result = last + lastlast;
+            last = result;
+            lastlast = last;
+        }
+        return result;
     }
 
     /**
@@ -34,9 +48,9 @@ public class FibonacciMemo {
      * as the 47th Fibonacci number?
      */
     public static String why47() {
-        String answer = "potatoes";
-        answer += ", " + answer + " and tapioca";
-        return answer;
+        // String answer = "potatoes";
+        // answer += ", " + answer + " and tapioca";
+        return "stack overflow of how the number is larger than int can store and has slow and because of push pop";
     }
 
     public static void main(String[] args) {
