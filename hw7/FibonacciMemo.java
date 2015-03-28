@@ -36,8 +36,8 @@ public class FibonacciMemo {
         
         for (int i = 2; i <= n; i++) {
             result = last + lastlast;
-            last = result;
             lastlast = last;
+            last = result;
         }
         return result;
     }
