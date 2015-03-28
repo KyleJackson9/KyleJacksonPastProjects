@@ -24,8 +24,22 @@ public class FibonacciMemo {
      * @return The nth fibonacci number
      */
     public static int fibMemo(int n) {
-        // YOUR CODE HERE
-        return 0;
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1){
+            return 1;
+        }
+        int result = 0;
+        int last = 1;
+        int lastlast = 0;
+        
+        for (int i = 2; i <= n; i++) {
+            result = last + lastlast;
+            last = result;
+            lastlast = last;
+        }
+        return result;
     }
 
     /**
