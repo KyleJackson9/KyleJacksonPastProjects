@@ -81,7 +81,7 @@ public class Nana {
 
     // Is hashCodeA() a perfect hash for Nana? Return "yes" or "no"
     public static final String isPerfectHashA() {
-        return "no"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER 
     }
 
     // Is hashCodeB() a perfect hash for Nana? Return "yes" or "no"
