@@ -119,7 +119,7 @@ public class Nana {
 
     // Is hashCodeB() a valid hash for Nana? Return "yes" or "no"
     public static final String isValidHashB() {
-        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER 
+        return "yes"; // REPLACE THIS LINE WITH YOUR ANSWER su
     }
 
     // Is hashCodeC() a valid hash for Nana? Return "yes" or "no"
