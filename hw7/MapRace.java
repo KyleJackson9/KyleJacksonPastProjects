@@ -1,6 +1,6 @@
-// import java.util.HashMap;
-// import java.util.TreeMap;
-// import java.util.Map;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.Map;
 // We don't need these! We made our own!
 
 public class MapRace {
