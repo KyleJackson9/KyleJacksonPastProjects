@@ -29,50 +29,50 @@ public class MapRace {
     /* Warms up Java to get the cache hot and ready. If you don't warm up, 
      * you'll see that the first test has an unfair handicap. */
     private static void warmup() {
-        Map61B<Integer, Integer> trashMap1 = new MyHashMap<Integer, Integer>();
-        Map61B<Integer, Integer> trashMap2 = new BSTMap<Integer, Integer>();
-        timePuts61B(trashMap1, MIL, MIL, MIL);
-        timePuts61B(trashMap2, MIL, MIL, MIL);
-        timeGets61B(trashMap1, MIL, MIL);
-        timeGets61B(trashMap2, MIL, MIL);
+        // Map61B<Integer, Integer> trashMap1 = new MyHashMap<Integer, Integer>();
+        // Map61B<Integer, Integer> trashMap2 = new BSTMap<Integer, Integer>();
+        // timePuts61B(trashMap1, MIL, MIL, MIL);
+        // timePuts61B(trashMap2, MIL, MIL, MIL);
+        // timeGets61B(trashMap1, MIL, MIL);
+        // timeGets61B(trashMap2, MIL, MIL);
     }
 
     private static final int MIL = 1000000;
 
     private static void run61BTimedTests(int num, int key_range, 
                 int val_range) {
-        Map61B<Integer, Integer> hMap = new MyHashMap<Integer, Integer>();
-        Map61B<Integer, Integer> tMap = new BSTMap<Integer, Integer>();
+        // Map61B<Integer, Integer> hMap = new HashMap<Integer, Integer>();
+        // Map61B<Integer, Integer> tMap = new BSTMap<Integer, Integer>();
 
-        // TreeMap puts
-        long tPuts = timePuts61B(tMap, num, key_range, val_range);
-        String tm = "TreeMap " + num + " puts: " + tPuts + " ms.";
-        System.out.println(tm);
+        // // TreeMap puts
+        // long tPuts = timePuts61B(tMap, num, key_range, val_range);
+        // String tm = "TreeMap " + num + " puts: " + tPuts + " ms.";
+        // System.out.println(tm);
 
-        // HashMap puts
-        long hPuts = timePuts61B(hMap, num, key_range, val_range);
-        String hm = "HashMap " + num + " puts: " + hPuts + " ms.";
-        System.out.println(hm);
+        // // HashMap puts
+        // long hPuts = timePuts61B(hMap, num, key_range, val_range);
+        // String hm = "HashMap " + num + " puts: " + hPuts + " ms.";
+        // System.out.println(hm);
 
-        // TreeMap gets
-        long tGets = timeGets61B(tMap, num, key_range);
-        String tg = "TreeMap " + num + " gets: " + tGets + " ms.";
-        System.out.println(tg);
+        // // TreeMap gets
+        // long tGets = timeGets61B(tMap, num, key_range);
+        // String tg = "TreeMap " + num + " gets: " + tGets + " ms.";
+        // System.out.println(tg);
 
-        // HashMap gets
-        long hGets = timeGets61B(hMap, num, key_range);
-        String hg = "HashMap " + num + " gets: " + hGets + " ms.";
-        System.out.println(hg);
+        // // HashMap gets
+        // long hGets = timeGets61B(hMap, num, key_range);
+        // String hg = "HashMap " + num + " gets: " + hGets + " ms.";
+        // System.out.println(hg);
 
-        // HashMap removes
-        long hRemove = timeRemove61B(hMap, num, key_range);
-        String hr = "HashMap " + num + " removes: " + hRemove + " ms.";
-        System.out.println(hr);
+        // // HashMap removes
+        // long hRemove = timeRemove61B(hMap, num, key_range);
+        // String hr = "HashMap " + num + " removes: " + hRemove + " ms.";
+        // System.out.println(hr);
 
-        // TreeMap removes
-        long tRemove = timeRemove61B(tMap, num, key_range);
-        String tr = "TreeMap " + num + " removes: " + tRemove + " ms.";
-        System.out.println(tr);
+        // // TreeMap removes
+        // long tRemove = timeRemove61B(tMap, num, key_range);
+        // String tr = "TreeMap " + num + " removes: " + tRemove + " ms.";
+        // System.out.println(tr);
     }
 
     public static final String followUp() {
