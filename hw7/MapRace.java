@@ -77,9 +77,7 @@ public class MapRace {
 
     public static final String followUp() {
         // YOUR ANSWER HERE
-        String answer = "yes, because I done it ";
-        answer += "yuh huh I did";
-        return answer;
+        return "yes, because you can get then down to nearly constant time";
     }
 
     public static void main(String[] args) {
