@@ -16,7 +16,16 @@ public class Username {
         } else if (reqName.length() != 3){
             throw new IllegalArgumentException("bad dog");
         } else {
-            username = reqName;
+            String[] tokens = reqName.split("");
+                char x = tokens[1].charAt(0);
+                char y = tokens[2].charAt(0);
+                char z = tokens[0].charAt(0);
+                if (Character.isLetter(x) && Character.isLowerCase(x) && Character.isLetter(y) && Character.isUpperCase(y) && Character.isDigit(z)){
+                    username = reqName;
+                } else {
+                throw new IllegalArgumentException("ugh");
+            }
+
         }
     }
 
