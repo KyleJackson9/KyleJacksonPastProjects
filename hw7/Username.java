@@ -13,7 +13,7 @@ public class Username {
     public Username(String reqName) {
         if (reqName == null){
             throw new NullPointerException("Requested username is null!");
-        } else if (reqName.length() != 3){
+        } else if (reqName.length() != 3 || reqName.length() != 2){
             throw new IllegalArgumentException("Your name is too long or too short");
         } else {
             String[] tokens = reqName.split("");
