@@ -356,11 +356,12 @@ public class Gitlet implements Serializable {
     	previousPaths.add(file);
     	finder.put(message, holdCommits[0]);
     	master.addNode(id, file, timeStamp, message); 
+    	File k = new File(file);
     	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
     	try {
-    		test.createNewFile();
-    		Files.copy(f.toPath(), test.toPath()); 	
-	    } catch (Throwable T) {
+    		Files.copy(k.toPath(), test.toPath()); 	
+	    } catch (IOException e) {
+	    	System.out.println(e);
 
 	    }
     }
@@ -373,7 +374,6 @@ public class Gitlet implements Serializable {
     	master.addNode(id, file, timeStamp, message); 
     	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
     	try {
-    		test.createNewFile();
     		Files.copy(f.toPath(), test.toPath()); 	
 	    } catch (Throwable T) {
 
