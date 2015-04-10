@@ -10,10 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.LinkedList;
 
-
-
 public class Gitlet implements Serializable {
-//need a master branch that holds all
 	private static int id;
 	private static CommitNodes master;
 	private static int countAdd;
@@ -24,17 +21,15 @@ public class Gitlet implements Serializable {
 	private static LinkedList<String> removeList;
 	private static LinkedList<String[]> globalList;
 	private static HashSet<File> previousFiles;
+	private static LinkedList<String> previousPaths;
 	private static String[] holdCommits;
 	private static String timeStamp;
 	private static HashMap<String, String> finder;
 
-
 	public Gitlet() {
-
 	}
 
 	public static void main(String[] args) {
-
             String command = "";
             if (args[0] != null) {
             	command = args[0];
@@ -50,6 +45,7 @@ public class Gitlet implements Serializable {
 			id = 0;
 			countAdd = 0;
 			inputs = 0;
+
 			holdCommits = new String[3];
 			finder = new HashMap<String,String>();
 			previousFiles = new HashSet<File>();
@@ -57,6 +53,7 @@ public class Gitlet implements Serializable {
 			removeList = new LinkedList<String>();
 			globalList = new LinkedList<String[]>();
 			addList = new LinkedList<String>();
+			previousPaths = new LinkedList<String>();
 	    	String filename = ".gitlet";
 	    	File git = new File(filename);
 	    	if (git.exists()) {
@@ -64,8 +61,9 @@ public class Gitlet implements Serializable {
 	    		return;
 	    	} else {
 	    		git.mkdir();
-	    		
 	    	}
+	    	File c = new File(".gitlet/" + Integer.toString(id));
+            c.mkdir();
 	    	timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 	    	commit(git, 0, filename, timeStamp, "initial commit");
 	    	holdCommits[0] = "0";
@@ -74,8 +72,11 @@ public class Gitlet implements Serializable {
 	    	globalList.add(holdCommits);
 	    	File previous = new File(".gitlet/previousFiles");
 	    	previous.mkdir();
+	    	File prev = new File(".gitlet/previousPaths");
+	    	prev.mkdir();
 	    	File find = new File(".gitlet/finder");
 	    	find.mkdir();
+
 	    	File commitID = new File(".gitlet/id");
 	    	commitID.mkdir();
 	    	File commit = new File(".gitlet/commitNodes");
@@ -93,9 +94,9 @@ public class Gitlet implements Serializable {
 	    	File add = new File(".gitlet/addList");
 	    	add.mkdir();
 	    	saveGitlet(id, ".gitlet/id/id.ser");
-
 	    	saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
-	    	saveGitlet(master, ".gitlet/commitNodes/CommitNodes.ser");
+	    	saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
+	    	saveGitlet(master, ".gitlet/master/master.ser");
 	    	saveGitlet(branches, ".gitlet/branches/branches.ser");
 	    	saveGitlet(curBranch, ".gitlet/branches/curBranch.ser");
 	    	saveGitlet(finder, ".gitlet/finder/finder.ser");
@@ -134,29 +135,37 @@ public class Gitlet implements Serializable {
                     break;
 
             case "commit":
-            // try{
             	previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");
+            	previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
             	addList = loadGitlet(".gitlet/addList/addList.ser");
             	removeList = loadGitlet(".gitlet/removeList/removeList.ser");
             	id = loadGitlet(".gitlet/id/id.ser");
             	holdCommits = loadGitlet(".gitlet/holdCommits/holdCommits.ser");
             	master = loadGitlet(".gitlet/master/master.ser");
             	finder = loadGitlet(".gitlet/finder/finder.ser");
-            	if (addList.size() == 0){
+            	globalList = loadGitlet(".gitlet/globalList/globalList.ser");
+            	if (addList.size() == 0 && removeList.size() == 0) {
             		return;
             	}
-
-
             	String message = args[1];
             	id++;
-            	for (int i = 1; i < inputs; i++){
-            		message += args[1 + i];
-            	}
+            	File commit = new File(".gitlet/" + Integer.toString(id));
+            	commit.mkdir();
+
+            	String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
             	for (int i = 0; i < addList.size(); i++) {
             		String filename = addList.get(i);
             		File commitFile = new File(filename);
-            		timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
             		commit(commitFile, id, filename, timeStamp, message);
+            	}
+            	for (int i = 0; i < previousPaths.size(); i++) {
+            		if (!removeList.contains(previousPaths.get(i))) {
+            			String filename = previousPaths.get(i);
+            			File commitFile = new File(previousPaths.get(i));
+            			commit2(commitFile, id, filename, timeStamp, message);
+            		}
+
+
             	}
             	System.out.println("====");
     			System.out.println(message);
@@ -171,12 +180,8 @@ public class Gitlet implements Serializable {
             	  	saveGitlet(holdCommits, ".gitlet/holdCommits/holdCommits.ser");
             	  	saveGitlet(id, ".gitlet/id/id.ser");
             	  	saveGitlet(finder, ".gitlet/finder/finder");
+            	  	saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
             	break;
-            // } catch(Throwable t) {
-            // 	System.out.println("commit failed");
-            // 	break;
-            // }
-
             case "global-log":
                 try {
                 	globalList = loadGitlet(".gitlet/globalList/globalList.ser");
@@ -185,9 +190,8 @@ public class Gitlet implements Serializable {
                 		System.out.println("Commit " + globalList.get(i)[0]);
                 		System.out.println(globalList.get(i)[1]);
     					System.out.println(globalList.get(i)[2]);
-    					
+    					System.out.println();
                 	}
-
                     break;
                 } catch (Throwable t) {
                     break;
@@ -245,12 +249,12 @@ public class Gitlet implements Serializable {
             case "log":
                 try {
                 	globalList = loadGitlet(".gitlet/globalList/globalList.ser");
-                	for (int i = 0; i < globalList.size(); i++) {
+                	for (int i = globalList.size() - 1; i >= 0; i = i - 1) {
                 		System.out.println("====");
                 		System.out.println("Commit " + globalList.get(i)[0]);
                 		System.out.println(globalList.get(i)[1]);
     					System.out.println(globalList.get(i)[2]);
-    					
+    					System.out.println();	
                 	}
                 
                     break;
@@ -261,7 +265,6 @@ public class Gitlet implements Serializable {
             case "checkout":
                 try {
 
-                    
                     break;
                 } catch (Throwable t) {
 
@@ -269,6 +272,15 @@ public class Gitlet implements Serializable {
                 }
             case "branch":
                 try {
+                	branches = loadGitlet(".gitlet/branches/branches.ser");
+                	String branch = args[1];
+                	if (branches.contains(branch)) {
+                		System.out.println("A branch with that name already exists.");
+                	} else {
+                		branches.add(branch);
+                	}
+
+                	saveGitlet(branches, ".gitlet/branches/branches.ser");
 
                     break;
                 } catch (Throwable t) {
@@ -278,9 +290,22 @@ public class Gitlet implements Serializable {
 
             case "remove":
                 try {
+                	addList = loadGitlet(".gitlet/addList/addList.ser");
+                	removeList = loadGitlet(".gitlet/removeList/removeList.ser");
+                	previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
                 	if (addList.contains(args[1])) {
                 		addList.remove(args[1]);
-                	}
+                	} else {
+                		if (!previousPaths.contains(args[1])) {
+                			System.out.println("No reason to remove the file.");
+                		} else if (!removeList.contains(args[1])) {
+                			removeList.add(args[1]);
+                		} else {
+                			System.out.println("File already on removal list.");
+                		}
+                }
+                	saveGitlet(addList, ".gitlet/addList/addList.ser");
+                	saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
                     break;
                 } catch (Throwable t) {
 
@@ -324,14 +349,36 @@ public class Gitlet implements Serializable {
         }
     }
     public static void commit(File f, int id, String file, String timeStamp, String message){
+    	holdCommits[0] = Integer.toString(id);
+    	holdCommits[1] = timeStamp;
+    	holdCommits[2] = message;
+    	previousFiles.add(f);
+    	previousPaths.add(file);
+    	finder.put(message, holdCommits[0]);
+    	master.addNode(id, file, timeStamp, message); 
+    	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
+    	try {
+    		test.createNewFile();
+    		Files.copy(f.toPath(), test.toPath()); 	
+	    } catch (Throwable T) {
 
-    	countAdd = 0;
+	    }
+    }
+    public static void commit2(File f, int id, String file, String timeStamp, String message){
     	holdCommits[0] = Integer.toString(id);
     	holdCommits[1] = timeStamp;
     	holdCommits[2] = message;
     	previousFiles.add(f);
     	finder.put(message, holdCommits[0]);
-    	master.addNode(id, file, timeStamp, message);    	
+    	master.addNode(id, file, timeStamp, message); 
+    	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
+    	try {
+    		test.createNewFile();
+    		Files.copy(f.toPath(), test.toPath()); 	
+	    } catch (Throwable T) {
+
+	    }
+   	
     }
 
 
