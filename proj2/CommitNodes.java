@@ -1,53 +1,80 @@
 import java.util.*;
 import java.io.*;
-import edu.princeton.cs.introcs.StdIn;
-import edu.princeton.cs.introcs.In;
-
-
 
 public class CommitNodes implements Serializable {
 	private int commitID;
-	private String filename;
+	private  HashSet<String> filenames;
 	private CommitNodes head;
 	private String time;
 	private String message;
-	private LinkedList<CommitNodes> commitTree;
+	private CommitNodes parent;
+	private String branch;
+	private LinkedList<CommitNodes> children;
 
 
     public static void main(String[] args) {
     }
     public CommitNodes() {
-    	commitTree = new LinkedList<CommitNodes>();
+    	children = new LinkedList<CommitNodes>();
 
     }
 
-    public CommitNodes(int cID, String file, String t, String m) {
+    public CommitNodes(String branchName, int cID, HashSet<String> file, String t, String m) {
     	commitID = cID;
-    	filename = file;
+    	filenames = file;
     	time = t;
     	message = m;
     	head = this;
-    	commitTree = new LinkedList<CommitNodes>();
-    	commitTree.add(this);
+    	branch = branchName;
+    	children = new LinkedList<CommitNodes>();
     }
 
-    public void addNode(int cID, String file, String t, String m) {
-    	CommitNodes adder = new CommitNodes(cID,  file,  t,  m);
-    	head = adder;
-    	commitTree.add(adder);
+    // public CommitNodes(String branchName, CommitNodes parent) {
+    // 	branch = branchName;
+    // 	message = parent.getMessage();
+    // 	filenames = parent.getFilenames();
+    // 	head = this;
+    // 	commitID = parent.getID();
+    // 	time = parent.getTime();
+    // 	children = new LinkedList<CommitNodes>();
+    // 	this.parent = parent;
 
+    // }
+
+    public void addChild(CommitNodes node) {
+    	children.add(node);
+    }
+
+    public void setParent(CommitNodes node) {
+    	parent = node;
+    }
+
+    public CommitNodes getParent() {
+    	return parent;
+    }
+
+    public String getBranch() {
+    	return branch;
     }
 
     public int getID() {
     	return commitID;
     }
 
-    public String getFilename() {
-    	return filename;
+    public String getTime() {
+    	return time;
+    }
+
+    public HashSet<String> getFilenames() {
+    	return filenames;
     }
 
     public String getMessage() {
     	return message;
+    }
+
+    public LinkedList<CommitNodes> getChildren() {
+    	return children;
     }
 
     public CommitNodes getHead() {
@@ -57,6 +84,5 @@ public class CommitNodes implements Serializable {
     public void setHead(CommitNodes n) {
     	head = n;
     }
-
 
 }
