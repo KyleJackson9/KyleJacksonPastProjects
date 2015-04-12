@@ -111,22 +111,7 @@ public class Gitlet implements Serializable {
 	    		System.out.println("initial commit");
 	    		System.out.println(timeStamp);
             } else {
-
             switch (command) {
-            	case "test":
-            	    curNode = loadGitlet(".gitlet/curNode/curNode.ser");
-            	    CommitNodes temp4 = curNode;
-
-            		while (temp4 != null) {
-            			System.out.println(temp4.getID());
-            			System.out.println(temp4.getBranch());
-            			System.out.println(temp4.getFilenames());
-            			System.out.println(temp4.getTime());
-            			System.out.println(temp4.getMessage());
-
-            			temp4 = temp4.getParent();
-            		}
-            		break;
             case "add":
             	previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");
             	addList = loadGitlet(".gitlet/addList/addList.ser");
@@ -154,8 +139,7 @@ public class Gitlet implements Serializable {
 						} else {
 							System.out.println("File has already been staged.");
 						}
-                	}
-                	 
+                	} 
                 	saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
             	  	saveGitlet(addList, ".gitlet/addList/addList.ser");
             	  	saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
@@ -190,8 +174,7 @@ public class Gitlet implements Serializable {
             		if (!removeList.contains(previousPaths.get(i))) {
             			String filename = previousPaths.get(i);
             			File commitFile = new File(previousPaths.get(i));
-            			commit2(commitFile, id, filename, timeStamp, message);
-            			
+            			commit2(commitFile, id, filename, timeStamp, message);	
             		}
             	}
             	previousPaths.clear();
@@ -204,7 +187,6 @@ public class Gitlet implements Serializable {
             	CommitNodes tempNode = new CommitNodes(curBranch, id, comFiles, timeStamp, message);
             	tempNode.setParent(curNode);
             	curNode = tempNode;
-            	System.out.println(curNode.getFilenames());
             	getEndBranches.put(curBranch, curNode);
             	getEndBranches.put(holdCommits[0], curNode);
             	System.out.println("====");
@@ -321,7 +303,6 @@ public class Gitlet implements Serializable {
                 	 		    File temps = new File(".gitlet/" + oldID + "/" + s);
                 	 		    previousFiles.put(s, temps);
                 	 		    previousPaths.add(s);
-
 							}
 							saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
 							saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
@@ -409,7 +390,6 @@ public class Gitlet implements Serializable {
                 	curNode = loadGitlet(".gitlet/curNode/curNode.ser");
                 	previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
                 	previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");
-
                 	String cID = args[1];
                 	int check = Integer.parseInt(cID);
                 	if (check <= id && check >= 0) {
@@ -419,7 +399,7 @@ public class Gitlet implements Serializable {
                 	previousPaths.clear();
                 	previousFiles.clear();
                 	for (String s : temp.getFilenames()) {
-                		System.out.println(s);
+                		if (!s.equals(".gitlet")) {
                 			File oldVersion = new File(".gitlet/" + cID + "/" + s);
                 			previousFiles.put(s, oldVersion);
                 	 		previousPaths.add(s);
@@ -429,22 +409,21 @@ public class Gitlet implements Serializable {
 							oStream.write(myBytes);
 							oStream.flush();
 							oStream.close();
+						}
                 	}
                 	curBranch = temp.getBranch();
                 	curNode = getEndBranches.get(temp.getBranch());
-                			saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
-							saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
-                	 		saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
-                	 		saveGitlet(curBranch, ".gitlet/branches/curBranch.ser");
+                	saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
+					saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
+                	saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
+                	saveGitlet(curBranch, ".gitlet/branches/curBranch.ser");
                 	break;
                 }
-
                 	 else {
                 			System.out.println("No commit with that id exists.");
                 		}
                     break;
                 } catch (Throwable t) {
-
                     break;
                 }
             case "rm-branch":
@@ -469,17 +448,56 @@ public class Gitlet implements Serializable {
                 }
             case "merge":
                 try {
+                	getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");
+                	curNode = loadGitlet(".gitlet/curNode/curNode.ser");
+                	branches = loadGitlet(".gitlet/branches/branches.ser");
+                	curBranch = loadGitlet(".gitlet/branches/curBranch.ser");
                 	String mBranch = args[1];
-
-
+                	
                 	if (!branches.contains(mBranch)) {
                 		System.out.println("A branch with that name does not exist.");
                 	} else if (curBranch.equals(mBranch)) {
                 		System.out.println("Cannot merge a branch with itself.");
                 	} else {
                 		int split = findSplit(getEndBranches.get(mBranch), curNode);
-                	}
-                    break;
+                		HashSet<String> nodelets = curNode.getFilenames();
+                		String currentID = Integer.toString(curNode.getID());
+                		HashSet<String> oldies = getEndBranches.get(mBranch).getFilenames();
+                		String oldID = Integer.toString(getEndBranches.get(mBranch).getID());
+                		HashSet<String> splitter = getEndBranches.get(Integer.toString(split)).getFilenames();
+                		System.out.println(splitter);
+
+                		for (String s : splitter) {
+                			if (!s.equals(".gitlet")) {
+                			File curl = new File(".gitlet/" + currentID + "/" + s);
+                			File old = new File(".gitlet/" + oldID + "/" + s);
+                			File toTesty = new File(".gitlet/" + Integer.toString(split) + "/" + s);
+                			boolean tester1 = Arrays.equals(Files.readAllBytes(curl.toPath()), Files.readAllBytes(toTesty.toPath()));
+                			boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toTesty.toPath()));
+                			//boolean tester3 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(curl.toPath()));
+                			if (!tester1 && !tester2) {
+						    	File test = new File(s + ".conflicted");
+						    	try {
+						    		Files.copy(old.toPath(), test.toPath()); 	
+							    } catch (Throwable T) {
+							    }
+                			} else if (!tester2) {
+								FileOutputStream oStream = new FileOutputStream(toTesty, false); 
+								byte[] myBytes = Files.readAllBytes(old.toPath());
+								oStream.write(myBytes);
+								oStream.flush();
+								oStream.close();
+                			} else if (!tester1) {
+                				FileOutputStream oStream = new FileOutputStream(toTesty, false); 
+								byte[] myBytes = Files.readAllBytes(curl.toPath());
+								oStream.write(myBytes);
+								oStream.flush();
+								oStream.close();
+                			}
+                		}
+
+                		}    
+                } break;
                 } catch (Throwable t) {
                     break;
                 }
@@ -509,7 +527,6 @@ public class Gitlet implements Serializable {
     	holdCommits[0] = Integer.toString(id);
     	holdCommits[1] = timeStamp;
     	holdCommits[2] = message;
-    	System.out.println(file);
     	previousPaths.add(file);
     	File k = new File(file);
     	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
@@ -535,26 +552,20 @@ public class Gitlet implements Serializable {
     	CommitNodes temp1 = old;
     	CommitNodes temp2 = current;
     	LinkedList<Integer> hold = new LinkedList<Integer>();
-    	while (temp1 != null && temp2 != null) {
-    		if (temp1 != null) {
-    			if (hold.contains(temp1.getID())) {
-    				return temp1.getID();
-    			} else {
+    	while (temp1 != null) {
     			hold.add(temp1.getID());
     			temp1 = temp1.getParent();
-    		}
-    		}
-    		if (temp2 != null) {
+    	}
+    	while (temp2 != null) {
     			if (hold.contains(temp2.getID())) {
+    				System.out.println(temp2.getID());
     				return temp2.getID();
     			} else {
-    			hold.add(temp1.getID());
+    			hold.add(temp2.getID());
     			temp2 = temp2.getParent();
     		}
     	}
-    	}
     	return 0;
-
     }
     private static <Zerp> Zerp loadGitlet(String filename) {
     	//majority taken from Sarah Kim
