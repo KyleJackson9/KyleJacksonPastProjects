@@ -474,7 +474,6 @@ public class Gitlet implements Serializable {
                 			File toTesty = new File(".gitlet/" + Integer.toString(split) + "/" + s);
                 			boolean tester1 = Arrays.equals(Files.readAllBytes(curl.toPath()), Files.readAllBytes(toTesty.toPath()));
                 			boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toTesty.toPath()));
-                			//boolean tester3 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(curl.toPath()));
                 			if (!tester1 && !tester2) {
 						    	File test = new File(s + ".conflicted");
 						    	try {
@@ -482,13 +481,15 @@ public class Gitlet implements Serializable {
 							    } catch (Throwable T) {
 							    }
                 			} else if (!tester2) {
-								FileOutputStream oStream = new FileOutputStream(toTesty, false); 
+                				File testF = new File(s);
+								FileOutputStream oStream = new FileOutputStream(s, false); 
 								byte[] myBytes = Files.readAllBytes(old.toPath());
 								oStream.write(myBytes);
 								oStream.flush();
 								oStream.close();
                 			} else if (!tester1) {
-                				FileOutputStream oStream = new FileOutputStream(toTesty, false); 
+                				File testF = new File(s);
+                				FileOutputStream oStream = new FileOutputStream(s, false); 
 								byte[] myBytes = Files.readAllBytes(curl.toPath());
 								oStream.write(myBytes);
 								oStream.flush();
