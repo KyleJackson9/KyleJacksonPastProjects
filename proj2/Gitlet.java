@@ -611,7 +611,7 @@ public class Gitlet implements Serializable {
             } else {
                 System.out.println("No need to checkout of the current branch.");
             }
-        } else if (previousPaths.contains(info)) {
+        } else if (previousPaths.contains(input)) {
             try {
                 File old = new File(input);
                 File replacement = new File(".gitlet/" + Integer.toString(id) + "/" + info);
@@ -623,8 +623,8 @@ public class Gitlet implements Serializable {
             } catch (Throwable t) {
                 System.out.println(t);
             }
-        } else if (arg2 != null) {
-            if (Integer.parseInt(info) <= id && Integer.parseInt(info) >= 0) {
+        } else if (!arg2.equals("")) {
+            if (Integer.parseInt(input) <= id && Integer.parseInt(input) >= 0) {
                 File oldVersion = new File(".gitlet/" + info + "/" + cutDown(arg2));
                 if (oldVersion.exists()){
                     try {
