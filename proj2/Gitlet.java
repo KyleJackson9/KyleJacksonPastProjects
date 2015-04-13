@@ -119,8 +119,11 @@ public class Gitlet implements Serializable {
             	curNode = loadGitlet(".gitlet/curNode/curNode.ser");
             	int addID = curNode.getID();
             	boolean tester = false;
-                File toAdd = new File(args[1]);
-                File toTest = new File(".gitlet/" + Integer.toString(addID) + "/" + args[1]);
+                String[] holdME = args[1].split("/");
+                String filer = holdME[holdME.length -1];
+                System.out.println(filer);
+                File toAdd = new File(holdME[holdME.length -1]);
+                File toTest = new File(".gitlet/" + Integer.toString(addID) + "/" + filer);
                 	if (!toAdd.exists()) {
                 		System.out.println("File does not exist.");
                 	} else if (previousFiles.containsKey(args[1])) {
@@ -131,14 +134,14 @@ public class Gitlet implements Serializable {
                 		}
                 		 if (tester) {
                 		 	System.out.println("File has not been modified since the last commit.");
-	                	} else if (removeList.contains(args[1])) {
-                			removeList.remove(args[1]);
-                		} else if (!addList.contains(args[1])) {
-                			addList.add(args[1]);
+	                	} else if (removeList.contains(filer)) {
+                			removeList.remove(filer);
+                		} else if (!addList.contains(filer)) {
+                			addList.add(filer);
                 		}
                 	} else {
-                		if (!addList.contains(args[1])){
-							addList.add(args[1]);
+                		if (!addList.contains(filer)){
+							addList.add(filer);
 						}
                 	} 
                 	saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
@@ -300,7 +303,9 @@ public class Gitlet implements Serializable {
                 	branches = loadGitlet(".gitlet/branches/branches.ser");
                 	id = loadGitlet(".gitlet/id/id.ser");  
                 	getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");       	
-                	String info = args[1];
+
+                    String[] holdME2 = args[1].split("/");
+                    String info = holdME2[holdME2.length-1];
                 	if (branches.contains(info)) {
                 	 	if (!curBranch.equals(info)) {
                 	 		curBranch = info;
@@ -324,8 +329,9 @@ public class Gitlet implements Serializable {
                 	 	}
                 	 }  else if (previousPaths.contains(info)) {
                 	 	try {
-                		File replacement = new File(".gitlet/" + Integer.toString(id) + "/" + info);
-                		File old = new File(info);
+                		
+                		File old = new File(args[1]);
+                        File replacement = new File(".gitlet/" + Integer.toString(id) + "/" + info); //this is empty in test
 						FileOutputStream oldStream = new FileOutputStream(old, false); 
 						byte[] myBytes = Files.readAllBytes(replacement.toPath());
 						oldStream.write(myBytes);
@@ -535,8 +541,6 @@ public class Gitlet implements Serializable {
                 	} else {
                 		CommitNodes oldBranch = getEndBranches.get(deadBranch);
                 		int splitB = findSplit(curNode, oldBranch);
-                		System.out.println(splitB);
-
                 		if (splitB == curNode.getID() || splitB == oldBranch.getID()) {
                 			System.out.println("Already up-to-date.");
                 			break;
@@ -567,31 +571,16 @@ public class Gitlet implements Serializable {
 				            		previousPaths.add(s);
 				            	}
 				            	}
-                				CommitNodes tempster = new CommitNodes(curBranch, tempo);
-                				tempster.setTime(timer);
-                				tempster.setMessage(mess);
+                				CommitNodes tempster = new CommitNodes(curBranch, id, comFiles, timer, mess);
                 				tempster.setParent(oldBranch);//adds to head of that branch
                 				oldBranch = tempster;
                 				curNode = tempster;
-
                 				getEndBranches.put(curBranch, curNode);
             					getEndBranches.put(holdCommits[0], curNode);
 				    			globalList.add(holdCommits);
 				            	addList.clear();
 				            	removeList.clear();
-				            	                			saveGitlet(branches, ".gitlet/branches/branches.ser");
-                			saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
-		            	  	saveGitlet(addList, ".gitlet/addList/addList.ser");
-		            	  	saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
-		            	  	saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
-		            	  	saveGitlet(holdCommits, ".gitlet/holdCommits/holdCommits.ser");
-		            	  	saveGitlet(id, ".gitlet/id/id.ser");
-		            	  	saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
-		            	  	saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
-		            	  	saveGitlet(getEndBranches, ".gitlet/branches/getEndBranches.ser");
-
-                			}
-                		// 	saveGitlet(branches, ".gitlet/branches/branches.ser");
+				            	 //                			saveGitlet(branches, ".gitlet/branches/branches.ser");
                 		// 	saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
 		            	  	// saveGitlet(addList, ".gitlet/addList/addList.ser");
 		            	  	// saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
@@ -601,6 +590,18 @@ public class Gitlet implements Serializable {
 		            	  	// saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
 		            	  	// saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
 		            	  	// saveGitlet(getEndBranches, ".gitlet/branches/getEndBranches.ser");
+
+                			}
+                			saveGitlet(branches, ".gitlet/branches/branches.ser");
+                			saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
+		            	  	saveGitlet(addList, ".gitlet/addList/addList.ser");
+		            	  	saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
+		            	  	saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
+		            	  	saveGitlet(holdCommits, ".gitlet/holdCommits/holdCommits.ser");
+		            	  	saveGitlet(id, ".gitlet/id/id.ser");
+		            	  	saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
+		            	  	saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
+		            	  	saveGitlet(getEndBranches, ".gitlet/branches/getEndBranches.ser");
 
                 		}
                 	}
