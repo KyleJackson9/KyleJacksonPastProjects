@@ -246,39 +246,8 @@ public class Gitlet implements Serializable {
                 	}           	
                 	break;
             case "status":
-                try {
-                	branches = loadGitlet(".gitlet/branches/branches.ser");
-                	curBranch = loadGitlet(".gitlet/branches/curBranch.ser");
-                	addList = loadGitlet(".gitlet/addList/addList.ser");
-                	removeList = loadGitlet(".gitlet/removeList/removeList.ser");
-
-                	System.out.println("=== Branches ===");
-					if (branches.size() > 0){
-						System.out.println("*" + curBranch);
-						for (int i = 0; i < branches.size(); i++) {
-							if (!branches.get(i).equals(curBranch)) {
-								System.out.println(branches.get(i));
-							}
-						}
-					}
-			    	System.out.println();
-					System.out.println("=== Staged Files ===");
-					if (addList.size() > 0){
-						for (int i = 0; i < addList.size(); i++) {
-							System.out.println(addList.get(i));
-						}
-					}
-					System.out.println();
-					System.out.println("=== Files Marked for Removal ===");
-					if (removeList.size() > 0) {
-						for (int i =0; i < removeList.size(); i++) {
-							System.out.println(removeList.get(i));
-						}
-					}
-                    break;
-                } catch (Throwable t) {
-                    break;
-                }
+                Status();
+                break;
             case "log":
                 try {
                 	curNode = loadGitlet(".gitlet/curNode/curNode.ser");
@@ -296,78 +265,12 @@ public class Gitlet implements Serializable {
                     break;
                 }
             case "checkout":
-                	previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
-                	previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");   
-                	curNode = loadGitlet(".gitlet/curNode/curNode.ser"); 
-                	curBranch = loadGitlet(".gitlet/branches/curBranch.ser"); 
-                	branches = loadGitlet(".gitlet/branches/branches.ser");
-                	id = loadGitlet(".gitlet/id/id.ser");  
-                	getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");       	
-
-                    String[] holdME2 = args[1].split("/");
-                    String info = holdME2[holdME2.length-1];
-                	if (branches.contains(info)) {
-                	 	if (!curBranch.equals(info)) {
-                	 		curBranch = info;
-                	 		curNode = getEndBranches.get(info);
-                	 		previousFiles.clear();
-                	 		previousPaths.clear();
-                	 		String oldID = Integer.toString(curNode.getID());
-                	 		for (String s : curNode.getFilenames()) {
-                	 		    File temps = new File(".gitlet/" + oldID + "/" + s);
-                	 		    previousFiles.put(s, temps);
-                	 		    previousPaths.add(s);
-							}
-							saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
-							saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
-                	 		saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
-                	 		saveGitlet(curBranch, ".gitlet/branches/curBranch.ser");
-                	 		break;
-                	 	} else {
-                	 		System.out.println("No need to checkout of the current branch.");
-                	 		break;
-                	 	}
-                	 }  else if (previousPaths.contains(info)) {
-                	 	try {
-                		
-                		File old = new File(args[1]);
-                        File replacement = new File(".gitlet/" + Integer.toString(id) + "/" + info); //this is empty in test
-						FileOutputStream oldStream = new FileOutputStream(old, false); 
-						byte[] myBytes = Files.readAllBytes(replacement.toPath());
-						oldStream.write(myBytes);
-						oldStream.flush();
-						oldStream.close();
-					} catch (Throwable t){
-						System.out.println(t);
-					}
-						break;
-                	}  else if (args[2] != null) {
-                		if (Integer.parseInt(info) <= id && Integer.parseInt(info) >= 0) {
-	                		File oldVersion = new File(".gitlet/" + info + "/" + args[2]);
-	                		if (oldVersion.exists()){
-	                			try {
-	                			File oldFile = new File(args[2]);
-								FileOutputStream oStream = new FileOutputStream(oldFile, false); 
-								byte[] myBytes = Files.readAllBytes(oldVersion.toPath());
-								oStream.write(myBytes);
-								oStream.flush();
-								oStream.close();
-							} catch (Throwable t) {
-								System.out.println(t);
-							}
-								break;
-                			} else {
-	                			System.out.println("File does not exist in that commit.");
-	                			break;
-                		}
-                	} else {
-                		System.out.println("No commit with that id exists.");
-                		break;
-                	}
-                	} else {
-                		System.out.println("File does not exist in the most recent commit, or no such branch exists.");
-                		break;
-                	}                
+                try {
+                    Checkout(args[1], args[2]);
+                } catch (Throwable t) {
+                    Checkout(args[1], "");
+                }
+                break;            
             case "branch":
                 	branches = loadGitlet(".gitlet/branches/branches.ser");
                 	getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");
@@ -383,23 +286,8 @@ public class Gitlet implements Serializable {
                 	}
                     break;
             case "remove":
-                	addList = loadGitlet(".gitlet/addList/addList.ser");
-                	removeList = loadGitlet(".gitlet/removeList/removeList.ser");
-                	previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
-                	if (addList.contains(args[1])) {
-                		addList.remove(args[1]);
-                	} else {
-                		if (!previousPaths.contains(args[1])) {
-                			System.out.println("No reason to remove the file.");
-                		} else if (!removeList.contains(args[1])) {
-                			removeList.add(args[1]);
-                		} else {
-                			System.out.println("File already on removal list.");
-                		}
-                }
-                	saveGitlet(addList, ".gitlet/addList/addList.ser");
-                	saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
-                    break;
+                Remove(args[1]);
+                break;
             case "reset":
                 try {
                 	id = loadGitlet(".gitlet/id/id.ser");
@@ -447,7 +335,6 @@ public class Gitlet implements Serializable {
                 	curBranch = loadGitlet(".gitlet/branches/curBranch.ser"); 
                 	branches = loadGitlet(".gitlet/branches/branches.ser");
                 	String bToRemove = args[1];
-
                 	if (bToRemove.equals(curBranch)) {
                 		System.out.println("Cannot remove the current branch.");
                 	} else if (branches.contains(bToRemove)) {
@@ -463,61 +350,8 @@ public class Gitlet implements Serializable {
                     break;
                 }
             case "merge":
-                try {
-                	getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");
-                	curNode = loadGitlet(".gitlet/curNode/curNode.ser");
-                	branches = loadGitlet(".gitlet/branches/branches.ser");
-                	curBranch = loadGitlet(".gitlet/branches/curBranch.ser");
-                	String mBranch = args[1];
-                	
-                	if (!branches.contains(mBranch)) {
-                		System.out.println("A branch with that name does not exist.");
-                	} else if (curBranch.equals(mBranch)) {
-                		System.out.println("Cannot merge a branch with itself.");
-                	} else {
-                		int split = findSplit(getEndBranches.get(mBranch), curNode);
-                		HashSet<String> nodelets = curNode.getFilenames();
-                		String currentID = Integer.toString(curNode.getID());
-                		HashSet<String> oldies = getEndBranches.get(mBranch).getFilenames();
-                		String oldID = Integer.toString(getEndBranches.get(mBranch).getID());
-                		HashSet<String> splitter = getEndBranches.get(Integer.toString(split)).getFilenames();
-                		for (String s : splitter) {
-                			if (!s.equals(".gitlet")) {
-                			File curl = new File(".gitlet/" + currentID + "/" + s);
-                			File old = new File(".gitlet/" + oldID + "/" + s);
-                			File toTesty = new File(".gitlet/" + Integer.toString(split) + "/" + s);
-                			boolean tester1 = Arrays.equals(Files.readAllBytes(curl.toPath()), Files.readAllBytes(toTesty.toPath()));
-                			boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toTesty.toPath()));
-                			if (!tester1 && !tester2) {
-						    	File test = new File(s + ".conflicted");
-						    	try {
-						    		Files.copy(old.toPath(), test.toPath()); 	
-							    } catch (Throwable T) {
-							    }
-                			} else if (!tester2) {
-                				File testF = new File(s);
-								FileOutputStream oStream = new FileOutputStream(s, false); 
-								byte[] myBytes = Files.readAllBytes(old.toPath());
-								oStream.write(myBytes);
-								oStream.flush();
-								oStream.close();
-                			} else if (!tester1) {
-                				File testF = new File(s);
-                				FileOutputStream oStream = new FileOutputStream(s, false); 
-								byte[] myBytes = Files.readAllBytes(curl.toPath());
-								oStream.write(myBytes);
-								oStream.flush();
-								oStream.close();
-                			}
-                		}
-
-                		}    
-                }
-                 break;
-                } catch (Throwable t) {
-                    break;
-                }
-
+                Merge(args[1]);
+                break;
             case "rebase":
                 try {
                 	previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");
@@ -580,17 +414,6 @@ public class Gitlet implements Serializable {
 				    			globalList.add(holdCommits);
 				            	addList.clear();
 				            	removeList.clear();
-				            	 //                			saveGitlet(branches, ".gitlet/branches/branches.ser");
-                		// 	saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
-		            	  	// saveGitlet(addList, ".gitlet/addList/addList.ser");
-		            	  	// saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
-		            	  	// saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
-		            	  	// saveGitlet(holdCommits, ".gitlet/holdCommits/holdCommits.ser");
-		            	  	// saveGitlet(id, ".gitlet/id/id.ser");
-		            	  	// saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
-		            	  	// saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
-		            	  	// saveGitlet(getEndBranches, ".gitlet/branches/getEndBranches.ser");
-
                 			}
                 			saveGitlet(branches, ".gitlet/branches/branches.ser");
                 			saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
@@ -624,7 +447,7 @@ public class Gitlet implements Serializable {
             }
         }
     }
-
+    /* For files to be added */
     public static void commit(File f, int id, String file, String timeStamp, String message){
     	holdCommits[0] = Integer.toString(id);
     	holdCommits[1] = timeStamp;
@@ -639,6 +462,7 @@ public class Gitlet implements Serializable {
 	    }
 	    previousFiles.put(file,f);
     }
+    /* For files that were not removed */
     public static void commit2(File f, int id, String file, String timeStamp, String message){
     	holdCommits[0] = Integer.toString(id);
     	holdCommits[1] = timeStamp;
@@ -698,9 +522,188 @@ public class Gitlet implements Serializable {
             FileOutputStream fileOut = new FileOutputStream(myGitFile);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(myGit);
+            //objectOut.close();
         } catch (IOException e) {
             String msg = "IOException while saving" + filename;
             System.out.println(msg);
         }
     }
+
+    public static void Merge(String mBranch) {
+        try {
+            getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");
+            curNode = loadGitlet(".gitlet/curNode/curNode.ser");
+            branches = loadGitlet(".gitlet/branches/branches.ser");
+            curBranch = loadGitlet(".gitlet/branches/curBranch.ser");
+            
+            if (!branches.contains(mBranch)) {
+                System.out.println("A branch with that name does not exist.");
+            } else if (curBranch.equals(mBranch)) {
+                System.out.println("Cannot merge a branch with itself.");
+            } else {
+                int split = findSplit(getEndBranches.get(mBranch), curNode);
+                HashSet<String> nodelets = curNode.getFilenames();
+                String currentID = Integer.toString(curNode.getID());
+                HashSet<String> oldies = getEndBranches.get(mBranch).getFilenames();
+                String oldID = Integer.toString(getEndBranches.get(mBranch).getID());
+                HashSet<String> splitter = getEndBranches.get(Integer.toString(split)).getFilenames();
+                for (String s : splitter) {
+                    if (!s.equals(".gitlet")) {
+                    File curl = new File(".gitlet/" + currentID + "/" + s);
+                    File old = new File(".gitlet/" + oldID + "/" + s);
+                    File toTesty = new File(".gitlet/" + Integer.toString(split) + "/" + s);
+                    boolean tester1 = Arrays.equals(Files.readAllBytes(curl.toPath()), Files.readAllBytes(toTesty.toPath()));
+                    boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toTesty.toPath()));
+                    if (!tester1 && !tester2) {
+                        File test = new File(s + ".conflicted");
+                        try {
+                            Files.copy(old.toPath(), test.toPath());    
+                        } catch (Throwable T) {
+                        }
+                    } else if (!tester2) {
+                        File testF = new File(s);
+                        FileOutputStream oStream = new FileOutputStream(s, false); 
+                        byte[] myBytes = Files.readAllBytes(old.toPath());
+                        oStream.write(myBytes);
+                        oStream.flush();
+                        oStream.close();
+                    } else if (!tester1) {
+                        File testF = new File(s);
+                        FileOutputStream oStream = new FileOutputStream(s, false); 
+                        byte[] myBytes = Files.readAllBytes(curl.toPath());
+                        oStream.write(myBytes);
+                        oStream.flush();
+                        oStream.close();
+                    }
+                }
+            }    
+        }
+        } catch (Throwable t) {
+        }
+    }
+
+    public static void Checkout(String input, String arg2) {
+        previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
+        previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");   
+        curNode = loadGitlet(".gitlet/curNode/curNode.ser"); 
+        curBranch = loadGitlet(".gitlet/branches/curBranch.ser"); 
+        branches = loadGitlet(".gitlet/branches/branches.ser");
+        id = loadGitlet(".gitlet/id/id.ser");  
+        getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");         
+
+        String info = cutDown(input);
+        if (branches.contains(info)) {
+            if (!curBranch.equals(info)) {
+                curBranch = info;
+                curNode = getEndBranches.get(info);
+                previousFiles.clear();
+                previousPaths.clear();
+                String oldID = Integer.toString(curNode.getID());
+                for (String s : curNode.getFilenames()) {
+                    File temps = new File(".gitlet/" + oldID + "/" + s);
+                    previousFiles.put(s, temps);
+                    previousPaths.add(s);
+                }
+                saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
+                saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
+                saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
+                saveGitlet(curBranch, ".gitlet/branches/curBranch.ser");
+            } else {
+                System.out.println("No need to checkout of the current branch.");
+            }
+        } else if (previousPaths.contains(info)) {
+            try {
+                File old = new File(input);
+                File replacement = new File(".gitlet/" + Integer.toString(id) + "/" + info);
+                FileOutputStream oldStream = new FileOutputStream(old, false); 
+                byte[] myBytes = Files.readAllBytes(replacement.toPath());
+                oldStream.write(myBytes);
+                oldStream.flush();
+                oldStream.close();
+            } catch (Throwable t) {
+                System.out.println(t);
+            }
+        } else if (arg2 != null) {
+            if (Integer.parseInt(info) <= id && Integer.parseInt(info) >= 0) {
+                File oldVersion = new File(".gitlet/" + info + "/" + cutDown(arg2));
+                if (oldVersion.exists()){
+                    try {
+                        File oldFile = new File(arg2);
+                        FileOutputStream oStream = new FileOutputStream(oldFile, false); 
+                        byte[] myBytes = Files.readAllBytes(oldVersion.toPath());
+                        oStream.write(myBytes);
+                        oStream.flush();
+                        oStream.close();
+                    } catch (Throwable t) {
+                        System.out.println(t);
+                    }
+                } else {
+                    System.out.println("File does not exist in that commit.");
+                }
+            } else {
+                System.out.println("No commit with that id exists.");
+            }
+        } else {
+            System.out.println("File does not exist in the most recent commit, or no such branch exists.");
+        }
+    }
+
+    public static void Status() {
+        try {
+            branches = loadGitlet(".gitlet/branches/branches.ser");
+            curBranch = loadGitlet(".gitlet/branches/curBranch.ser");
+            addList = loadGitlet(".gitlet/addList/addList.ser");
+            removeList = loadGitlet(".gitlet/removeList/removeList.ser");
+
+            System.out.println("=== Branches ===");
+            if (branches.size() > 0){
+                System.out.println("*" + curBranch);
+                for (int i = 0; i < branches.size(); i++) {
+                    if (!branches.get(i).equals(curBranch)) {
+                        System.out.println(branches.get(i));
+                    }
+                }
+            }
+            System.out.println();
+            System.out.println("=== Staged Files ===");
+            if (addList.size() > 0){
+                for (int i = 0; i < addList.size(); i++) {
+                    System.out.println(addList.get(i));
+                }
+            }
+            System.out.println();
+            System.out.println("=== Files Marked for Removal ===");
+            if (removeList.size() > 0) {
+                for (int i =0; i < removeList.size(); i++) {
+                    System.out.println(removeList.get(i));
+                }
+            }
+        } catch (Throwable t) {};
+    }
+
+    public static void Remove(String input) {
+        String fileName = cutDown(input);
+        addList = loadGitlet(".gitlet/addList/addList.ser");
+        removeList = loadGitlet(".gitlet/removeList/removeList.ser");
+        previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
+        if (addList.contains(fileName)) {
+            addList.remove(fileName);
+        } else {
+            if (!previousPaths.contains(fileName)) {
+                System.out.println("No reason to remove the file.");
+            } else if (!removeList.contains(fileName)) {
+                removeList.add(fileName);
+            } else {
+                System.out.println("File already on removal list.");
+            }
+        }
+        saveGitlet(addList, ".gitlet/addList/addList.ser");
+        saveGitlet(removeList, ".gitlet/removeList/removeList.ser");
+    }
+
+    public static String cutDown(String file) {
+        String[] parsed = file.split("/");
+        return parsed[parsed.length-1];
+    }
+
 }
