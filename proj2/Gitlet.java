@@ -416,7 +416,6 @@ public class Gitlet implements Serializable {
                                     File toT = new File(".gitlet/" + Integer.toString(splitB) + "/" + s);
                                     boolean tester1 = Arrays.equals(Files.readAllBytes(curly.toPath()), Files.readAllBytes(toT.toPath()));
                                     boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toT.toPath()));
-                                    System.out.println("e");
                                     if (!tester1 && tester2) {
                                         fileOld.add(s);
                                     } else {
@@ -445,7 +444,7 @@ public class Gitlet implements Serializable {
                                 previousFiles.clear();
                 				HashSet<String> tempoS = tempo.getFilenames();
                 				String timer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-                				String mess = "rebase" + Integer.toString(id);
+                				String mess = tempo.getMessage();
                 				for (String s : fileOld) {
                                     if (tempoS.contains(s)) {
     	                				File fTempo = new File(".gitlet/" + oldieBranch + "/" + s);
@@ -465,13 +464,17 @@ public class Gitlet implements Serializable {
 				            		previousPaths.add(s);
 				            	   
 				            	}
+                                    String[] holdCommit = new String[3];
+                                    holdCommit[0] = Integer.toString(id);
+                                    holdCommit[1] = timer;
+                                    holdCommit[2] = mess;
+                                    globalList.add(holdCommit);
                 				CommitNodes tempster = new CommitNodes(curBranch, id, comFiles, timer, mess);
                 				tempster.setParent(oldBranch);
                 				oldBranch = tempster;
                 				curNode = tempster;
                 				getEndBranches.put(curBranch, curNode);
             					getEndBranches.put(holdCommits[0], curNode);
-				    			globalList.add(holdCommits);
                 			}
                 			saveGitlet(branches, ".gitlet/branches/branches.ser");
                 			saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
@@ -496,12 +499,157 @@ public class Gitlet implements Serializable {
             }
 
             case "i-rebase":
-                try {
+                Scanner userInputScanner12 = new Scanner(System.in);
+                System.out.println("Warning: The command you entered may alter the files in your working directory. Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
+                String inp = userInputScanner12.nextLine();
+                if (inp.equals("yes")) {
+                    try {
+                    previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");
+                    previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
+                    id = loadGitlet(".gitlet/id/id.ser");
+                    holdCommits = loadGitlet(".gitlet/holdCommits/holdCommits.ser");
+                    curNode = loadGitlet(".gitlet/curNode/curNode.ser");
+                    globalList = loadGitlet(".gitlet/globalList/globalList.ser");
+                    curBranch = loadGitlet(".gitlet/branches/curBranch.ser");
+                    getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");
+                    branches = loadGitlet(".gitlet/branches/branches.ser");
+                    String deadBranch = args[1];
+                    if (curBranch.equals(deadBranch)) {
+                        System.out.println("Cannot rebase a branch onto itself");
+                        break;
+                    } else if (!branches.contains(deadBranch)) {
+                        System.out.println("A branch with that name does not exist.");
+                        break;
+                    } else {
+                        CommitNodes oldBranch = getEndBranches.get(deadBranch);
+                        int splitB = findSplit(curNode, oldBranch);
+                        if (splitB == oldBranch.getID()) {
+                            System.out.println("Already up-to-date.");
+                            break;
+                        }  else if (splitB == curNode.getID()) {
+                                curNode = oldBranch;
+                                getEndBranches.put(curBranch, curNode);
+                                saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
+                                saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
+                                break;
+                        } else {
+                            LinkedList<CommitNodes> oNodes = new LinkedList<CommitNodes>();
+                            String oldieBranch = Integer.toString(oldBranch.getID());
+                            HashSet<String> fileNew = new HashSet<String>();
+                            HashSet<String> fileOld = new HashSet<String>();
+                            for (String s : curNode.getFilenames()) {
+                                System.out.println(oldieBranch);
+                                if (!s.equals(".gitlet")) {
+                                if (oldBranch.getFilenames().contains(s)) {
+                                    System.out.println(s);
+                                    File curly = new File(".gitlet/" + Integer.toString(curNode.getID()) + "/" + s);
+                                    File old = new File(".gitlet/" + oldieBranch + "/" + s);
+                                    File toT = new File(".gitlet/" + Integer.toString(splitB) + "/" + s);
+                                    boolean tester1 = Arrays.equals(Files.readAllBytes(curly.toPath()), Files.readAllBytes(toT.toPath()));
+                                    boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toT.toPath()));
+                                    if (!tester1 && tester2) {
+                                        fileOld.add(s);
+                                    } else {
+                                        fileNew.add(s);
+                                    }
+                                } else {
+                                    fileNew.add(s);
+                                }
+                            }
+                            }
+                            CommitNodes lopp = curNode;
+                            while (lopp.getID() != splitB) {
+                                oNodes.add(lopp);
+                                lopp = lopp.getParent();
+                            }
+                            while (oNodes != null) {
+                                CommitNodes tempo = oNodes.pollLast();
+                                if (tempo == null) {
+                                    break;
+                                }
+                                System.out.println("Currently replaying:");
+                                System.out.println("Commit " + Integer.toString(tempo.getID()) + ".");
+                                System.out.println(tempo.getTime());
+                                System.out.println(tempo.getMessage());
+                                System.out.println();
+                                System.out.println("Would you like to (c)ontinue, (s)kip this commit, or change this commit's (m)essage?");
+                                String choice = userInputScanner12.nextLine();
+                                while (!choice.equals("s") && !choice.equals("c") && !choice.equals("m")) {
+                                    System.out.println("Would you like to (c)ontinue, (s)kip this commit, or change this commit's (m)essage?");
+                                    choice = userInputScanner12.nextLine();
+                                }
+                                if (choice.equals("s")) {
+
+                                } else {
+                                    String mess = "";
+                                    if (choice.equals("m")) {
+                                        System.out.println("Please enter a new message for this commit.");
+                                         mess = userInputScanner12.nextLine();
+                                    } else {
+                                         mess = tempo.getMessage();
+                                    }
+                                    id++;
+                                    File commit1 = new File(".gitlet/" + Integer.toString(id));
+                                    commit1.mkdir();
+                                    HashSet<String> comFiles = new HashSet<String>();
+                                    previousFiles.clear();
+                                    HashSet<String> tempoS = tempo.getFilenames();
+                                    String timer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                                    
+                                    for (String s : fileOld) {
+                                        if (tempoS.contains(s)) {
+                                            File fTempo = new File(".gitlet/" + oldieBranch + "/" + s);
+                                            commit(fTempo, id, s, timer, mess);
+                                        }
+                                    }
+                                    for (String s : fileNew) {
+                                        if (tempoS.contains(s)) {
+                                            File fTempoS = new File(s);
+                                            commit(fTempoS, id, s, timer, mess);                                        
+                                        }
+
+                                    }
+                                    previousPaths.clear();
+                                    for (String s : previousFiles.keySet()) {
+                                        comFiles.add(s);
+                                        previousPaths.add(s);
+                                       
+                                    }
+                                    String[] holdCommitt = new String[3];
+                                    holdCommitt[0] = Integer.toString(id);
+                                    holdCommitt[1] = timer;
+                                    holdCommitt[2] = mess;
+                                    globalList.add(holdCommitt);
+                                    CommitNodes tempster = new CommitNodes(curBranch, id, comFiles, timer, mess);
+                                    tempster.setParent(oldBranch);
+                                    oldBranch = tempster;
+                                    curNode = tempster;
+                                    getEndBranches.put(curBranch, curNode);
+                                    getEndBranches.put(holdCommits[0], curNode);
+
+                                }
+                            }
+                            saveGitlet(branches, ".gitlet/branches/branches.ser");
+                            saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
+                            saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
+                            saveGitlet(holdCommits, ".gitlet/holdCommits/holdCommits.ser");
+                            saveGitlet(id, ".gitlet/id/id.ser");
+                            saveGitlet(previousPaths, ".gitlet/previousPaths/previousPaths.ser");
+                            saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
+                            saveGitlet(getEndBranches, ".gitlet/branches/getEndBranches.ser");
+
+                        }
+                    }
+
                     break;
                 } catch (Throwable t) {
 
                     break;
                 }
+            } else {
+                System.out.println("Did not type 'yes', so aborting.");
+                break;
+            }
             default:
                 break;
             }
@@ -512,7 +660,6 @@ public class Gitlet implements Serializable {
     	holdCommits[0] = Integer.toString(id);
     	holdCommits[1] = timeStamp;
     	holdCommits[2] = message;
-    	//previousPaths.add(file);
         String fileCut = cutDown(file);
     	File test = new File(".gitlet/" + holdCommits[0] + "/" + fileCut);
     	try {
