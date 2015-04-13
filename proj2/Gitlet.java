@@ -30,7 +30,6 @@ public class Gitlet implements Serializable {
 
 	public Gitlet() {
 	}
-
 	public static void main(String[] args) {
             String command = "";
             if (args[0] != null) {
@@ -128,7 +127,7 @@ public class Gitlet implements Serializable {
                 		try {
                 			tester = Arrays.equals(Files.readAllBytes(toAdd.toPath()), Files.readAllBytes(toTest.toPath()));
                 		} catch (IOException e) {
-                			System.out.println(e);
+                            break;
                 		}
                 		 if (tester) {
                 		 	System.out.println("File has not been modified since the last commit.");
@@ -416,7 +415,7 @@ public class Gitlet implements Serializable {
                                     File toT = new File(".gitlet/" + Integer.toString(splitB) + "/" + s);
                                     boolean tester1 = Arrays.equals(Files.readAllBytes(curly.toPath()), Files.readAllBytes(toT.toPath()));
                                     boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toT.toPath()));
-                                    if (!tester1 && tester2) {
+                                    if (tester1 && !tester2) {
                                         fileOld.add(s);
                                     } else {
                                         fileNew.add(s);
@@ -427,7 +426,6 @@ public class Gitlet implements Serializable {
                             }
                             }
                 			CommitNodes lopp = curNode;
-                            System.out.println(lopp);
                 			while (lopp.getID() != splitB) {
                 				oNodes.add(lopp);
                 				lopp = lopp.getParent();
@@ -538,16 +536,14 @@ public class Gitlet implements Serializable {
                             HashSet<String> fileNew = new HashSet<String>();
                             HashSet<String> fileOld = new HashSet<String>();
                             for (String s : curNode.getFilenames()) {
-                                System.out.println(oldieBranch);
                                 if (!s.equals(".gitlet")) {
                                 if (oldBranch.getFilenames().contains(s)) {
-                                    System.out.println(s);
                                     File curly = new File(".gitlet/" + Integer.toString(curNode.getID()) + "/" + s);
                                     File old = new File(".gitlet/" + oldieBranch + "/" + s);
                                     File toT = new File(".gitlet/" + Integer.toString(splitB) + "/" + s);
                                     boolean tester1 = Arrays.equals(Files.readAllBytes(curly.toPath()), Files.readAllBytes(toT.toPath()));
                                     boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toT.toPath()));
-                                    if (!tester1 && tester2) {
+                                    if (tester1 && !tester2) {
                                         fileOld.add(s);
                                     } else {
                                         fileNew.add(s);
@@ -665,7 +661,6 @@ public class Gitlet implements Serializable {
     	try {
     		Files.copy(f.toPath(), test.toPath()); 	
 	    } catch (IOException e) {
-	    	System.out.println(e);
 	    }
 	    previousFiles.put(file,f);
     }
