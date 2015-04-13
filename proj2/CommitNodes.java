@@ -3,7 +3,7 @@ import java.io.*;
 
 public class CommitNodes implements Serializable {
 	private int commitID;
-	private  HashSet<String> filenames;
+	private HashSet<String> filenames;
 	private CommitNodes head;
 	private String time;
 	private String message;
@@ -29,17 +29,17 @@ public class CommitNodes implements Serializable {
     	children = new LinkedList<CommitNodes>();
     }
 
-    // public CommitNodes(String branchName, CommitNodes parent) {
-    // 	branch = branchName;
-    // 	message = parent.getMessage();
-    // 	filenames = parent.getFilenames();
-    // 	head = this;
-    // 	commitID = parent.getID();
-    // 	time = parent.getTime();
-    // 	children = new LinkedList<CommitNodes>();
-    // 	this.parent = parent;
+    public CommitNodes(String branchName, CommitNodes parent) {
+    	branch = branchName;
+    	message = parent.getMessage();
+    	filenames = parent.getFilenames();
+    	head = this;
+    	commitID = parent.getID();
+    	time = parent.getTime();
+    	children = new LinkedList<CommitNodes>();
+    	this.parent = parent;
 
-    // }
+    }
 
     public void addChild(CommitNodes node) {
     	children.add(node);
@@ -63,6 +63,13 @@ public class CommitNodes implements Serializable {
 
     public String getTime() {
     	return time;
+    }
+    public void setTime(String t) {
+    	time = t;
+    }
+
+    public void setMessage(String m) {
+    	message = m;
     }
 
     public HashSet<String> getFilenames() {
