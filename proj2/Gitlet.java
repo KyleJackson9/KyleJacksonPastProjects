@@ -119,10 +119,8 @@ public class Gitlet implements Serializable {
             	curNode = loadGitlet(".gitlet/curNode/curNode.ser");
             	int addID = curNode.getID();
             	boolean tester = false;
-                String[] holdME = args[1].split("/");
-                String filer = holdME[holdME.length -1];
-                System.out.println(filer);
-                File toAdd = new File(holdME[holdME.length -1]);
+                String filer = cutDown(args[1]);
+                File toAdd = new File(args[1]);
                 File toTest = new File(".gitlet/" + Integer.toString(addID) + "/" + filer);
                 	if (!toAdd.exists()) {
                 		System.out.println("File does not exist.");
@@ -134,14 +132,14 @@ public class Gitlet implements Serializable {
                 		}
                 		 if (tester) {
                 		 	System.out.println("File has not been modified since the last commit.");
-	                	} else if (removeList.contains(filer)) {
-                			removeList.remove(filer);
-                		} else if (!addList.contains(filer)) {
-                			addList.add(filer);
+	                	} else if (removeList.contains(args[1])) {
+                			removeList.remove(args[1]);
+                		} else if (!addList.contains(args[1])) {
+                			addList.add(args[1]);
                 		}
                 	} else {
-                		if (!addList.contains(filer)){
-							addList.add(filer);
+                		if (!addList.contains(args[1])){
+							addList.add(args[1]);
 						}
                 	} 
                 	saveGitlet(previousFiles, ".gitlet/previousFiles/previousFiles.ser");
@@ -193,9 +191,9 @@ public class Gitlet implements Serializable {
             	previousPaths.clear();
             	for (String s : previousFiles.keySet()) {
             		if (!removeList.contains(s)) {
-            		comFiles2.add(s);
-            		previousPaths.add(s);
-            	}
+                		comFiles2.add(s);
+                		previousPaths.add(s);
+            	   }
             	}
             	CommitNodes tempNode = new CommitNodes(curBranch, id, comFiles2, timeStamp, message);
             	tempNode.setParent(curNode);
@@ -454,7 +452,8 @@ public class Gitlet implements Serializable {
     	holdCommits[2] = message;
     	previousPaths.add(file);
     	File k = new File(file);
-    	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
+        String fileCut = cutDown(file);
+    	File test = new File(".gitlet/" + holdCommits[0] + "/" + fileCut);
     	try {
     		Files.copy(k.toPath(), test.toPath()); 	
 	    } catch (IOException e) {
@@ -468,7 +467,8 @@ public class Gitlet implements Serializable {
     	holdCommits[1] = timeStamp;
     	holdCommits[2] = message;
     	previousFiles.put(file, f);
-    	File test = new File(".gitlet/" + holdCommits[0] + "/" + file);
+        String fileN = cutDown(file);
+    	File test = new File(".gitlet/" + holdCommits[0] + "/" + fileN);
     	try {
     		Files.copy(f.toPath(), test.toPath()); 	
 	    } catch (Throwable T) {
@@ -682,17 +682,17 @@ public class Gitlet implements Serializable {
     }
 
     public static void Remove(String input) {
-        String fileName = cutDown(input);
+        //String fileName = cutDown(input);
         addList = loadGitlet(".gitlet/addList/addList.ser");
         removeList = loadGitlet(".gitlet/removeList/removeList.ser");
         previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
-        if (addList.contains(fileName)) {
-            addList.remove(fileName);
+        if (addList.contains(input)) {
+            addList.remove(input);
         } else {
-            if (!previousPaths.contains(fileName)) {
+            if (!previousPaths.contains(input)) {
                 System.out.println("No reason to remove the file.");
-            } else if (!removeList.contains(fileName)) {
-                removeList.add(fileName);
+            } else if (!removeList.contains(input)) {
+                removeList.add(input);
             } else {
                 System.out.println("File already on removal list.");
             }
