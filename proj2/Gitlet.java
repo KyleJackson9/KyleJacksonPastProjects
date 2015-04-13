@@ -198,9 +198,6 @@ public class Gitlet implements Serializable {
             	curNode = tempNode;
             	getEndBranches.put(curBranch, curNode);
             	getEndBranches.put(holdCommits[0], curNode);
-            	System.out.println("====");
-    			System.out.println(message);
-    			System.out.println(timeStamp);
     			globalList.add(holdCommits);
             	addList.clear();
             	removeList.clear();
@@ -261,11 +258,18 @@ public class Gitlet implements Serializable {
                     break;
                 }
             case "checkout":
+                Scanner userInputScanner = new Scanner(System.in);
+                System.out.println("Warning: The command you entered may alter the files in your working directory. Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
+                String input = userInputScanner.nextLine();
+                if (input.equals("yes")) {
                 try {
                     Checkout(args[1], args[2]);
                 } catch (Throwable t) {
                     Checkout(args[1], "");
                 }
+            } else {
+                System.out.println("Did not type 'yes', so aborting.");
+            }
                 break;            
             case "branch":
                 	branches = loadGitlet(".gitlet/branches/branches.ser");
@@ -285,6 +289,10 @@ public class Gitlet implements Serializable {
                 Remove(args[1]);
                 break;
             case "reset":
+                Scanner userInputScanner4 = new Scanner(System.in);
+                System.out.println("Warning: The command you entered may alter the files in your working directory. Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
+                String input3 = userInputScanner4.nextLine();
+                if (input3.equals("yes")) {
                 try {
                 	id = loadGitlet(".gitlet/id/id.ser");
                 	getEndBranches = loadGitlet(".gitlet/branches/getEndBranches.ser");
@@ -326,6 +334,10 @@ public class Gitlet implements Serializable {
                 } catch (Throwable t) {
                     break;
                 }
+            } else {
+                System.out.println("Did not type 'yes', so aborting.");
+                break;
+            }
             case "rm-branch":
                 try {
                 	curBranch = loadGitlet(".gitlet/branches/curBranch.ser"); 
@@ -346,10 +358,23 @@ public class Gitlet implements Serializable {
                     break;
                 }
             case "merge":
-                Merge(args[1]);
+            Scanner userInputScanner1 = new Scanner(System.in);
+
+                System.out.println("Warning: The command you entered may alter the files in your working directory. Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
+                String inputt = userInputScanner1.nextLine();
+                if (inputt.equals("yes")) {
+                    Merge(args[1]);
+                } else {
+                    System.out.println("Did not type 'yes', so aborting.");
+                }
                 break;
             case "rebase":
-                try {
+                
+                Scanner userInputScanner2 = new Scanner(System.in);
+                System.out.println("Warning: The command you entered may alter the files in your working directory. Uncommitted changes may be lost. Are you sure you want to continue? (yes/no)");
+                String inpu = userInputScanner2.nextLine();
+                if (inpu.equals("yes")) {
+                    try {
                 	previousFiles = loadGitlet(".gitlet/previousFiles/previousFiles.ser");
 	            	previousPaths = loadGitlet(".gitlet/previousPaths/previousPaths.ser");
 	            	id = loadGitlet(".gitlet/id/id.ser");
@@ -369,10 +394,16 @@ public class Gitlet implements Serializable {
                 	} else {
                 		CommitNodes oldBranch = getEndBranches.get(deadBranch);
                 		int splitB = findSplit(curNode, oldBranch);
-                		if (splitB == curNode.getID() || splitB == oldBranch.getID()) {
+                		if (splitB == oldBranch.getID()) {
                 			System.out.println("Already up-to-date.");
                 			break;
-                		} else {
+                		}  else if (splitB == curNode.getID()) {
+                                curNode = oldBranch;
+                                getEndBranches.put(curBranch, curNode);
+                                saveGitlet(globalList, ".gitlet/globalList/globalList.ser");
+                                saveGitlet(curNode, ".gitlet/curNode/curNode.ser");
+                                break;
+                        } else {
                 			LinkedList<CommitNodes> oNodes = new LinkedList<CommitNodes>();
                             String oldieBranch = Integer.toString(oldBranch.getID());
                             HashSet<String> fileNew = new HashSet<String>();
@@ -415,13 +446,13 @@ public class Gitlet implements Serializable {
                 				HashSet<String> tempoS = tempo.getFilenames();
                 				String timer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                 				String mess = "rebase" + Integer.toString(id);
-                				for (String s : fileOld) { //use old files
+                				for (String s : fileOld) {
                                     if (tempoS.contains(s)) {
     	                				File fTempo = new File(".gitlet/" + oldieBranch + "/" + s);
     	                				commit(fTempo, id, s, timer, mess);
                                     }
                 				}
-                                for (String s : fileNew) { //keep current
+                                for (String s : fileNew) {
                                     if (tempoS.contains(s)) {
                                         File fTempoS = new File(s);
                                         commit(fTempoS, id, s, timer, mess);                                        
@@ -459,6 +490,10 @@ public class Gitlet implements Serializable {
 
                     break;
                 }
+            } else {
+                System.out.println("Did not type 'yes', so aborting.");
+                break;
+            }
 
             case "i-rebase":
                 try {
@@ -478,7 +513,6 @@ public class Gitlet implements Serializable {
     	holdCommits[1] = timeStamp;
     	holdCommits[2] = message;
     	//previousPaths.add(file);
-    	//File k = new File(file);
         String fileCut = cutDown(file);
     	File test = new File(".gitlet/" + holdCommits[0] + "/" + fileCut);
     	try {
