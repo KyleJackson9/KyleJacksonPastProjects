@@ -750,36 +750,88 @@ public class Gitlet implements Serializable {
                 HashSet<String> oldies = getEndBranches.get(mBranch).getFilenames();
                 String oldID = Integer.toString(getEndBranches.get(mBranch).getID());
                 HashSet<String> splitter = getEndBranches.get(Integer.toString(split)).getFilenames();
-                for (String s : splitter) {
-                    if (!s.equals(".gitlet")) {
-                    File curl = new File(".gitlet/" + currentID + "/" + s);
-                    File old = new File(".gitlet/" + oldID + "/" + s);
-                    File toTesty = new File(".gitlet/" + Integer.toString(split) + "/" + s);
-                    boolean tester1 = Arrays.equals(Files.readAllBytes(curl.toPath()), Files.readAllBytes(toTesty.toPath()));
-                    boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toTesty.toPath()));
-                    if (!tester1 && !tester2) {
-                        File test = new File(s + ".conflicted");
-                        try {
-                            Files.copy(old.toPath(), test.toPath());    
-                        } catch (Throwable T) {
-                        }
-                    } else if (!tester2) {
-                        File testF = new File(s);
-                        FileOutputStream oStream = new FileOutputStream(s, false); 
-                        byte[] myBytes = Files.readAllBytes(old.toPath());
-                        oStream.write(myBytes);
-                        oStream.flush();
-                        oStream.close();
-                    } else if (!tester1) {
-                        File testF = new File(s);
-                        FileOutputStream oStream = new FileOutputStream(s, false); 
-                        byte[] myBytes = Files.readAllBytes(curl.toPath());
-                        oStream.write(myBytes);
-                        oStream.flush();
-                        oStream.close();
-                    }
+                //only checks files of old. Needs to check files of new ones against each other too
+                HashSet<String> combo = new HashSet<String>();
+                for (String s : nodelets) {
+                    combo.add(s);
                 }
-            }    
+                for (String s: oldies) {
+                    combo.add(s);
+                }
+                for (String s : combo) {
+                    if (!s.equals(".gitlet")) {
+                        if (splitter.contains(s) && oldies.contains(s) && nodelets.contains(s)) {
+                            File curl = new File(".gitlet/" + currentID + "/" + s);
+                            File old = new File(".gitlet/" + oldID + "/" + s);
+                            File toTesty = new File(".gitlet/" + Integer.toString(split) + "/" + s);
+                            boolean tester1 = Arrays.equals(Files.readAllBytes(curl.toPath()), Files.readAllBytes(toTesty.toPath()));
+                            boolean tester2 = Arrays.equals(Files.readAllBytes(old.toPath()), Files.readAllBytes(toTesty.toPath()));
+                            if (!tester1 && !tester2) {
+                                File test = new File(s + ".conflicted");
+                                try {
+                                    Files.copy(old.toPath(), test.toPath());    
+                                } catch (Throwable T) {
+                                }
+                            } else if (!tester2) {
+                                File testF = new File(s);
+                                FileOutputStream oStream = new FileOutputStream(testF, false); 
+                                byte[] myBytes = Files.readAllBytes(old.toPath());
+                                oStream.write(myBytes);
+                                oStream.flush();
+                                oStream.close();
+                            } else if (!tester1) {
+                                File testF = new File(s);
+                                FileOutputStream oStream = new FileOutputStream(testF, false); 
+                                byte[] myBytes = Files.readAllBytes(curl.toPath());
+                                oStream.write(myBytes);
+                                oStream.flush();
+                                oStream.close();
+                            }
+                        } else if (oldies.contains(s) && nodelets.contains(s)) {
+                                File test = new File(s + ".conflicted");
+                                File old = new File(".gitlet/" + oldID + "/" + s);
+                                try {
+                                    Files.copy(old.toPath(), test.toPath());    
+                                } catch (Throwable T) {
+                                }
+                        } else if (oldies.contains(s) && splitter.contains(s)) {
+                            File old = new File(".gitlet/" + oldID + "/" + s);
+                                File testF = new File(s);
+                                FileOutputStream oStream = new FileOutputStream(testF, false); 
+                                byte[] myBytes = Files.readAllBytes(old.toPath());
+                                oStream.write(myBytes);
+                                oStream.flush();
+                                oStream.close();
+
+                        } else if (nodelets.contains(s) && splitter.contains(s)) {
+                            File curl = new File(".gitlet/" + currentID + "/" + s);
+                                File testF = new File(s);
+                                FileOutputStream oStream = new FileOutputStream(testF, false); 
+                                byte[] myBytes = Files.readAllBytes(curl.toPath());
+                                oStream.write(myBytes);
+                                oStream.flush();
+                                oStream.close();
+                        } else if (nodelets.contains(s)) {
+                            File curl = new File(".gitlet/" + currentID + "/" + s);
+                                File testF = new File(s);
+                                FileOutputStream oStream = new FileOutputStream(testF, false); 
+                                byte[] myBytes = Files.readAllBytes(curl.toPath());
+                                oStream.write(myBytes);
+                                oStream.flush();
+                                oStream.close();
+
+                        } else if (oldies.contains(s)) {
+                                File curl = new File(".gitlet/" + oldID + "/" + s);
+                                File testF = new File(s);
+                                FileOutputStream oStream = new FileOutputStream(testF, false); 
+                                byte[] myBytes = Files.readAllBytes(curl.toPath());
+                                oStream.write(myBytes);
+                                oStream.flush();
+                                oStream.close();
+
+                        } 
+                    }
+                }   
         }
         } catch (Throwable t) {
         }
