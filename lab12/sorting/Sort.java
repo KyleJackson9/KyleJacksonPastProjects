@@ -255,8 +255,20 @@ public final class Sort {
         /** YOUR CODE HERE! */
 
         int tmp = a[index1];
+        SortSounds.clearRectangle(tmp);
         a[index1] = a[index2];
         a[index2] = tmp;
+            SortSounds.drawRectangle(StdDraw.RED, a[index2]);
+            StdDraw.show(5);
+            SortSounds.play(a[index2]);
+            SortSounds.drawRectangle(StdDraw.CYAN, a[index2]);
+            StdDraw.show(5);
+
+        // for (int i = 0; i < a.length; i++, rightEnd--) {
+            
+            //a[rightEnd] = tmpArray[rightEnd];
+
+        // }
 
         /** YOUR CODE HERE! */
 
