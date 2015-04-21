@@ -200,6 +200,7 @@ public class UserList {
                 combo.enqueue(q2.front());
                 q2.dequeue();
             } else {
+
                 combo.enqueue(q1.front());
                 q1.dequeue();
                 combo.enqueue(q2.front());
@@ -214,10 +215,13 @@ public class UserList {
                 combo.enqueue(q2.front());
                 q2.dequeue();
             } else {
-                combo.enqueue(q1.front());
-                q1.dequeue();
-                combo.enqueue(q2.front());
-                q2.dequeue();
+                if (q1.front().getId() < q2.front().getId()) {
+                    combo.enqueue(q1.front());
+                    q1.dequeue();
+                } else {
+                    combo.enqueue(q2.front());
+                    q2.dequeue();
+                }                
             }
 
         }
@@ -257,7 +261,7 @@ public class UserList {
         if (answer.size() == 1) {
             userQueue = answer.front();
         }
-        //return answer.front();
+        
     }
 
     /**
