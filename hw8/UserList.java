@@ -192,49 +192,32 @@ public class UserList {
         CatenableQueue<User> combo = new CatenableQueue<User>();
         while (!q1.isEmpty() && !q2.isEmpty()){
         if (sortFeature.equals("id")) {
-            // if (q1.isEmpty()) {
-            //     while (!q2.isEmpty()) {
-            //         combo.enqueue(q2.front());
-            //         q2.dequeue();
-            //     }
-                
-            // } else if (q2.isEmpty()) {
-            //     while (!q1.isEmpty()) {
-            //         combo.enqueue(q1.front());
-            //         q1.dequeue();
-            //     }
-            // } 
+ 
             if (q1.front().getId() < q2.front().getId()) {
                 combo.enqueue(q1.front());
                 q1.dequeue();
-                //mergeTwoQueues(sortFeature, q1, q2);
             } else if (q1.front().getId() > q2.front().getId()) {
                 combo.enqueue(q2.front());
                 q2.dequeue();
-                //mergeTwoQueues(sortFeature, q1, q2);
             } else {
                 combo.enqueue(q1.front());
                 q1.dequeue();
                 combo.enqueue(q2.front());
                 q2.dequeue();
-               // mergeTwoQueues(sortFeature, q1, q2);
             }
 
         } else {
             if (q1.front().getPagesPrinted() < q2.front().getPagesPrinted()) {
                 combo.enqueue(q1.front());
                 q1.dequeue();
-                //mergeTwoQueues(sortFeature, q1, q2);
             } else if (q1.front().getPagesPrinted() > q2.front().getPagesPrinted()) {
                 combo.enqueue(q2.front());
                 q2.dequeue();
-                //mergeTwoQueues(sortFeature, q1, q2);
             } else {
                 combo.enqueue(q1.front());
                 q1.dequeue();
                 combo.enqueue(q2.front());
                 q2.dequeue();
-                //mergeTwoQueues(sortFeature, q1, q2);
             }
 
         }
@@ -283,6 +266,8 @@ public class UserList {
     **/
     public void sortByBothFeatures(){
         //Replace with solution. Don't overthink this one!
+        mergesort("pages");
+        
     }
 
 
