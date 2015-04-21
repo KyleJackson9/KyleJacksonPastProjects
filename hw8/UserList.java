@@ -125,19 +125,19 @@ public class UserList {
         partition(sortFeature, q, pivot, qLess, qEqual, qGreater);
         if (qLess.size() != 0) {
             if (qLess.size() == 1) {
-                add(qLess.front());
+                this.add(qLess.front());
             } else {
                 quickSort(sortFeature, qLess);
             } 
         }
         int equalSize = qEqual.size();
         for (int i = 0; i < equalSize; i++){
-            add(qEqual.front());
+            this.add(qEqual.front());
             qEqual.dequeue();
         }
         if (qGreater.size() != 0) {
             if (qGreater.size() == 1) {
-                add(qGreater.front());
+                this.add(qGreater.front());
             } else {
                 quickSort(sortFeature, qGreater);
             } 
@@ -164,7 +164,15 @@ public class UserList {
     **/
     public CatenableQueue<CatenableQueue<User>> makeQueueOfQueues(){
         //Replace with solution.
-        return null;
+        CatenableQueue<CatenableQueue<User>> qq = new CatenableQueue<CatenableQueue<User>>();
+        while (!userQueue.isEmpty()) {
+            CatenableQueue<User> holder = new CatenableQueue<User>();
+            holder.enqueue(userQueue.front());
+            qq.enqueue(holder);
+            userQueue.dequeue();
+
+        }
+        return qq;
     }
 
     /**
@@ -181,7 +189,70 @@ public class UserList {
     **/
     public static CatenableQueue<User> mergeTwoQueues(String sortFeature, CatenableQueue<User> q1, CatenableQueue<User> q2){
         //Replace with solution.
-        return null;
+        CatenableQueue<User> combo = new CatenableQueue<User>();
+        while (!q1.isEmpty() && !q2.isEmpty()){
+        if (sortFeature.equals("id")) {
+            // if (q1.isEmpty()) {
+            //     while (!q2.isEmpty()) {
+            //         combo.enqueue(q2.front());
+            //         q2.dequeue();
+            //     }
+                
+            // } else if (q2.isEmpty()) {
+            //     while (!q1.isEmpty()) {
+            //         combo.enqueue(q1.front());
+            //         q1.dequeue();
+            //     }
+            // } 
+            if (q1.front().getId() < q2.front().getId()) {
+                combo.enqueue(q1.front());
+                q1.dequeue();
+                //mergeTwoQueues(sortFeature, q1, q2);
+            } else if (q1.front().getId() > q2.front().getId()) {
+                combo.enqueue(q2.front());
+                q2.dequeue();
+                //mergeTwoQueues(sortFeature, q1, q2);
+            } else {
+                combo.enqueue(q1.front());
+                q1.dequeue();
+                combo.enqueue(q2.front());
+                q2.dequeue();
+               // mergeTwoQueues(sortFeature, q1, q2);
+            }
+
+        } else {
+            if (q1.front().getPagesPrinted() < q2.front().getPagesPrinted()) {
+                combo.enqueue(q1.front());
+                q1.dequeue();
+                //mergeTwoQueues(sortFeature, q1, q2);
+            } else if (q1.front().getPagesPrinted() > q2.front().getPagesPrinted()) {
+                combo.enqueue(q2.front());
+                q2.dequeue();
+                //mergeTwoQueues(sortFeature, q1, q2);
+            } else {
+                combo.enqueue(q1.front());
+                q1.dequeue();
+                combo.enqueue(q2.front());
+                q2.dequeue();
+                //mergeTwoQueues(sortFeature, q1, q2);
+            }
+
+        }
+    }
+            if (q1.isEmpty()) {
+                while (!q2.isEmpty()) {
+                    combo.enqueue(q2.front());
+                    q2.dequeue();
+                }
+                
+            } else if (q2.isEmpty()) {
+                while (!q1.isEmpty()) {
+                    combo.enqueue(q1.front());
+                    q1.dequeue();
+                }
+            }
+        
+        return combo;
     }
 
     /**
@@ -193,6 +264,17 @@ public class UserList {
     **/
     public void mergeSort(String sortFeature){
         //Replace with solution.
+        CatenableQueue<CatenableQueue<User>> answer = makeQueueOfQueues();
+        while (answer.size() > 1) {
+            CatenableQueue<User> hold = mergeTwoQueues(sortFeature, answer.nth(0), answer.nth(1));
+            answer.dequeue();
+            answer.dequeue();
+            answer.enqueue(hold);
+        }
+        if (answer.size() == 1) {
+            userQueue = answer.front();
+        }
+        //return answer.front();
     }
 
     /**
