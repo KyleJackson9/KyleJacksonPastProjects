@@ -266,7 +266,8 @@ public class UserList {
     **/
     public void sortByBothFeatures(){
         //Replace with solution. Don't overthink this one!
-        mergesort("pages");
+        mergeSort("id");
+        mergeSort("pages");
         
     }
 
