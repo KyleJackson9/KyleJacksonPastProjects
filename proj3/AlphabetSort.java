@@ -67,10 +67,10 @@ public class AlphabetSort {
             char[] charWord = printed.get(i).toCharArray();
             String toTrie = "";
             for (int k = 0; k < charWord.length; k++) {
-                if (k == charWord.length - 1 && Character.isLetter(charWord[k])) {
+                if (k == charWord.length - 1 && convert.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                     System.out.println(toTrie);
-                } else if (Character.isLetter(charWord[k])) {
+                } else if (convert.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                 } else {
                     break;
