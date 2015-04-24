@@ -47,6 +47,9 @@ public class Trie {
     }
 
     public void insert(String s) {
+    	if (s.equals("")) {
+    		throw new IllegalArgumentException();
+    	}
     	Trie sink = this;
     	char[] charArray = s.toCharArray();
     	for (int i = 0; i < charArray.length; i++) {
