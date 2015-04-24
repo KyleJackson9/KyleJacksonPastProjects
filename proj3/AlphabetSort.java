@@ -78,6 +78,7 @@ public class AlphabetSort {
                 if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                     System.out.println(toTrie);
+                    break;
                 } else if (convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                 } else {
