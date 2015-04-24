@@ -66,9 +66,16 @@ public class AlphabetSort {
             char[] charWord = printed.get(i).toCharArray();
             String toTrie = "";
             for (int k = 0; k < charWord.length; k++) {
-                toTrie += convertBack.get(charWord[k]);
+                if (k == charWord.length - 1 && Character.isLetter(charWord[k])) {
+                    toTrie += convertBack.get(charWord[k]);
+                    System.out.println(toTrie);
+                } else if (Character.isLetter(charWord[k])) {
+                    toTrie += convertBack.get(charWord[k]);
+                } else {
+                    break;
+                }
+                
             }
-            System.out.println(toTrie);
         }
 
     }
