@@ -32,8 +32,11 @@ public class AlphabetSort {
             InputStreamReader isr = new InputStreamReader(fis, Charset.forName("US-ASCII"));
             BufferedReader br = new BufferedReader(isr);
         ) {
+
             char[] alpha = br.readLine().toCharArray();
-            System.out.println(alpha);
+            if (alpha == null) {
+                throw new IllegalArgumentException();
+            }
             for (int j = 0; j < alpha.length; j++) {
                 if (!convert.containsKey(alpha[j])) {
                     convert.put(alpha[j], alphabet[j]);
@@ -80,7 +83,7 @@ public class AlphabetSort {
     
     public static void main(String[] args) {
         AlphabetSort a = new AlphabetSort();
-        a.sort("test.in"); //this is the issue
+        a.sort("test.in");
         
     }
 }
