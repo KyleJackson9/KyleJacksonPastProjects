@@ -45,7 +45,6 @@ public class AlphabetSort {
             }
 
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
                 count++;
                 char[] charWord = line.toCharArray();
                 String toTrie = "";
@@ -61,7 +60,6 @@ public class AlphabetSort {
 
 
         LinkedList<String> printed = t.print(count);
-        System.out.println(printed);
         for (int i = 0; i < printed.size(); i++) {
             char[] charWord = printed.get(i).toCharArray();
             String toTrie = "";
