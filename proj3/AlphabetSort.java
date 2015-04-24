@@ -25,7 +25,7 @@ public class AlphabetSort {
     public static void sort(String in) {
         String line;
         int count = 0;
-        String x = "abcdefghijklmnopqrstuvwxyz";
+        String x = "abcdefghijklmnopqrstuvwxyz1";
         char[] alphabet = x.toCharArray();
         try (
             InputStream fis = new FileInputStream(in);
@@ -52,9 +52,16 @@ public class AlphabetSort {
                 char[] charWord = line.toCharArray();
                 String toTrie = "";
                 for (int i = 0; i < charWord.length; i++) {
-                    toTrie += convert.get(charWord[i]);
+                    if (i== charWord.length - 1 && convert.containsKey(charWord[i])) {
+                        toTrie += convert.get(charWord[i]);
+                        t.insert(toTrie);
+                    } else if (convert.containsKey(charWord[i])) {
+                        toTrie += convert.get(charWord[i]);
+                    } else {
+                        break;
+                    }
                 }
-                t.insert(toTrie);
+                
             }
         } catch (Throwable t) {
             System.out.println(t);
@@ -64,19 +71,21 @@ public class AlphabetSort {
 
         LinkedList<String> printed = t.print(count);
         for (int i = 0; i < printed.size(); i++) {
-            char[] charWord = printed.get(i).toCharArray();
+            String toPrint = printed.get(i);
+            char[] charWord = toPrint.toCharArray();
             String toTrie = "";
             for (int k = 0; k < charWord.length; k++) {
-                if (k == charWord.length - 1 && convert.containsKey(charWord[k])) {
+                if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                     System.out.println(toTrie);
-                } else if (convert.containsKey(charWord[k])) {
+                } else if (convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                 } else {
+                    System.out.println(charWord[k] + toTrie);
                     break;
                 }
-                
             }
+
         }
 
     }
