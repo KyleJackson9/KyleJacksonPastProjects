@@ -70,6 +70,7 @@ public class AlphabetSort {
 
 
         LinkedList<String> printed = t.print(count);
+        LinkedList<String> out = new LinkedList<String>();
         for (int i = 0; i < printed.size(); i++) {
             String toPrint = printed.get(i);
             char[] charWord = toPrint.toCharArray();
@@ -77,7 +78,7 @@ public class AlphabetSort {
             for (int k = 0; k < charWord.length; k++) {
                 if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
-                    System.out.println(toTrie);
+                    out.add(toTrie);
                 } else if (convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                 } else {
@@ -87,6 +88,7 @@ public class AlphabetSort {
             }
 
         }
+        System.out.println(out);
 
     }
     
