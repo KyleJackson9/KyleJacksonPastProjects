@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  */

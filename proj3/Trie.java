@@ -14,9 +14,9 @@ public class Trie {
      * @param foundFullWord checks if found a full word.
      */
     private static final int r = 255;
-    public boolean isWord;
-    public Trie[] links;
-    public boolean foundFullWord;
+    private boolean isWord;
+    private Trie[] links;
+    private boolean foundFullWord;
 
     public Trie() {
         links = new Trie[r];
@@ -33,9 +33,9 @@ public class Trie {
         if (foundFullWord) {
             return true;
         } else if (!isFullWord && found == s.length()) {
-            return true;
+            return true; 
         } 
-        return false;
+        return false; 
 
     }
     /**
@@ -45,19 +45,19 @@ public class Trie {
      */
     private int find(String s) {
         Trie sink = this;
-        char[] charArray = s.toCharArray();
-        int k = 0;
+        char[] charArray = s.toCharArray(); 
+        int k = 0; 
         for (int i = 0; i < charArray.length; i++) {
             int indexOfChar = charArray[i];
             if (sink.links[indexOfChar] == null) {
-                foundFullWord = false;
-                return k;
+                foundFullWord = false; 
+                return k; 
             } 
-            k++;
-            sink = sink.links[indexOfChar];
-            foundFullWord = sink.isWord;
+            k++; 
+            sink = sink.links[indexOfChar]; 
+            foundFullWord = sink.isWord; 
         }
-        return k;
+        return k; 
 
     }
     /**
@@ -68,42 +68,42 @@ public class Trie {
         if (s.equals("")) {
             throw new IllegalArgumentException();
         }
-        Trie sink = this;
-        char[] charArray = s.toCharArray();
+        Trie sink = this; 
+        char[] charArray = s.toCharArray(); 
         for (int i = 0; i < charArray.length; i++) {
-            int indexOfChar = charArray[i];
+            int indexOfChar = charArray[i]; 
             if (sink.links[indexOfChar] != null) {
-                sink = sink.links[indexOfChar];
+                sink = sink.links[indexOfChar]; 
             } else {
-                sink.links[indexOfChar] = new Trie();
-                sink = sink.links[indexOfChar];
+                sink.links[indexOfChar] = new Trie(); 
+                sink = sink.links[indexOfChar]; 
             }
         }
-        sink.isWord = true;
+        sink.isWord = true; 
     }
 
     public LinkedList<String> print(int size) {
         LinkedList rec = new LinkedList(); 
         final int BUFFER = 1024; 
-        char[] buffer = new char[BUFFER];   
-        doApply(rec,0,buffer,this); 
+        char[] buffer = new char[BUFFER];    
+        doApply(rec, 0, buffer, this); 
         return rec; 
     } 
 
     private void doApply(LinkedList rec, int index, char buffer[], Trie t) {
-    int i = 0; 
-    if (t != null) {
-        if (t.isWord) {
-            rec.add(new String(buffer, 0, index));
-            i++;
-        }
-        int k;
-        for(k=0; k < r; k++){
-            if (t.links[k] != null) {
-                buffer[index] = (char)(k);
-                doApply(rec,index+1,buffer,t.links[k]);
+        int i = 0; 
+        if (t != null) {
+            if (t.isWord) {
+                rec.add(new String(buffer, 0, index));
+                i++; 
             }
-        }
-    }       
+            int k; 
+            for(k = 0; k < r; k++){
+                if (t.links[k] != null) {
+                    buffer[index] = (char) (k);
+                    doApply(rec,index+1, buffer, t.links[k]);
+                }
+            }
+        }       
     }
 }
