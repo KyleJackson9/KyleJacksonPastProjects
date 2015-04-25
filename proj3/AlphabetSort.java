@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.io.IOException;
+import java.util.Scanner;
 /**
  * Alphabet Sort. Supports weird alphabets getting sorted. 
  * Should support determining whether a word is a full word in the 
@@ -28,18 +29,13 @@ public class AlphabetSort {
      * Initializes required data structures from parallel arrays.
      * @param in  is the String path name.
      */
-    public void sort(String in) {
+    public void sort(Scanner sc) {
         String line;
         int count = 0;
         String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         char[] alphabet = x.toCharArray();
-        try (
-            InputStream fis = new FileInputStream(in);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("US-ASCII"));
-            BufferedReader br = new BufferedReader(isr);
-        ) {
-
-            char[] alpha = br.readLine().toCharArray();
+        Scanner in = sc;
+        char[] alpha = in.nextLine().toCharArray();
             if (alpha == null) {
                 throw new IllegalArgumentException();
             }
@@ -53,7 +49,7 @@ public class AlphabetSort {
 
             }
 
-            while ((line = br.readLine()) != null) {
+            while ((line = in.nextLine()) != null) {
                 count++;
                 char[] charWord = line.toCharArray();
                 String toTrie = "";
@@ -68,9 +64,9 @@ public class AlphabetSort {
                     }
                 }
             }
-        } catch (IOException w) {
-            System.out.println(w);
-        } 
+        // } catch (IOException w) {
+        //     System.out.println(w);
+        // } 
         
         LinkedList<String> printed = t.print(count);
         for (int i = 0; i < printed.size(); i++) {
@@ -82,7 +78,59 @@ public class AlphabetSort {
             }
             System.out.println(toTrie);
         }
+        in.close();
     }
+
+        // try (
+        //     InputStream fis = new FileInputStream(in);
+        //     InputStreamReader isr = new InputStreamReader(fis, Charset.forName("US-ASCII"));
+        //     BufferedReader br = new BufferedReader(isr);
+        // ) {
+
+    //         char[] alpha = br.readLine().toCharArray();
+    //         if (alpha == null) {
+    //             throw new IllegalArgumentException();
+    //         }
+    //         for (int j = 0; j < alpha.length; j++) {
+    //             if (!convert.containsKey(alpha[j])) {
+    //                 convert.put(alpha[j], alphabet[j]);
+    //                 convertBack.put(alphabet[j], alpha[j]);
+    //             } else {
+    //                 throw new IllegalArgumentException();
+    //             }
+
+    //         }
+
+    //         while ((line = br.readLine()) != null) {
+    //             count++;
+    //             char[] charWord = line.toCharArray();
+    //             String toTrie = "";
+    //             for (int i = 0; i < charWord.length; i++) {
+    //                 if (i == charWord.length - 1 && convert.containsKey(charWord[i])) {
+    //                     toTrie += convert.get(charWord[i]);
+    //                     t.insert(toTrie);
+    //                 } else if (convert.containsKey(charWord[i])) {
+    //                     toTrie += convert.get(charWord[i]);
+    //                 } else {
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     } catch (IOException w) {
+    //         System.out.println(w);
+    //     } 
+        
+    //     LinkedList<String> printed = t.print(count);
+    //     for (int i = 0; i < printed.size(); i++) {
+    //         String toPrint = printed.get(i);
+    //         char[] charWord = toPrint.toCharArray();
+    //         String toTrie = "";
+    //         for (int k = 0; k < charWord.length; k++) {
+    //             toTrie += convertBack.get(charWord[k]);
+    //         }
+    //         System.out.println(toTrie);
+    //     }
+    // }
 
 
         /**
@@ -90,7 +138,8 @@ public class AlphabetSort {
      */
     public static void main(String[] args) {
         AlphabetSort a = new AlphabetSort();
-        a.sort("test.in");
+        Scanner sc = new Scanner(System.in);
+        a.sort(sc);
         
     }
 }
