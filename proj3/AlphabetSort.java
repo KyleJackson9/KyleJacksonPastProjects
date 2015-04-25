@@ -46,7 +46,6 @@ public class AlphabetSort {
                 } else {
                     throw new IllegalArgumentException();
                 }
-
             }
 
             while (in.hasNext()) {
@@ -65,10 +64,7 @@ public class AlphabetSort {
                     }
                 }
             }
-        // } catch (IOException w) {
-        //     System.out.println(w);
-        // } 
-        
+       
         LinkedList<String> printed = t.print(count);
         for (int i = 0; i < printed.size(); i++) {
             String toPrint = printed.get(i);
@@ -81,58 +77,6 @@ public class AlphabetSort {
         }
         in.close();
     }
-
-        // try (
-        //     InputStream fis = new FileInputStream(in);
-        //     InputStreamReader isr = new InputStreamReader(fis, Charset.forName("US-ASCII"));
-        //     BufferedReader br = new BufferedReader(isr);
-        // ) {
-
-    //         char[] alpha = br.readLine().toCharArray();
-    //         if (alpha == null) {
-    //             throw new IllegalArgumentException();
-    //         }
-    //         for (int j = 0; j < alpha.length; j++) {
-    //             if (!convert.containsKey(alpha[j])) {
-    //                 convert.put(alpha[j], alphabet[j]);
-    //                 convertBack.put(alphabet[j], alpha[j]);
-    //             } else {
-    //                 throw new IllegalArgumentException();
-    //             }
-
-    //         }
-
-    //         while ((line = br.readLine()) != null) {
-    //             count++;
-    //             char[] charWord = line.toCharArray();
-    //             String toTrie = "";
-    //             for (int i = 0; i < charWord.length; i++) {
-    //                 if (i == charWord.length - 1 && convert.containsKey(charWord[i])) {
-    //                     toTrie += convert.get(charWord[i]);
-    //                     t.insert(toTrie);
-    //                 } else if (convert.containsKey(charWord[i])) {
-    //                     toTrie += convert.get(charWord[i]);
-    //                 } else {
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     } catch (IOException w) {
-    //         System.out.println(w);
-    //     } 
-        
-    //     LinkedList<String> printed = t.print(count);
-    //     for (int i = 0; i < printed.size(); i++) {
-    //         String toPrint = printed.get(i);
-    //         char[] charWord = toPrint.toCharArray();
-    //         String toTrie = "";
-    //         for (int k = 0; k < charWord.length; k++) {
-    //             toTrie += convertBack.get(charWord[k]);
-    //         }
-    //         System.out.println(toTrie);
-    //     }
-    // }
-
 
         /**
      * Spits out the sorted array.
