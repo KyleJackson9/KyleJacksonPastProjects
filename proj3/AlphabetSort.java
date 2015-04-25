@@ -12,16 +12,24 @@ import java.util.LinkedList;
  * @author Kyle Jackson
  */
 public class AlphabetSort {
-    public static HashMap<Character, Character> convert;
-    public static HashMap<Character, Character> convertBack;
-    public static Trie t;
-
+    private static HashMap<Character, Character> convert;
+    private static HashMap<Character, Character> convertBack;
+    private static Trie t;
+        /**
+     * Initializes required data structures from parallel arrays.
+     * @param convert  changes their alphabet to ours.
+     * @param convertBack changes our alphabet to theirs.
+     * @param t a trie to hold and sort what they add in.
+     */
     public AlphabetSort() {
         convert = new HashMap<Character, Character>();
         convertBack = new HashMap<Character, Character>();
         t = new Trie();
     }
-
+        /**
+     * Initializes required data structures from parallel arrays.
+     * @param in  is the String path name.
+     */
     public static void sort(String in) {
         String line;
         int count = 0;
@@ -63,7 +71,7 @@ public class AlphabetSort {
                 }
                 
             }
-        } catch (Throwable t) {
+        } catch (IllegalArgumentException t) {
             System.out.println(t);
         }
         
