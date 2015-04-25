@@ -25,7 +25,7 @@ public class AlphabetSort {
     public static void sort(String in) {
         String line;
         int count = 0;
-        String x = "abcdefghijklmnopqrstuvwxyz1";
+        String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         char[] alphabet = x.toCharArray();
         try (
             InputStream fis = new FileInputStream(in);
@@ -78,7 +78,6 @@ public class AlphabetSort {
                 if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                     System.out.println(toTrie);
-                    break;
                 } else if (convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
                 } else {
@@ -93,7 +92,9 @@ public class AlphabetSort {
     
     public static void main(String[] args) {
         AlphabetSort a = new AlphabetSort();
-        a.sort("test.in");
+        a.sort(args[0]);
         
     }
+}
+}
 }
