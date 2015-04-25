@@ -17,7 +17,13 @@ public class Trie {
     private boolean isWord;
     private Trie[] links;
     private boolean foundFullWord;
-
+        /**
+     * Initializes required data structures from parallel arrays.
+     * @param r  length of links.
+     * @param isWord True if its a full word.
+     * @param links All of the children of that Trie.
+     * @param foundFullWord checks if found a full word.
+     */
     public Trie() {
         links = new Trie[r];
         isWord = false;
@@ -81,7 +87,11 @@ public class Trie {
         }
         sink.isWord = true; 
     }
-
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param size a size of the total to be inputted.
+     * @return LinkedList of all the words popping out of the print.
+     */
     public LinkedList<String> print(int size) {
         LinkedList rec = new LinkedList(); 
         final int BUFFER = 1024; 
@@ -89,7 +99,13 @@ public class Trie {
         doApply(rec, 0, buffer, this); 
         return rec; 
     } 
-
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param rec a String to be inputted.
+     * @param index a int to see how deep.
+     * @param buffer a character array to hold output.
+     * @param t a Trie to test.
+     */
     private void doApply(LinkedList rec, int index, char[] buffer, Trie t) {
         int i = 0; 
         if (t != null) {
@@ -101,7 +117,7 @@ public class Trie {
             for (k = 0; k < r; k++) {
                 if (t.links[k] != null) {
                     buffer[index] = (char) (k);
-                    doApply(rec,index + 1, buffer, t.links[k]); 
+                    doApply(rec, index + 1, buffer, t.links[k]); 
                 }
             }
         }       
