@@ -76,7 +76,7 @@ public class AlphabetSort {
 
 
         LinkedList<String> printed = t.print(count);
-        LinkedList<String> out = new LinkedList<String>();
+        //LinkedList<String> out = new LinkedList<String>();
         for (int i = 0; i < printed.size(); i++) {
             String toPrint = printed.get(i);
             char[] charWord = toPrint.toCharArray();
@@ -84,10 +84,9 @@ public class AlphabetSort {
             for (int k = 0; k < charWord.length; k++) {
                 toTrie += convertBack.get(charWord[k]);
             }
-            out.add(toTrie);
-
+            System.out.println(toTrie);
         }
-        System.out.println(out);
+        //System.out.println(out);
 
     }
 
@@ -97,7 +96,7 @@ public class AlphabetSort {
      */
     public static void main(String[] args) {
         AlphabetSort a = new AlphabetSort();
-        a.sort("test.in");
+        a.sort(args[0]);
         
     }
 }
