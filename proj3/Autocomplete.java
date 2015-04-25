@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.HashMap;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  * @author Kyle Jackson
