@@ -90,7 +90,7 @@ public class Trie {
         return rec; 
     } 
 
-    private void doApply(LinkedList rec, int index, char buffer[], Trie t) {
+    private void doApply(LinkedList rec, int index, char[] buffer, Trie t) {
         int i = 0; 
         if (t != null) {
             if (t.isWord) {
@@ -98,10 +98,10 @@ public class Trie {
                 i++; 
             }
             int k; 
-            for(k = 0; k < r; k++){
+            for (k = 0; k < r; k++) {
                 if (t.links[k] != null) {
                     buffer[index] = (char) (k);
-                    doApply(rec,index+1, buffer, t.links[k]);
+                    doApply(rec,index + 1, buffer, t.links[k]); 
                 }
             }
         }       
