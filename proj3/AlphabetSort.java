@@ -92,7 +92,7 @@ public class AlphabetSort {
     
     public static void main(String[] args) {
         AlphabetSort a = new AlphabetSort();
-        a.sort(args[0]);
+        a.sort("test.in");
         
     }
 }
