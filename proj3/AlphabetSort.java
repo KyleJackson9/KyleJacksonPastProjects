@@ -76,16 +76,17 @@ public class AlphabetSort {
             char[] charWord = toPrint.toCharArray();
             String toTrie = "";
             for (int k = 0; k < charWord.length; k++) {
-                if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
+                // if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
+                //     toTrie += convertBack.get(charWord[k]);
+                //     out.add(toTrie);
+                // } else if (convertBack.containsKey(charWord[k])) {
                     toTrie += convertBack.get(charWord[k]);
-                    out.add(toTrie);
-                } else if (convertBack.containsKey(charWord[k])) {
-                    toTrie += convertBack.get(charWord[k]);
-                } else {
-                    System.out.println(charWord[k] + toTrie);
-                    break;
-                }
+                // } else {
+                //     break;
+                // }
+
             }
+            out.add(toTrie);
 
         }
         System.out.println(out);
