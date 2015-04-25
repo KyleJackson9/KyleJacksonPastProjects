@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.io.IOException;
 /**
  * Prefix-Trie. Supports linear time find() and insert(). 
  * Should support determining whether a word is a full word in the 
@@ -73,9 +74,7 @@ public class AlphabetSort {
             }
         } catch (IOException t) {
             System.out.println(t);
-        } catch (FileNotFoundException t) {
-            System.out.println(t);
-        }
+        } 
         
 
 

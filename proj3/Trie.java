@@ -6,23 +6,13 @@ import java.util.LinkedList;
  * @author Kyle Jackson
  */
 public class Trie {
-        /**
-     * Initializes required data structures from parallel arrays.
-     * @param r  length of links.
-     * @param isWord True if its a full word.
-     * @param links All of the children of that Trie.
-     * @param foundFullWord checks if found a full word.
-     */
+
     private static final int r = 255;
     private boolean isWord;
     private Trie[] links;
     private boolean foundFullWord;
         /**
      * Initializes required data structures from parallel arrays.
-     * @param r  length of links.
-     * @param isWord True if its a full word.
-     * @param links All of the children of that Trie.
-     * @param foundFullWord checks if found a full word.
      */
     public Trie() {
         links = new Trie[r];
@@ -31,7 +21,8 @@ public class Trie {
     }
         /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0
-     * @param term
+     * @param s the string you try and find
+     * @param isFullWord checks to see what type of word they looking for. 
      * @return true if full word is true and it was a full word. 
      */
     public boolean find(String s, boolean isFullWord) {
