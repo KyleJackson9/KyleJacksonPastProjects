@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
+ * @author Kyle Jackson
  */
 public class Autocomplete {
     /**
@@ -14,10 +15,10 @@ public class Autocomplete {
     /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0
      * @param term
-     * @return
+     * @return a double of the weight
      */
     public double weightOf(String term) {
-        return 9.2;
+        return 0;
     }
 
     /**
@@ -55,7 +56,8 @@ public class Autocomplete {
     }
     /**
      * Test client. Reads the data from the file, 
-     * then repeatedly reads autocomplete queries from standard input and prints out the top k matching terms.
+     * then repeatedly reads autocomplete queries from standard 
+     * input and prints out the top k matching terms.
      * @param args takes the name of an input file and an integer k as command-line arguments
      */
     public static void main(String[] args) {
