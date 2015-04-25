@@ -49,7 +49,8 @@ public class AlphabetSort {
 
             }
 
-            while ((line = in.nextLine()) != null) {
+            while (in.hasNext()) {
+                line = in.nextLine();
                 count++;
                 char[] charWord = line.toCharArray();
                 String toTrie = "";
