@@ -52,16 +52,15 @@ public class AlphabetSort {
                 char[] charWord = line.toCharArray();
                 String toTrie = "";
                 for (int i = 0; i < charWord.length; i++) {
-                    // if (i== charWord.length - 1 && convert.containsKey(charWord[i])) {
-                    //     toTrie += convert.get(charWord[i]);
-                    //     t.insert(toTrie);
-                    // } else if (convert.containsKey(charWord[i])) {
+                    if (i == charWord.length - 1 && convert.containsKey(charWord[i])) {
                         toTrie += convert.get(charWord[i]);
-                    // } else {
-                    //     break;
-                    // }
+                        t.insert(toTrie);
+                    } else if (convert.containsKey(charWord[i])) {
+                        toTrie += convert.get(charWord[i]);
+                    } else {
+                        break;
+                    }
                 }
-                                        t.insert(toTrie);
                 
             }
         } catch (Throwable t) {
@@ -77,15 +76,7 @@ public class AlphabetSort {
             char[] charWord = toPrint.toCharArray();
             String toTrie = "";
             for (int k = 0; k < charWord.length; k++) {
-                // if (k == charWord.length - 1 && convertBack.containsKey(charWord[k])) {
-                //     toTrie += convertBack.get(charWord[k]);
-                //     out.add(toTrie);
-                // } else if (convertBack.containsKey(charWord[k])) {
-                    toTrie += convertBack.get(charWord[k]);
-                // } else {
-                //     break;
-                // }
-
+                toTrie += convertBack.get(charWord[k]);
             }
             out.add(toTrie);
 
