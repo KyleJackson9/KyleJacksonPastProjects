@@ -29,7 +29,6 @@ public class AlphabetSort {
      * @param in  is the String path name.
      */
     public static void sort(String in) {
-        Trie t = this;
         String line;
         int count = 0;
         String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
