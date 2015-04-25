@@ -17,7 +17,7 @@ public class Autocomplete {
      * @return
      */
     public double weightOf(String term) {
-        return null;
+        return 9.2;
     }
 
     /**

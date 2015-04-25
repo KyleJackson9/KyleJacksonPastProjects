@@ -71,7 +71,9 @@ public class AlphabetSort {
                 }
                 
             }
-        } catch (IllegalArgumentException t) {
+        } catch (IOException t) {
+            System.out.println(t);
+        } catch (FileNotFoundException t) {
             System.out.println(t);
         }
         
