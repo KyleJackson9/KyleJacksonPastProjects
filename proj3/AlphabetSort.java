@@ -7,15 +7,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.io.IOException;
 /**
- * Prefix-Trie. Supports linear time find() and insert(). 
+ * Alphabet Sort. Supports weird alphabets getting sorted. 
  * Should support determining whether a word is a full word in the 
  * Trie or a prefix.
  * @author Kyle Jackson
  */
 public class AlphabetSort {
-    private static HashMap<Character, Character> convert;
-    private static HashMap<Character, Character> convertBack;
-    private static Trie t;
+    private HashMap<Character, Character> convert;
+    private HashMap<Character, Character> convertBack;
+    private Trie t;
         /**
      * Initializes required data structures for conversion.
      */
@@ -28,7 +28,7 @@ public class AlphabetSort {
      * Initializes required data structures from parallel arrays.
      * @param in  is the String path name.
      */
-    public static void sort(String in) {
+    public void sort(String in) {
         String line;
         int count = 0;
         String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -67,16 +67,12 @@ public class AlphabetSort {
                         break;
                     }
                 }
-                
             }
         } catch (IOException w) {
             System.out.println(w);
         } 
         
-
-
         LinkedList<String> printed = t.print(count);
-        //LinkedList<String> out = new LinkedList<String>();
         for (int i = 0; i < printed.size(); i++) {
             String toPrint = printed.get(i);
             char[] charWord = toPrint.toCharArray();
@@ -86,12 +82,10 @@ public class AlphabetSort {
             }
             System.out.println(toTrie);
         }
-        //System.out.println(out);
-
     }
 
 
-            /**
+        /**
      * Spits out the sorted array.
      */
     public static void main(String[] args) {
