@@ -37,7 +37,7 @@ public class Trie {
     }
     /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0
-     * @param s
+     * @param s  string that is input to be found.
      * @return int of how long the string got to before exiting
      */
     private int find(String s) {
@@ -55,7 +55,6 @@ public class Trie {
             foundFullWord = sink.isWord; 
         }
         return k; 
-
     }
     /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0

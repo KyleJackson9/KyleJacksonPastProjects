@@ -17,10 +17,7 @@ public class AlphabetSort {
     private static HashMap<Character, Character> convertBack;
     private static Trie t;
         /**
-     * Initializes required data structures from parallel arrays.
-     * @param convert  changes their alphabet to ours.
-     * @param convertBack changes our alphabet to theirs.
-     * @param t a trie to hold and sort what they add in.
+     * Initializes required data structures for conversion.
      */
     public AlphabetSort() {
         convert = new HashMap<Character, Character>();
@@ -32,6 +29,7 @@ public class AlphabetSort {
      * @param in  is the String path name.
      */
     public static void sort(String in) {
+        Trie t = this;
         String line;
         int count = 0;
         String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -72,8 +70,8 @@ public class AlphabetSort {
                 }
                 
             }
-        } catch (IOException t) {
-            System.out.println(t);
+        } catch (IOException w) {
+            System.out.println(w);
         } 
         
 
@@ -93,7 +91,11 @@ public class AlphabetSort {
         System.out.println(out);
 
     }
-    
+
+
+            /**
+     * Spits out the sorted array.
+     */
     public static void main(String[] args) {
         AlphabetSort a = new AlphabetSort();
         a.sort("test.in");
