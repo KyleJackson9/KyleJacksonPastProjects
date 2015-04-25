@@ -4,12 +4,20 @@ import java.util.LinkedList;
  * @author Kyle Jackson
  */
 public class Autocomplete {
+    HashMap<String, double> hold;
+    Trie t;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
      * @param weights Array of weights.
      */
     public Autocomplete(String[] terms, double[] weights) {
+        hold = new HashMap<String, double>();
+        t = new Trie();
+        for (int i = 0; i < terms.length; i++) {
+            hold.put(terms[i], weights[i]);
+            t.insert(terms[i]);
+        }
     }
 
     /**
@@ -18,7 +26,7 @@ public class Autocomplete {
      * @return a double of the weight
      */
     public double weightOf(String term) {
-        return 0;
+        return hold.get();
     }
 
     /**
@@ -27,6 +35,7 @@ public class Autocomplete {
      * @return Best (highest weight) matching string in the dictionary.
      */
     public String topMatch(String prefix) {
+        //need to print out only those below that (fix Trie print by putting in prefix)
         return null;
     }
 
