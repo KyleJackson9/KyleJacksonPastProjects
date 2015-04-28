@@ -32,13 +32,19 @@ public class AlphabetSort {
     public void sort(Scanner sc) {
         String line;
         int count = 0;
-        String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        char[] alphabet = x.toCharArray();
+        //char[] alphabet = x.toCharArray();
+        char[] alphabet = new char[256];
+        for (int i=0; i<256; i++){
+          char temp = (char) i;
+          alphabet[i] = temp;
+        }
+        //String x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        
         Scanner in = sc;
+        if (!in.hasNext()) {
+           throw new IllegalArgumentException(); 
+        }
         char[] alpha = in.nextLine().toCharArray();
-            if (alpha == null) {
-                throw new IllegalArgumentException();
-            }
             for (int j = 0; j < alpha.length; j++) {
                 if (!convert.containsKey(alpha[j])) {
                     convert.put(alpha[j], alphabet[j]);
