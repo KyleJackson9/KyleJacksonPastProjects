@@ -37,6 +37,9 @@ public class AlphabetSort {
                 throw new IllegalArgumentException();
             }
         }
+        if (!in.hasNext()) {
+            throw new IllegalArgumentException();
+        }
         while (in.hasNext()) {
             line = in.nextLine();
             t.insert(line);
