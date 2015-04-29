@@ -7,7 +7,7 @@ import java.util.LinkedList;
  */
 public class Trie {
 
-    private static final int r = 255;
+    private static final int MAX = 255;
     private boolean isWord;
     private Trie[] links;
     private boolean foundFullWord;
@@ -15,7 +15,7 @@ public class Trie {
      * Initializes required data structures from parallel arrays.
      */
     public Trie() {
-        links = new Trie[r];
+        links = new Trie[MAX];
         isWord = false;
         foundFullWord = false;
     }
@@ -104,7 +104,7 @@ public class Trie {
                 i++; 
             }
             int k; 
-            for (k = 0; k < r; k++) {
+            for (k = 0; k < MAX; k++) {
                 if (t.links[k] != null) {
                     buffer[index] = (char) (k);
                     doApply(rec, index + 1, buffer, t.links[k]); 
