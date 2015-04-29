@@ -11,7 +11,7 @@ public class AlphabetSort {
     private HashMap<Character, Character> convert;
     private HashMap<Character, Character> convertBack;
     private Trie t;
-    private static final int l = 256;
+    private static final int MAX = 255;
         /**
      * Initializes required data structures for conversion.
      */
@@ -27,14 +27,14 @@ public class AlphabetSort {
     public void sort(Scanner sc) {
         String line;
         int count = 0;
-        char[] alphabet = new char[l];
-        for (int i = 0; i < 256; i++){
+        char[] alphabet = new char[MAX];
+        for (int i = 0; i < MAX; i++) {
             char temp = (char) i;
             alphabet[i] = temp;
         }      
         Scanner in = sc;
         if (!in.hasNext()) {
-           throw new IllegalArgumentException(); 
+            throw new IllegalArgumentException(); 
         }
         char[] alpha = in.nextLine().toCharArray();
         for (int j = 0; j < alpha.length; j++) {

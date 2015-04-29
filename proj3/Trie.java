@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.HashMap;
 /**
  * Prefix-Trie. Supports linear time find() and insert(). 
  * Should support determining whether a word is a full word in the 
@@ -9,13 +10,13 @@ public class Trie {
 
     private static final int MAX = 255;
     private boolean isWord;
-    private Trie[] links;
+    private HashMap<Integer, Trie> links;
     private boolean foundFullWord;
         /**
      * Initializes required data structures from parallel arrays.
      */
     public Trie() {
-        links = new Trie[MAX];
+        links = new HashMap<Integer, Trie>();
         isWord = false;
         foundFullWord = false;
     }
@@ -46,12 +47,12 @@ public class Trie {
         int k = 0; 
         for (int i = 0; i < charArray.length; i++) {
             int indexOfChar = charArray[i];
-            if (sink.links[indexOfChar] == null) {
+            if (sink.links.get(indexOfChar) == null) {
                 foundFullWord = false; 
                 return k; 
             } 
             k++; 
-            sink = sink.links[indexOfChar]; 
+            sink = sink.links.get(indexOfChar); 
             foundFullWord = sink.isWord; 
         }
         return k; 
@@ -68,11 +69,11 @@ public class Trie {
         char[] charArray = s.toCharArray(); 
         for (int i = 0; i < charArray.length; i++) {
             int indexOfChar = charArray[i]; 
-            if (sink.links[indexOfChar] != null) {
-                sink = sink.links[indexOfChar]; 
+            if (sink.links.get(indexOfChar) != null) {
+                sink = sink.links.get(indexOfChar); 
             } else {
-                sink.links[indexOfChar] = new Trie(); 
-                sink = sink.links[indexOfChar]; 
+                sink.links.put(indexOfChar, new Trie()); 
+                sink = sink.links.get(indexOfChar); 
             }
         }
         sink.isWord = true; 
@@ -105,9 +106,9 @@ public class Trie {
             }
             int k; 
             for (k = 0; k < MAX; k++) {
-                if (t.links[k] != null) {
+                if (t.links.get(k) != null) {
                     buffer[index] = (char) (k);
-                    doApply(rec, index + 1, buffer, t.links[k]); 
+                    doApply(rec, index + 1, buffer, t.links.get(k)); 
                 }
             }
         }       
