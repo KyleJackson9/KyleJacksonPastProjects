@@ -1,6 +1,5 @@
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.HashSet;
 /**
  * Alphabet Sort. Supports weird alphabets getting sorted. 
  * Should support determining whether a word is a full word in the 
@@ -8,103 +7,61 @@ import java.util.Scanner;
  * @author Kyle Jackson
  */
 public class AlphabetSort {
-    // private HashMap<Character, Character> convert;
-    // private HashMap<Character, Character> convertBack;
+    private HashSet<Character> convert;
     private Trie t;
-    // private static final int MAX = 255;
         /**
      * Initializes required data structures for conversion.
      */
     public AlphabetSort() {
-        // convert = new HashMap<Character, Character>();
-        // convertBack = new HashMap<Character, Character>();
+        convert = new HashSet<Character>();
         t = new Trie();
     }
         /**
      * Initializes required data structures from parallel arrays.
-     * @param in  is the String path name.
+     * @param sc  is the Scanner of System.in name.
      */
     public void sort(Scanner sc) {
-        String line;
-        // int count = 0;
-        // char[] alphabet = new char[MAX];
-        // for (int i = 0; i < MAX; i++) {
-        //     char temp = (char) i;
-        //     alphabet[i] = temp;
-        // }      
+        String line;  
         Scanner in = sc;
-        if (!in.hasNext()) {
-            throw new IllegalArgumentException(); 
+        char[] alpha;
+        try {
+            alpha = in.nextLine().toCharArray();
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
         }
-        char[] alpha = in.nextLine().toCharArray();
-        // for (int j = 0; j < alpha.length; j++) {
-        //     if (!convert.containsKey(alpha[j])) {
-        //         convert.put(alpha[j], alphabet[j]);
-        //         convertBack.put(alphabet[j], alpha[j]);
-        //     } else {
-        //         throw new IllegalArgumentException();
-        //     }
-        // }
+       
+        for (int j = 0; j < alpha.length; j++) {
+            if (!convert.contains(alpha[j])) {
+                convert.add(alpha[j]);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
         while (in.hasNext()) {
             line = in.nextLine();
-            //System.out.println(line);
             t.insert(line);
-            // count++;
-            // char[] charWord = line.toCharArray();
-            // String toTrie = "";
-            // for (int i = 0; i < charWord.length; i++) {
-            //     if (i == charWord.length - 1 && convert.containsKey(charWord[i])) {
-            //         toTrie += convert.get(charWord[i]);
-            //         t.insert(toTrie);
-            //     } else if (convert.containsKey(charWord[i])) {
-            //         toTrie += convert.get(charWord[i]);
-            //     } else {
-            //         break;
-            //     }
-            // }
         }
         sorter(alpha, t, "");
-   
-        // LinkedList<String> printed = t.print(count);
-        // for (int i = 0; i < printed.size(); i++) {
-        //     String toPrint = printed.get(i);
-        //     char[] charWord = toPrint.toCharArray();
-        //     String toTrie = "";
-        //     for (int k = 0; k < charWord.length; k++) {
-        //         toTrie += convertBack.get(charWord[k]);
-        //     }
-        //     System.out.println(toTrie);
-        // }
         in.close();
     }
+            /**
+     * Spits out the sorted array.
+     * @param alpha takes their weird alphabet
+     * @param t takes the trie storing everything
+     * @param s takes in the string they are building/testing
+     */
     public void sorter(char[] alpha, Trie t, String s) {
-        //System.out.println(s + "here");
+        Trie x = t;
         if (t.isWord) {
-            System.out.println(t.fullWord);
+            System.out.println(x.fullWord);
         }
         for (int i : alpha) {
-            //System.out.println((char) i);
-            //System.out.println(t.links.keySet());
-            //System.out.println(i);
-            // if (t.isWord && t.links.containsKey(i)) {
-            //     System.out.println(t.fullWord);
-            //     s += (char) i;
-            //     System.out.println(i);
-            //     sorter(alpha, t.links.get(i), s);
-            //     System.out.println(s);
-            // } else if (t.isWord) {
-            //     System.out.println(t.fullWord);
-            //     return; 
-            // } else 
-            if (t.links.containsKey(i)) {
+            if (x.links.containsKey(i)) {
                 s += (char) i;
-                sorter(alpha, t.links.get(i), s);
+                sorter(alpha, x.links.get(i), s);
             }
 
         }
-        // if (t.isWord) {
-        //     System.out.println(t.fullWord);
-        // }
     }
 
         /**
