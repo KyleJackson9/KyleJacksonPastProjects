@@ -9,8 +9,9 @@ import java.util.HashMap;
 public class Trie {
 
     private static final int MAX = 255;
-    private boolean isWord;
-    private HashMap<Integer, Trie> links;
+    public boolean isWord;
+    public HashMap<Integer, Trie> links;
+    public String fullWord;
     private boolean foundFullWord;
         /**
      * Initializes required data structures from parallel arrays.
@@ -19,6 +20,7 @@ public class Trie {
         links = new HashMap<Integer, Trie>();
         isWord = false;
         foundFullWord = false;
+        fullWord = "";
     }
         /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0
@@ -76,20 +78,21 @@ public class Trie {
                 sink = sink.links.get(indexOfChar); 
             }
         }
-        sink.isWord = true; 
+        sink.isWord = true;
+        sink.fullWord = s; 
     }
     /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0
      * @param size a size of the total to be inputted.
      * @return LinkedList of all the words popping out of the print.
      */
-    public LinkedList<String> print(int size) {
-        LinkedList rec = new LinkedList(); 
-        final int BUFFER = 1024; 
-        char[] buffer = new char[BUFFER];    
-        doApply(rec, 0, buffer, this); 
-        return rec; 
-    } 
+    // public LinkedList<String> print(int size) {
+    //     LinkedList rec = new LinkedList(); 
+    //     final int BUFFER = 1024; 
+    //     char[] buffer = new char[BUFFER];    
+    //     doApply(rec, 0, buffer, this); 
+    //     return rec; 
+    // } 
     /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0
      * @param rec a String to be inputted.
@@ -97,20 +100,20 @@ public class Trie {
      * @param buffer a character array to hold output.
      * @param t a Trie to test.
      */
-    private void doApply(LinkedList rec, int index, char[] buffer, Trie t) {
-        int i = 0; 
-        if (t != null) {
-            if (t.isWord) {
-                rec.add(new String(buffer, 0, index));
-                i++; 
-            }
-            int k; 
-            for (k = 0; k < MAX; k++) {
-                if (t.links.get(k) != null) {
-                    buffer[index] = (char) (k);
-                    doApply(rec, index + 1, buffer, t.links.get(k)); 
-                }
-            }
-        }       
-    }
+    // private void doApply(LinkedList rec, int index, char[] buffer, Trie t) {
+    //     int i = 0; 
+    //     if (t != null) {
+    //         if (t.isWord) {
+    //             rec.add(new String(buffer, 0, index));
+    //             i++; 
+    //         }
+    //         int k; 
+    //         for (k = 0; k < MAX; k++) {
+    //             if (t.links.get(k) != null) {
+    //                 buffer[index] = (char) (k);
+    //                 doApply(rec, index + 1, buffer, t.links.get(k)); 
+    //             }
+    //         }
+    //     }       
+    // }
 }
