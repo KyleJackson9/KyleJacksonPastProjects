@@ -1,23 +1,22 @@
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.ArrayList;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  * @author Kyle Jackson
  */
 public class Autocomplete {
-    HashMap<String, double> hold;
-    Trie t;
+    TernarySearchTrie t;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
      * @param weights Array of weights.
      */
     public Autocomplete(String[] terms, double[] weights) {
-        hold = new HashMap<String, double>();
-        t = new Trie();
+        t = new TernarySearchTrie();
         for (int i = 0; i < terms.length; i++) {
-            hold.put(terms[i], weights[i]);
-            t.insert(terms[i]);
+            t.insert(terms[i], weights[i]);
         }
     }
 
@@ -27,7 +26,12 @@ public class Autocomplete {
      * @return a double of the weight
      */
     public double weightOf(String term) {
-        return hold.get();
+        double output = t.search(term);
+        int check = (int) output;
+        if (check == -1) {
+            return 0.0;
+        }
+        return output;
     }
 
     /**
@@ -37,7 +41,8 @@ public class Autocomplete {
      */
     public String topMatch(String prefix) {
         //need to print out only those below that (fix Trie print by putting in prefix)
-        return null;
+        PriorityQueue<TSTNode> tops = t.prefixSearch(prefix);
+        return tops.poll().word;
     }
 
     /**
@@ -48,7 +53,16 @@ public class Autocomplete {
      * @return
      */
     public Iterable<String> topMatches(String prefix, int k) {
-        return null;
+        PriorityQueue<TSTNode> tops = t.prefixSearch(prefix);
+        ArrayList<String> topMatch = new ArrayList<String>();
+        int max = k;
+        if (tops.size() < k) {
+            max = tops.size();
+        }
+        for (int i = 0; i < max; i++) {
+            topMatch.add(tops.poll().word);
+        }
+        return topMatch;
     }
 
     /**
@@ -72,7 +86,7 @@ public class Autocomplete {
      */
     public static void main(String[] args) {
         // initialize autocomplete data structure
-        In in = new In(args[0]);
+        In in = new In(args[0]);    
         int N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
@@ -89,6 +103,7 @@ public class Autocomplete {
         while (StdIn.hasNextLine()) {
             String prefix = StdIn.readLine();
             for (String term : autocomplete.topMatches(prefix, k))
+            // String term = autocomplete.topMatch(prefix);
                 StdOut.printf("%14.1f  %s\n", autocomplete.weightOf(term), term);
         }
     }
