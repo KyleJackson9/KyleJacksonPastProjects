@@ -14,13 +14,13 @@ public class AlphabetSort {
      */
     public AlphabetSort() {
         convert = new HashSet<Character>();
-        t = new Trie();
     }
         /**
      * Initializes required data structures from parallel arrays.
      * @param sc  is the Scanner of System.in name.
      */
     public void sort(Scanner sc) {
+        t = new Trie();
         String line;  
         Scanner in = sc;
         char[] alpha;
@@ -44,8 +44,7 @@ public class AlphabetSort {
             line = in.nextLine();
             t.insert(line);
         }
-        Trie x = t;
-        sorter(alpha, x, "");
+        sorter(alpha, t, "");
         in.close();
     }
             /**
@@ -55,14 +54,13 @@ public class AlphabetSort {
      * @param s takes in the string they are building/testing
      */
     public void sorter(char[] alpha, Trie t, String s) {
-        Trie x = t;
-        if (x.getWord()) {
-            System.out.println(x.getFullWord());
+        if (t.getWord()) {
+            System.out.println(t.getFullWord());
         }
         for (int i : alpha) {
-            if (x.getLinks().containsKey(i)) {
+            if (t.getLinks().containsKey(i)) {
                 s += (char) i;
-                sorter(alpha, x.getLinks().get(i), s);
+                sorter(alpha, t.getLinks().get(i), s);
             }
 
         }

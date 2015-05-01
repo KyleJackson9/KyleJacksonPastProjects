@@ -99,8 +99,7 @@ public class TernarySearchTrie {
                 if(r.isEnd) {
                     al.add(r);
                 }
-                String pre = new String(prefix);
-                traverse(r.middle,"", pre);
+                traverse(r.middle);
             } else {
                 prefixSearch(r.middle, prefix, ptr + 1);
             }
@@ -121,19 +120,19 @@ public class TernarySearchTrie {
         };
 
         al = new PriorityQueue<TSTNode>(11, compareTST);
-        traverse(root, "","");
+        traverse(root);
         return al;
     }      
 
     /** function to traverse tree **/
-    private void traverse(TSTNode r, String str, String original) {
+    private void traverse(TSTNode r) {
         if (r != null) {
-            traverse(r.left, str, original);
+            traverse(r.left);
             if (r.isEnd) {
                     al.add(r);
             }
-            traverse(r.middle, str, original);
-            traverse(r.right, str, original);
+            traverse(r.middle);
+            traverse(r.right);
         }
     }
 }
