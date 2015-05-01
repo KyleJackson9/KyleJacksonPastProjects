@@ -22,10 +22,18 @@ public class Autocomplete {
      */
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
+        HashSet<String> check = new HashSet<String>();
         // this.terms = terms;
         // nothing = new TreeMap<Integer, String>();
-        for (int i = 0; i < terms.length; i++) {
+        if (terms.length != weights.length) {
+            throw new IllegalArgumentException();
+        }
+         for (int i = 0; i < terms.length; i++) {
             t.insert(terms[i], weights[i]);
+            if (weights[i] <= 0 || check.contains(terms[i])) {
+                throw new IllegalArgumentException();
+            }
+            check.add(terms[i]);
             // nothing.put((int) weights[i], terms[i]);
         }
     }
@@ -129,15 +137,10 @@ public class Autocomplete {
         N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
-        HashSet<String> check = new HashSet<String>();
         for (int i = 0; i < N; i++) {
             weights[i] = in.readDouble();   // read the next weight
             in.readChar();                  // scan past the tab
             terms[i] = in.readLine();       // read the next term
-            if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null) {
-                throw new IllegalArgumentException();
-            }
-            check.add(terms[i]);
         }
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
