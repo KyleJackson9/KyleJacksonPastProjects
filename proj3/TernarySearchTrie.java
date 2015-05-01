@@ -5,8 +5,6 @@ import java.util.Comparator;
 public class TernarySearchTrie {
     private TSTNode root;
     private PriorityQueue<TSTNode> al;
-    private PriorityQueue<String> a2;
-
 
     // http://www.sanfoundry.com/java-program-ternary-search-tree/
     // got help from here when thinking of how to implement it (changed much)
@@ -106,42 +104,17 @@ public class TernarySearchTrie {
             }
         }
     }        
-    
-    
-
-
-    // /** function to print tree **/
-    // public PriorityQueue traversal(String prefix) {
-    //     //use Priority Queue
-    //     al = new PriorityQueue<String>();
-    //     traverse(root, prefix);
-    //     return al;
-    // }
 
     /** function to traverse tree **/
     private void traverse(TSTNode r, String str, String original) {
-        //need to fix this to do it only in regard to prefix
-
         if (r != null) {
-            // if (first) {
-            //     str = str + r.data;
-            //     if (r.isEnd) {
-            //         if (r.word.startsWith(original)) {
-            //             al.add(r);
-            //      }
-            //      traverse(r.middle, str, original, false);
-            //     }
-
-            // }
             traverse(r.left, str, original);
-            //str = str + r.data;
             if (r.isEnd) {
                  if (r.word.startsWith(original)) {
                     al.add(r);
                  }
             }
             traverse(r.middle, str, original);
-            //System.out.println(str);
             //str = str.substring(0, str.length() - 1);
             traverse(r.right, str, original);
         }

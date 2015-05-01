@@ -8,9 +8,9 @@ import java.util.HashMap;
 public class Trie {
 
     private static final int MAX = 255;
-    public boolean isWord;
-    public HashMap<Integer, Trie> links;
-    public String fullWord;
+    private boolean isWord;
+    private HashMap<Integer, Trie> links;
+    private String fullWord;
     private boolean foundFullWord;
         /**
      * Initializes required data structures from parallel arrays.
@@ -20,6 +20,38 @@ public class Trie {
         isWord = false;
         foundFullWord = false;
         fullWord = "";
+    }
+
+    public void setLinks(HashMap<Integer, Trie> linker) {
+        links = linker;
+    }
+
+    public void setWord(boolean word) {
+        isWord = word;
+    }
+
+    public void setFullWord(String word) {
+        fullWord = word;
+    }
+
+    public void setFound(boolean found) {
+        foundFullWord = found;
+    }
+
+    public HashMap<Integer, Trie> getLinks() {
+        return links;
+    }
+
+    public boolean getWord() {
+        return isWord;
+    }
+
+    public String getFullWord() {
+        return fullWord;
+    }
+
+    public boolean getFound() {
+        return foundFullWord;
     }
         /**
      * Find the weight of a given term. If it is not in the dictionary, return 0.0

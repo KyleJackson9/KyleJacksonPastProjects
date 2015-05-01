@@ -24,9 +24,9 @@ public class AlphabetSort {
         String line;  
         Scanner in = sc;
         char[] alpha;
-        try {
+        if (in.hasNext()) {
             alpha = in.nextLine().toCharArray();
-        } catch (Exception e) {
+        } else {
             throw new IllegalArgumentException();
         }
        
@@ -55,13 +55,13 @@ public class AlphabetSort {
      */
     public void sorter(char[] alpha, Trie t, String s) {
         Trie x = t;
-        if (t.isWord) {
-            System.out.println(x.fullWord);
+        if (x.getWord()) {
+            System.out.println(x.getFullWord());
         }
         for (int i : alpha) {
-            if (x.links.containsKey(i)) {
+            if (x.getLinks().containsKey(i)) {
                 s += (char) i;
-                sorter(alpha, x.links.get(i), s);
+                sorter(alpha, x.getLinks().get(i), s);
             }
 
         }
