@@ -46,9 +46,9 @@ public class Autocomplete {
         //need to print out only those below that (fix Trie print by putting in prefix)
         tops = new PriorityQueue<TSTNode>();
         if (prefix.equals("")) {
-            tops = t.traverseAll(N);
+            tops = t.traverseAll(1);
         } else {
-            tops = t.prefixSearch(prefix, N);
+            tops = t.prefixSearch(prefix, 1);
         }
         return tops.poll().word;
     }
@@ -69,9 +69,9 @@ public class Autocomplete {
         tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
-            tops = t.traverseAll(N);
+            tops = t.traverseAll(k);
         } else {
-            tops = t.prefixSearch(prefix, N);
+            tops = t.prefixSearch(prefix, k);
         }
         if (tops.size() < k) {
             max = tops.size();
