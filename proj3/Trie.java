@@ -22,34 +22,43 @@ public class Trie {
         fullWord = "";
     }
 
-    public void setLinks(HashMap<Integer, Trie> linker) {
-        links = linker;
-    }
+    // public void setLinks(HashMap<Integer, Trie> linker) {
+    //     links = linker;
+    // }
 
-    public void setWord(boolean word) {
-        isWord = word;
-    }
+    // public void setWord(boolean word) {
+    //     isWord = word;
+    // }
 
-    public void setFullWord(String word) {
-        fullWord = word;
-    }
+    // public void setFullWord(String word) {
+    //     fullWord = word;
+    // }
 
-    public void setFound(boolean found) {
-        foundFullWord = found;
-    }
-
+    // public void setFound(boolean found) {
+    //     foundFullWord = found;
+    // }
+    
+        /**
+     * Initializes required data structures from parallel arrays.
+     */
     public HashMap<Integer, Trie> getLinks() {
         return links;
     }
-
+        /**
+     * Initializes required data structures from parallel arrays.
+     */
     public boolean getWord() {
         return isWord;
     }
-
+        /**
+     * Initializes required data structures from parallel arrays.
+     */
     public String getFullWord() {
         return fullWord;
     }
-
+        /**
+     * Initializes required data structures from parallel arrays.
+     */
     public boolean getFound() {
         return foundFullWord;
     }
