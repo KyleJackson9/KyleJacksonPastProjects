@@ -89,8 +89,7 @@ public class TernarySearchTrie {
 
     /** function to search for a word **/
     private void prefixSearch(TSTNode r, char[] prefix, int ptr) {
-        if (r == null) {
-            
+        if (r == null) {   
         } else if (prefix[ptr] < r.data) {
             prefixSearch(r.left, prefix, ptr);
         } else if (prefix[ptr] > r.data) {
@@ -98,7 +97,11 @@ public class TernarySearchTrie {
         } else {
             String pre = new String(prefix);
             if (ptr == prefix.length - 1) {
-                traverse(r,"", pre);
+                if(r.isEnd) {
+                    al.add(r);
+                }
+                traverse(r.middle,"", pre);
+                //traverse(r.right,"", pre);
             } else {
                 prefixSearch(r.middle, prefix, ptr + 1);
             }
@@ -108,6 +111,7 @@ public class TernarySearchTrie {
     /** function to traverse tree **/
     private void traverse(TSTNode r, String str, String original) {
         if (r != null) {
+            //System.out.println(r.word);
             traverse(r.left, str, original);
             if (r.isEnd) {
                  if (r.word.startsWith(original)) {
