@@ -40,10 +40,12 @@ public class Autocomplete {
      */
     public String topMatch(String prefix) {
         //need to print out only those below that (fix Trie print by putting in prefix)
+        PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
         if (prefix.equals("")) {
-            throw new IllegalArgumentException();
+            tops = t.traverseAll();
+        } else {
+            tops = t.prefixSearch(prefix);
         }
-        PriorityQueue<TSTNode> tops = t.prefixSearch(prefix);
         return tops.poll().word;
     }
 
@@ -55,15 +57,18 @@ public class Autocomplete {
      * @return an Iterable of String in the form of ArrayList of top matches.
      */
     public Iterable<String> topMatches(String prefix, int k) {
-        if (prefix.equals("")) {
-            throw new IllegalArgumentException();
-        }
         if (k < 0) {
             throw new IllegalArgumentException();
         }
-        PriorityQueue<TSTNode> tops = t.prefixSearch(prefix);
+
         ArrayList<String> topMatch = new ArrayList<String>();
+        PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
         int max = k;
+        if (prefix.equals("")) {
+            tops = t.traverseAll();
+        } else {
+            tops = t.prefixSearch(prefix);
+        }
         if (tops.size() < k) {
             max = tops.size();
         }

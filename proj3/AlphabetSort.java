@@ -44,7 +44,8 @@ public class AlphabetSort {
             line = in.nextLine();
             t.insert(line);
         }
-        sorter(alpha, t, "");
+        Trie x = t;
+        sorter(alpha, x, "");
         in.close();
     }
             /**
