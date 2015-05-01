@@ -8,6 +8,7 @@ import java.util.HashSet;
  */
 public class Autocomplete {
     TernarySearchTrie t;
+    ArrayList<String> topMatch;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
@@ -62,7 +63,7 @@ public class Autocomplete {
             throw new IllegalArgumentException();
         }
 
-        ArrayList<String> topMatch = new ArrayList<String>();
+        topMatch = new ArrayList<String>();
         PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
@@ -106,10 +107,16 @@ public class Autocomplete {
         double[] weights = new double[N];
         HashSet<String> check = new HashSet<String>();
         for (int i = 0; i < N; i++) {
+            // if (!in.hasNextDouble()) {
+            //     throw new IllegalArgumentException();
+            // }
             weights[i] = in.readDouble();   // read the next weight
             in.readChar();                  // scan past the tab
+            if (!in.hasNextLine()) {
+                throw new IllegalArgumentException();
+            }
             terms[i] = in.readLine();       // read the next term
-            if (weights[i] <= 0 || check.contains(terms[i])) {
+            if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null) {
                 throw new IllegalArgumentException();
             }
 
