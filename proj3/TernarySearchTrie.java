@@ -94,19 +94,24 @@ public class TernarySearchTrie {
         if (r == null) {
             
         } else if (prefix[ptr] < r.data) {
-            prefixSearch(r.left, prefix, ptr);
+            prefixSearch(r.left, prefix, ptr + 1);
         } else if (prefix[ptr] > r.data) {
-            prefixSearch(r.right, prefix, ptr);
+            prefixSearch(r.right, prefix, ptr + 1);
         } else { //this will get me to the end of the prefix
             String pre = new String(prefix);
-            traverse(r,"", pre);
+            // System.out.println(r.word);
+            if (ptr == prefix.length - 1) {
+                //a2.add(pre);
+                traverse(r,"", pre);
+            } else {
+                prefixSearch(r.middle, prefix, ptr + 1);
+            }
+            // System.out.println(r.data);
+            // traverse(r,"", pre, false);
 
             //pre = Character.prefix.to;
 
-            // if (ptr == prefix.length - 1) {
-            //     //a2.add(pre);
-            //     traverse(r,"", pre);
-            //     System.out.println(pre);
+
                 
             // // } else if (ptr == prefix.length - 1) {
             // //     return r.val; //should be -1
@@ -147,19 +152,19 @@ public class TernarySearchTrie {
         //need to fix this to do it only in regard to prefix
 
         if (r != null) {
+            // System.out.println(str);
             traverse(r.left, str, original);
             str = str + r.data;
             if (r.isEnd) {
-                if (str.startsWith(original)) {
+                 if (r.word.startsWith(original)) {
                     al.add(r);
-                }
+                 }
             }
             traverse(r.middle, str, original);
+            //System.out.println(str);
             str = str.substring(0, str.length() - 1);
+            //System.out.println(str);
             traverse(r.right, str, original);
-
         }
-
     }
-
 }
