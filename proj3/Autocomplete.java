@@ -2,6 +2,8 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.TreeMap;
+import java.util.NavigableSet;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  * @author Kyle Jackson
@@ -10,6 +12,8 @@ public class Autocomplete {
     TernarySearchTrie t;
     ArrayList<String> topMatch;
     PriorityQueue<TSTNode> tops;
+    // TreeMap<Integer, String> nothing;
+    // String[] terms;
     static int N;
     /**
      * Initializes required data structures from parallel arrays.
@@ -18,8 +22,11 @@ public class Autocomplete {
      */
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
+        // this.terms = terms;
+        // nothing = new TreeMap<Integer, String>();
         for (int i = 0; i < terms.length; i++) {
             t.insert(terms[i], weights[i]);
+            // nothing.put((int) weights[i], terms[i]);
         }
     }
 
@@ -70,6 +77,18 @@ public class Autocomplete {
         int max = k;
         if (prefix.equals("")) {
             tops = t.traverseAll(k);
+<<<<<<< HEAD
+=======
+            // NavigableSet<Integer> hold = nothing.navigableKeySet();
+            // //System.out.println(nothing.values());
+            // //System.out.println(hold);
+            // for (int i = 0; i < k; i++) {
+            // System.out.println(hold.pollLast());   
+            //     topMatch.add(nothing.get(hold.pollLast()));
+            //     System.out.println(nothing.get(hold.pollLast()));
+            // }
+            // return topMatch;
+>>>>>>> master
         } else {
             tops = t.prefixSearch(prefix, k);
         }
@@ -121,6 +140,7 @@ public class Autocomplete {
             if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null) {
                 throw new IllegalArgumentException();
             }
+            check.add(terms[i]);
         }
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
