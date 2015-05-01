@@ -9,6 +9,7 @@ import java.util.HashSet;
 public class Autocomplete {
     TernarySearchTrie t;
     ArrayList<String> topMatch;
+    PriorityQueue<TSTNode> tops;
     static int N;
     /**
      * Initializes required data structures from parallel arrays.
@@ -43,7 +44,7 @@ public class Autocomplete {
      */
     public String topMatch(String prefix) {
         //need to print out only those below that (fix Trie print by putting in prefix)
-        PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
+        tops = new PriorityQueue<TSTNode>();
         if (prefix.equals("")) {
             tops = t.traverseAll(N);
         } else {
@@ -65,7 +66,7 @@ public class Autocomplete {
         }
 
         topMatch = new ArrayList<String>();
-        PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
+        tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
             tops = t.traverseAll(N);
