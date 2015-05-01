@@ -63,7 +63,7 @@ public class TernarySearchTrie {
             if (r.isEnd && ptr == word.length - 1) {
                 return r.val;
             } else if (ptr == word.length - 1) {
-                return r.val; //should be -1
+                return r.val; 
             } else {
                 return search(r.middle, word, ptr + 1);
             }
@@ -134,14 +134,15 @@ public class TernarySearchTrie {
 
             // }
             traverse(r.left, str, original);
-            str = str + r.data;
+            //str = str + r.data;
             if (r.isEnd) {
                  if (r.word.startsWith(original)) {
                     al.add(r);
                  }
             }
             traverse(r.middle, str, original);
-            str = str.substring(0, str.length() - 1);
+            //System.out.println(str);
+            //str = str.substring(0, str.length() - 1);
             traverse(r.right, str, original);
         }
     }
