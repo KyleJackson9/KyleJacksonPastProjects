@@ -53,6 +53,9 @@ public class Autocomplete {
      * @return
      */
     public Iterable<String> topMatches(String prefix, int k) {
+        if (k < 0) {
+            throw new IllegalArgumentException();
+        }
         PriorityQueue<TSTNode> tops = t.prefixSearch(prefix);
         ArrayList<String> topMatch = new ArrayList<String>();
         int max = k;
