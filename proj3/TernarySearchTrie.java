@@ -68,7 +68,7 @@ public class TernarySearchTrie {
         }        
     }
 
-    public PriorityQueue prefixSearch(String word) {
+    public PriorityQueue prefixSearch(String word, int k) {
         Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
             @Override
             public int compare(TSTNode a, TSTNode b) {
@@ -81,7 +81,7 @@ public class TernarySearchTrie {
             }
         };
 
-        al = new PriorityQueue<TSTNode>(11, compareTST);
+        al = new PriorityQueue<TSTNode>(k, compareTST);
         prefixSearch(root, word.toCharArray(), 0);
         return al;
         
@@ -106,7 +106,7 @@ public class TernarySearchTrie {
         }
     }  
 
-    public PriorityQueue traverseAll() {
+    public PriorityQueue traverseAll(int k) {
         Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
             @Override
             public int compare(TSTNode a, TSTNode b) {
@@ -119,7 +119,7 @@ public class TernarySearchTrie {
             }
         };
 
-        al = new PriorityQueue<TSTNode>(11, compareTST);
+        al = new PriorityQueue<TSTNode>(k, compareTST);
         traverse(root);
         return al;
     }      
