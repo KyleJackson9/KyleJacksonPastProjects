@@ -104,29 +104,22 @@ public class Autocomplete {
         // initialize autocomplete data structure
         In in = new In(args[0]);
         In in2 = new In(args[0]); 
-        double[] t = in2.readAllDoubles();
-        String[] w = in2.readAllStrings(); 
-        if (t.length != w.length) {
-            throw new IllegalArgumentException();
-        }  
+        // double[] t = in2.readAllDoubles();
+        // String[] w = in2.readAllStrings(); 
+        // if (t.length != w.length) {
+        //     throw new IllegalArgumentException();
+        // }  
         N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
         HashSet<String> check = new HashSet<String>();
         for (int i = 0; i < N; i++) {
-            // if (!in.hasNextDouble()) {
-            //     throw new IllegalArgumentException();
-            // }
             weights[i] = in.readDouble();   // read the next weight
             in.readChar();                  // scan past the tab
-            // if (!in.hasNextLine()) {
-            //     throw new IllegalArgumentException();
-            // }
             terms[i] = in.readLine();       // read the next term
             if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null) {
                 throw new IllegalArgumentException();
             }
-
         }
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
