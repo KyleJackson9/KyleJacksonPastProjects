@@ -12,8 +12,8 @@ public class Autocomplete {
     TernarySearchTrie t;
     ArrayList<String> topMatch;
     PriorityQueue<TSTNode> tops;
-    // TreeMap<Integer, String> nothing;
-    // String[] terms;
+    TreeMap<Integer, String> nothing;
+    String[] terms;
     static int N;
     /**
      * Initializes required data structures from parallel arrays.
@@ -23,18 +23,18 @@ public class Autocomplete {
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
         HashSet<String> check = new HashSet<String>();
-        // this.terms = terms;
-        // nothing = new TreeMap<Integer, String>();
+        this.terms = terms;
+        nothing = new TreeMap<Integer, String>();
         if (terms.length != weights.length) {
             throw new IllegalArgumentException();
         }
-         for (int i = 0; i < terms.length; i++) {
+        for (int i = 0; i < terms.length; i++) {
             t.insert(terms[i], weights[i]);
             if (weights[i] <= 0 || check.contains(terms[i])) {
                 throw new IllegalArgumentException();
             }
             check.add(terms[i]);
-            // nothing.put((int) weights[i], terms[i]);
+            nothing.put((int) weights[i], terms[i]);
         }
     }
 
@@ -61,7 +61,10 @@ public class Autocomplete {
         //need to print out only those below that (fix Trie print by putting in prefix)
         tops = new PriorityQueue<TSTNode>();
         if (prefix.equals("")) {
-            tops = t.traverseAll(1);
+            LinkedList<String> hold = new LinkedList(nothing.values());
+            return hold.pollLast();
+        // if (prefix.equals("")) {
+        //     tops = t.traverseAll(1);
         } else {
             tops = t.prefixSearch(prefix, 1);
         }
@@ -84,16 +87,12 @@ public class Autocomplete {
         tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
-            tops = t.traverseAll(k);
-            // NavigableSet<Integer> hold = nothing.navigableKeySet();
-            // //System.out.println(nothing.values());
-            // //System.out.println(hold);
-            // for (int i = 0; i < k; i++) {
-            // System.out.println(hold.pollLast());   
-            //     topMatch.add(nothing.get(hold.pollLast()));
-            //     System.out.println(nothing.get(hold.pollLast()));
-            // }
-            // return topMatch;
+            //tops = t.traverseAll(k);
+            LinkedList<String> hold = new LinkedList(nothing.values());
+            for (int i = 0; i < k; i++) {
+                topMatch.add((hold.pollLast()));
+            }
+            return topMatch;
         } else {
             tops = t.prefixSearch(prefix, k);
         }
