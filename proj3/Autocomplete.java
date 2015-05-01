@@ -41,6 +41,9 @@ public class Autocomplete {
      */
     public String topMatch(String prefix) {
         //need to print out only those below that (fix Trie print by putting in prefix)
+        if (prefix.equals(" ")) {
+            throw new IllegalArgumentException();
+        }
         PriorityQueue<TSTNode> tops = t.prefixSearch(prefix);
         return tops.poll().word;
     }
@@ -53,6 +56,9 @@ public class Autocomplete {
      * @return
      */
     public Iterable<String> topMatches(String prefix, int k) {
+        if (prefix.equals(" ")) {
+            throw new IllegalArgumentException();
+        }
         if (k < 0) {
             throw new IllegalArgumentException();
         }
