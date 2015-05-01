@@ -105,7 +105,25 @@ public class TernarySearchTrie {
                 prefixSearch(r.middle, prefix, ptr + 1);
             }
         }
-    }        
+    }  
+
+    public PriorityQueue traverseAll() {
+        Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
+            @Override
+            public int compare(TSTNode a, TSTNode b) {
+                if (a.val > b.val) {
+                    return -1;
+                } else if (b.val > a.val) {
+                    return 1;
+                } 
+                return 0;
+            }
+        };
+
+        al = new PriorityQueue<TSTNode>(11, compareTST);
+        traverse(root, "","");
+        return al;
+    }      
 
     /** function to traverse tree **/
     private void traverse(TSTNode r, String str, String original) {
