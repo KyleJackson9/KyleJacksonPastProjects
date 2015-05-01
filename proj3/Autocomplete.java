@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.ArrayList;
+import java.util.HashSet;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  * @author Kyle Jackson
@@ -103,13 +104,15 @@ public class Autocomplete {
         int N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
+        HashSet<String> check = new HashSet<String>();
         for (int i = 0; i < N; i++) {
             weights[i] = in.readDouble();   // read the next weight
-            if (weights[i] <= 0) {
-                throw new IllegalArgumentException();
-            }
             in.readChar();                  // scan past the tab
             terms[i] = in.readLine();       // read the next term
+            if (weights[i] <= 0 || check.contains(terms[i])) {
+                throw new IllegalArgumentException();
+            }
+
         }
 
         Autocomplete autocomplete = new Autocomplete(terms, weights);
