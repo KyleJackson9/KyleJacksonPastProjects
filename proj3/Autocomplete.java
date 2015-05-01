@@ -9,6 +9,7 @@ import java.util.HashSet;
 public class Autocomplete {
     TernarySearchTrie t;
     ArrayList<String> topMatch;
+    static int N;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
@@ -44,9 +45,9 @@ public class Autocomplete {
         //need to print out only those below that (fix Trie print by putting in prefix)
         PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
         if (prefix.equals("")) {
-            tops = t.traverseAll();
+            tops = t.traverseAll(N);
         } else {
-            tops = t.prefixSearch(prefix);
+            tops = t.prefixSearch(prefix, N);
         }
         return tops.poll().word;
     }
@@ -67,9 +68,9 @@ public class Autocomplete {
         PriorityQueue<TSTNode> tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
-            tops = t.traverseAll();
+            tops = t.traverseAll(N);
         } else {
-            tops = t.prefixSearch(prefix);
+            tops = t.prefixSearch(prefix, N);
         }
         if (tops.size() < k) {
             max = tops.size();
@@ -102,7 +103,7 @@ public class Autocomplete {
     public static void main(String[] args) {
         // initialize autocomplete data structure
         In in = new In(args[0]);    
-        int N = in.readInt();
+        N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
         HashSet<String> check = new HashSet<String>();
@@ -112,11 +113,11 @@ public class Autocomplete {
             // }
             weights[i] = in.readDouble();   // read the next weight
             in.readChar();                  // scan past the tab
-            if (!in.hasNextLine()) {
-                throw new IllegalArgumentException();
-            }
+            // if (!in.hasNextLine()) {
+            //     throw new IllegalArgumentException();
+            // }
             terms[i] = in.readLine();       // read the next term
-            if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null) {
+            if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null || terms[i].equals("")) {
                 throw new IllegalArgumentException();
             }
 

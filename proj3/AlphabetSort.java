@@ -50,7 +50,7 @@ public class AlphabetSort {
             /**
      * Spits out the sorted array.
      * @param alpha takes their weird alphabet
-     * @param t takes the trie storing everything
+     * @param x takes the trie storing everything
      * @param s takes in the string they are building/testing
      */
     public void sorter(char[] alpha, Trie x, String s) {
