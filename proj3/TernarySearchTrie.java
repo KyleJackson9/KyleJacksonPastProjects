@@ -97,42 +97,13 @@ public class TernarySearchTrie {
             prefixSearch(r.left, prefix, ptr);
         } else if (prefix[ptr] > r.data) {
             prefixSearch(r.right, prefix, ptr);
-        } else { //this will get me to the end of the prefix
+        } else {
             String pre = new String(prefix);
-            // System.out.println(r.word);
             if (ptr == prefix.length - 1) {
-                //a2.add(pre);
                 traverse(r,"", pre);
             } else {
                 prefixSearch(r.middle, prefix, ptr + 1);
             }
-            // System.out.println(r.data);
-            // traverse(r,"", pre, false);
-
-            //pre = Character.prefix.to;
-
-
-                
-            // // } else if (ptr == prefix.length - 1) {
-            // //     return r.val; //should be -1
-            // // } else {
-            // }
-
-            // if (r.middle != null) {
-            //     System.out.println("checking mid");
-            //     pre = pre + r.middle.data;
-            //     prefixSearch(r.middle, pre.toCharArray(), ptr);
-            // }
-            // if (r.right != null) {
-            //     System.out.println("right");
-            //     pre = pre + r.right.data;
-            //     prefixSearch(r.right, pre.toCharArray(), ptr);
-            // }
-            // if (r.left != null) {
-            //     System.out.println("left");
-            //     pre = pre + r.left.data;
-            //     prefixSearch(r.left, pre.toCharArray(), ptr);
-            // }
         }
     }        
     
@@ -152,7 +123,16 @@ public class TernarySearchTrie {
         //need to fix this to do it only in regard to prefix
 
         if (r != null) {
-            //if ()
+            // if (first) {
+            //     str = str + r.data;
+            //     if (r.isEnd) {
+            //         if (r.word.startsWith(original)) {
+            //             al.add(r);
+            //      }
+            //      traverse(r.middle, str, original, false);
+            //     }
+
+            // }
             traverse(r.left, str, original);
             str = str + r.data;
             if (r.isEnd) {
@@ -161,9 +141,7 @@ public class TernarySearchTrie {
                  }
             }
             traverse(r.middle, str, original);
-            System.out.println(str);
             str = str.substring(0, str.length() - 1);
-            System.out.println(str);
             traverse(r.right, str, original);
         }
     }
