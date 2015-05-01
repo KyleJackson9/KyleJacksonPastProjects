@@ -21,43 +21,31 @@ public class Trie {
         foundFullWord = false;
         fullWord = "";
     }
-
-    // public void setLinks(HashMap<Integer, Trie> linker) {
-    //     links = linker;
-    // }
-
-    // public void setWord(boolean word) {
-    //     isWord = word;
-    // }
-
-    // public void setFullWord(String word) {
-    //     fullWord = word;
-    // }
-
-    // public void setFound(boolean found) {
-    //     foundFullWord = found;
-    // }
     
         /**
      * Initializes required data structures from parallel arrays.
+     * @return Hashmap of all the links
      */
     public HashMap<Integer, Trie> getLinks() {
         return links;
     }
         /**
      * Initializes required data structures from parallel arrays.
+     * @return boolean of true if isWord is true
      */
     public boolean getWord() {
         return isWord;
     }
         /**
      * Initializes required data structures from parallel arrays.
+     * @return String of the word
      */
     public String getFullWord() {
         return fullWord;
     }
         /**
      * Initializes required data structures from parallel arrays.
+     * @return boolean of if its found
      */
     public boolean getFound() {
         return foundFullWord;
