@@ -85,8 +85,6 @@ public class Autocomplete {
         int max = k;
         if (prefix.equals("")) {
             tops = t.traverseAll(k);
-<<<<<<< HEAD
-=======
             // NavigableSet<Integer> hold = nothing.navigableKeySet();
             // //System.out.println(nothing.values());
             // //System.out.println(hold);
@@ -96,7 +94,6 @@ public class Autocomplete {
             //     System.out.println(nothing.get(hold.pollLast()));
             // }
             // return topMatch;
->>>>>>> master
         } else {
             tops = t.prefixSearch(prefix, k);
         }
