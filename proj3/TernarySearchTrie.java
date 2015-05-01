@@ -94,9 +94,9 @@ public class TernarySearchTrie {
         if (r == null) {
             
         } else if (prefix[ptr] < r.data) {
-            prefixSearch(r.left, prefix, ptr + 1);
+            prefixSearch(r.left, prefix, ptr);
         } else if (prefix[ptr] > r.data) {
-            prefixSearch(r.right, prefix, ptr + 1);
+            prefixSearch(r.right, prefix, ptr);
         } else { //this will get me to the end of the prefix
             String pre = new String(prefix);
             // System.out.println(r.word);
@@ -152,7 +152,7 @@ public class TernarySearchTrie {
         //need to fix this to do it only in regard to prefix
 
         if (r != null) {
-            // System.out.println(str);
+            //if ()
             traverse(r.left, str, original);
             str = str + r.data;
             if (r.isEnd) {
@@ -161,9 +161,9 @@ public class TernarySearchTrie {
                  }
             }
             traverse(r.middle, str, original);
-            //System.out.println(str);
+            System.out.println(str);
             str = str.substring(0, str.length() - 1);
-            //System.out.println(str);
+            System.out.println(str);
             traverse(r.right, str, original);
         }
     }
