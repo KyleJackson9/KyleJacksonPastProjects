@@ -3,7 +3,6 @@ import java.util.PriorityQueue;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
-import java.util.NavigableSet;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  * @author Kyle Jackson
@@ -89,6 +88,9 @@ public class Autocomplete {
         if (prefix.equals("")) {
             //tops = t.traverseAll(k);
             LinkedList<String> hold = new LinkedList(nothing.values());
+            if (hold.size() < k) {
+                k = hold.size();
+            }
             for (int i = 0; i < k; i++) {
                 topMatch.add((hold.pollLast()));
             }

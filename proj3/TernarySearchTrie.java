@@ -106,23 +106,23 @@ public class TernarySearchTrie {
         }
     }  
 
-    public PriorityQueue traverseAll(int k) {
-        Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
-            @Override
-            public int compare(TSTNode a, TSTNode b) {
-                if (a.val > b.val) {
-                    return -1;
-                } else if (b.val > a.val) {
-                    return 1;
-                } 
-                return 0;
-            }
-        };
+    // public PriorityQueue traverseAll(int k) {
+    //     Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
+    //         @Override
+    //         public int compare(TSTNode a, TSTNode b) {
+    //             if (a.val > b.val) {
+    //                 return -1;
+    //             } else if (b.val > a.val) {
+    //                 return 1;
+    //             } 
+    //             return 0;
+    //         }
+    //     };
 
-        al = new PriorityQueue<TSTNode>(k, compareTST);
-        traverse(root);
-        return al;
-    }      
+    //     al = new PriorityQueue<TSTNode>(k, compareTST);
+    //     traverse(root);
+    //     return al;
+    // }      
 
     /** function to traverse tree **/
     private void traverse(TSTNode r) {
