@@ -102,7 +102,13 @@ public class Autocomplete {
      */
     public static void main(String[] args) {
         // initialize autocomplete data structure
-        In in = new In(args[0]);    
+        In in = new In(args[0]);
+        In in2 = new In(args[0]); 
+        double[] t = in2.readAllDoubles();
+        String[] w = in2.readAllStrings(); 
+        if (t.length != w.length) {
+            throw new IllegalArgumentException();
+        }  
         N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
@@ -117,7 +123,7 @@ public class Autocomplete {
             //     throw new IllegalArgumentException();
             // }
             terms[i] = in.readLine();       // read the next term
-            if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null || terms[i].equals("")) {
+            if (weights[i] <= 0 || check.contains(terms[i]) || terms[i] == null) {
                 throw new IllegalArgumentException();
             }
 
