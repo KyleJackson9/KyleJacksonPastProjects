@@ -73,9 +73,9 @@ public class TernarySearchTrie {
             @Override
             public int compare(TSTNode a, TSTNode b) {
                 if (a.val > b.val) {
-                    return 1;
-                } else if (b.val > a.val) {
                     return -1;
+                } else if (b.val > a.val) {
+                    return 1;
                 } 
                 return 0;
             }
@@ -108,29 +108,55 @@ public class TernarySearchTrie {
     /** function to traverse tree **/
     private void traverse(TSTNode r, int k) {
         if (r != null) {
-            if (al.size() < k) {
+            // if (al.size() < k) {
+                traverse(r.left, k);
                 if (r.isEnd) {
+                    //System.out.println(r.word);
                     al.add(r);
                 }
-                traverse(r.left, k);
+
                 traverse(r.middle, k);
                 traverse(r.right, k);
-            } else {
-                if (al.peek().max <= r.val && r.isEnd) {
-                    al.poll();
-                    // System.out.println(r.word)
-                    al.add(r);
-                }
-                if (r.left != null && r.left.max > al.peek().val) {
-                    traverse(r.left, k);
-                }
-                if (r.middle != null && r.middle.max > al.peek().val) {
-                    traverse(r.middle, k);
-                }
-                if (r.right != null && r.right.max > al.peek().val) {
-                    traverse(r.right, k);
-                }
-            }
         }
     }
 }
+
+
+
+
+
+            // } else {
+                // if (r.left != null) {
+                //     if (r.left.max > al.peek().val) {
+                //         traverse(r.left, k);
+                //     }
+                // }
+
+                // if (al.peek().val <= r.val && r.isEnd) {
+                //     // al.poll();
+                //     // System.out.println(r.word)
+                //     // al.add(r);
+                //     if (al.size() == k) {
+                //         al.poll();
+                //         al.add(r);
+                //     } else {
+                //         al.add(r);
+                //     }
+                // }
+                // if (r.middle != null) {
+                //     if (r.middle.max > al.peek().val) {
+                //         traverse(r.middle, k);
+                //     }
+                // }
+
+                //                 if (r.right != null) {
+                //     if (r.right.max > al.peek().val) {
+                //         traverse(r.right, k);
+//                 //     }
+//                 // }
+
+
+//             // }
+//         }
+//     }
+// }
