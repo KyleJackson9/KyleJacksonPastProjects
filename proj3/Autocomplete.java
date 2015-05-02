@@ -1,7 +1,5 @@
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.TreeMap;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
@@ -19,17 +17,15 @@ public class Autocomplete {
      */
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
-        HashSet<String> check = new HashSet<String>();
         nothing = new TreeMap<Integer, String>();
         if (terms.length != weights.length) {
             throw new IllegalArgumentException();
         }
         for (int i = 0; i < terms.length; i++) {
             t.insert(terms[i], weights[i]);
-            if (weights[i] <= 0 || check.contains(terms[i])) {
+            if (weights[i] <= 0 || nothing.containsValue(terms[i])) {
                 throw new IllegalArgumentException();
             }
-            check.add(terms[i]);
             nothing.put((int) weights[i], terms[i]);
         }
     }
@@ -59,8 +55,6 @@ public class Autocomplete {
         if (prefix.equals("")) {
             LinkedList<String> hold = new LinkedList(nothing.values());
             return hold.pollLast();
-        // if (prefix.equals("")) {
-        //     tops = t.traverseAll(1);
         } else {
             tops = t.prefixSearch(prefix, 1);
         }
