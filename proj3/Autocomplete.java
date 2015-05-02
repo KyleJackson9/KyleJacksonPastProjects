@@ -12,8 +12,6 @@ public class Autocomplete {
     ArrayList<String> topMatch;
     PriorityQueue<TSTNode> tops;
     TreeMap<Integer, String> nothing;
-    String[] terms;
-    static int N;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
@@ -22,7 +20,6 @@ public class Autocomplete {
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
         HashSet<String> check = new HashSet<String>();
-        this.terms = terms;
         nothing = new TreeMap<Integer, String>();
         if (terms.length != weights.length) {
             throw new IllegalArgumentException();
@@ -86,13 +83,12 @@ public class Autocomplete {
         tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
-            //tops = t.traverseAll(k);
             LinkedList<String> hold = new LinkedList(nothing.values());
             if (hold.size() < k) {
                 k = hold.size();
             }
             for (int i = 0; i < k; i++) {
-                topMatch.add((hold.pollLast()));
+                topMatch.add(hold.pollLast());
             }
             return topMatch;
         } else {
@@ -127,15 +123,8 @@ public class Autocomplete {
      * @param args takes the name of an input file and an integer k as command-line arguments
      */
     public static void main(String[] args) {
-        // initialize autocomplete data structure
         In in = new In(args[0]);
-        In in2 = new In(args[0]); 
-        // double[] t = in2.readAllDoubles();
-        // String[] w = in2.readAllStrings(); 
-        // if (t.length != w.length) {
-        //     throw new IllegalArgumentException();
-        // }  
-        N = in.readInt();
+        int N = in.readInt();
         String[] terms = new String[N];
         double[] weights = new double[N];
         for (int i = 0; i < N; i++) {
