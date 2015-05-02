@@ -9,7 +9,7 @@ import java.util.TreeMap;
  */
 public class Autocomplete {
     TernarySearchTrie t;
-    ArrayList<String> topMatch;
+    LinkedList<String> topMatch;
     PriorityQueue<TSTNode> tops;
     TreeMap<Integer, String> nothing;
     /**
@@ -78,8 +78,7 @@ public class Autocomplete {
         if (k < 0) {
             throw new IllegalArgumentException();
         }
-
-        topMatch = new ArrayList<String>();
+        topMatch = new LinkedList<String>();
         tops = new PriorityQueue<TSTNode>();
         int max = k;
         if (prefix.equals("")) {
@@ -98,8 +97,9 @@ public class Autocomplete {
             max = tops.size();
         }
         for (int i = 0; i < max; i++) {
-            topMatch.add(tops.poll().word);
+            topMatch.addFirst(tops.poll().word);
         }
+        // System.out.println(topMatch);
         return topMatch;
     }
 
