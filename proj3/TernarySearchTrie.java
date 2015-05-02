@@ -73,47 +73,65 @@ public class TernarySearchTrie {
             @Override
             public int compare(TSTNode a, TSTNode b) {
                 if (a.val > b.val) {
-                    return -1;
-                } else if (b.val > a.val) {
                     return 1;
+                } else if (b.val > a.val) {
+                    return -1;
                 } 
                 return 0;
             }
         };
 
         al = new PriorityQueue<TSTNode>(k, compareTST);
-        prefixSearch(root, word.toCharArray(), 0);
+        prefixSearch(root, word.toCharArray(), 0, k);
         return al;
         
     }
 
     /** function to search for a word **/
-    private void prefixSearch(TSTNode r, char[] prefix, int ptr) {
+    private void prefixSearch(TSTNode r, char[] prefix, int ptr, int k) {
         if (r == null) {   
         } else if (prefix[ptr] < r.data) {
-            prefixSearch(r.left, prefix, ptr);
+            prefixSearch(r.left, prefix, ptr, k);
         } else if (prefix[ptr] > r.data) {
-            prefixSearch(r.right, prefix, ptr);
+            prefixSearch(r.right, prefix, ptr, k);
         } else {
             if (ptr == prefix.length - 1) {
                 if(r.isEnd) {
                     al.add(r);
                 }
-                traverse(r.middle);
+                traverse(r.middle, k);
             } else {
-                prefixSearch(r.middle, prefix, ptr + 1);
+                prefixSearch(r.middle, prefix, ptr + 1, k);
             }
         }
     }  
     /** function to traverse tree **/
-    private void traverse(TSTNode r) {
+    private void traverse(TSTNode r, int k) {
         if (r != null) {
-            traverse(r.left);
-            if (r.isEnd) {
+            // if (r.left.max > r.right.max && r.left.max < )
+            if (al.size() != k) {
+                traverse(r.left, k);
+                if (r.isEnd) {
                     al.add(r);
+                }
+                traverse(r.middle, k);
+                traverse(r.right, k);
+            } else {
+                if (al.peek().max < r.max && r.isEnd) {
+                    al.poll();
+                    // System.out.println(r.word)
+                    al.add(r);
+                }
+                if (r.left != null && r.left.max > al.peek().max) {
+                    traverse(r.left, k);
+                }
+                if (r.middle != null && r.middle.max > al.peek().max) {
+                    traverse(r.middle, k);
+                }
+                if (r.right != null && r.right.max > al.peek().max) {
+                    traverse(r.right, k);
+                }
             }
-            traverse(r.middle);
-            traverse(r.right);
         }
     }
 }
