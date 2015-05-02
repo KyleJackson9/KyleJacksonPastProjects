@@ -108,27 +108,26 @@ public class TernarySearchTrie {
     /** function to traverse tree **/
     private void traverse(TSTNode r, int k) {
         if (r != null) {
-            // if (r.left.max > r.right.max && r.left.max < )
-            if (al.size() != k) {
-                traverse(r.left, k);
+            if (al.size() < k) {
                 if (r.isEnd) {
                     al.add(r);
                 }
+                traverse(r.left, k);
                 traverse(r.middle, k);
                 traverse(r.right, k);
             } else {
-                if (al.peek().max < r.max && r.isEnd) {
+                if (al.peek().max <= r.val && r.isEnd) {
                     al.poll();
                     // System.out.println(r.word)
                     al.add(r);
                 }
-                if (r.left != null && r.left.max > al.peek().max) {
+                if (r.left != null && r.left.max > al.peek().val) {
                     traverse(r.left, k);
                 }
-                if (r.middle != null && r.middle.max > al.peek().max) {
+                if (r.middle != null && r.middle.max > al.peek().val) {
                     traverse(r.middle, k);
                 }
-                if (r.right != null && r.right.max > al.peek().max) {
+                if (r.right != null && r.right.max > al.peek().val) {
                     traverse(r.right, k);
                 }
             }
