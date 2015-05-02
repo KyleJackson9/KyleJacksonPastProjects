@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.TreeMap;
+import java.util.HashSet;
 /**
  * Implements autocomplete on prefixes for a given dictionary of terms and weights.
  * @author Kyle Jackson
@@ -10,6 +11,7 @@ public class Autocomplete {
     LinkedList<String> topMatch;
     PriorityQueue<TSTNode> tops;
     TreeMap<Integer, String> nothing;
+    HashSet<String> check;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
@@ -17,15 +19,17 @@ public class Autocomplete {
      */
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
+        check = new HashSet<String>();
         nothing = new TreeMap<Integer, String>();
         if (terms.length != weights.length) {
             throw new IllegalArgumentException();
         }
         for (int i = 0; i < terms.length; i++) {
             t.insert(terms[i], weights[i]);
-            if (weights[i] <= 0 || nothing.containsValue(terms[i])) {
+            if (weights[i] <= 0 || check.contains(terms[i])) {
                 throw new IllegalArgumentException();
             }
+            check.add(terms[i]);
             nothing.put((int) weights[i], terms[i]);
         }
     }
