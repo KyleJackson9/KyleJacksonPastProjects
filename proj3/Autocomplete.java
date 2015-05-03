@@ -11,7 +11,7 @@ public class Autocomplete {
     LinkedList<String> topMatch;
     PriorityQueue<TSTNode> tops;
     TreeMap<Integer, String> nothing;
-    HashSet<String> check;
+    HashSet<String> checker;
     /**
      * Initializes required data structures from parallel arrays.
      * @param terms Array of terms.
@@ -19,17 +19,17 @@ public class Autocomplete {
      */
     public Autocomplete(String[] terms, double[] weights) {
         t = new TernarySearchTrie();
-        check = new HashSet<String>();
+        checker = new HashSet<String>();
         nothing = new TreeMap<Integer, String>();
         if (terms.length != weights.length) {
             throw new IllegalArgumentException();
         }
         for (int i = 0; i < terms.length; i++) {
             t.insert(terms[i], weights[i]);
-            if (weights[i] <= 0 || check.contains(terms[i])) {
+            if (weights[i] <= 0 || checker.contains(terms[i])) {
                 throw new IllegalArgumentException();
             }
-            check.add(terms[i]);
+            checker.add(terms[i]);    
             nothing.put((int) weights[i], terms[i]);
         }
     }
