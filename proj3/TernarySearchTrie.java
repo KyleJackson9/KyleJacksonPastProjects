@@ -6,7 +6,6 @@ import java.util.HashSet;
 public class TernarySearchTrie {
     private TSTNode root;
     private PriorityQueue<TSTNode> al;
-    private HashSet<TSTNode> chek;
 
     // http://www.sanfoundry.com/java-program-ternary-search-tree/
     // got help from here when thinking of how to implement it (changed much)
@@ -76,120 +75,57 @@ public class TernarySearchTrie {
         }        
     }
 
-    public PriorityQueue prefixSearch(String word, int k) {
+    public PriorityQueue prefixSearch(String word) {
         Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
             @Override
             public int compare(TSTNode a, TSTNode b) {
                 if (a.val > b.val) {
-                    return 1;
-                } else if (b.val > a.val) {
                     return -1;
+                } else if (b.val > a.val) {
+                    return 1;
                 } 
                 return 0;
             }
         };
 
-        al = new PriorityQueue<TSTNode>(k, compareTST);
-        chek = new HashSet<TSTNode>();
-        prefixSearch(root, word.toCharArray(), 0, k);
+        al = new PriorityQueue<TSTNode>(50, compareTST);
+        prefixSearch(root, word.toCharArray(), 0);
         return al;
         
     }
 
     /** function to search for a word **/
-    private void prefixSearch(TSTNode r, char[] prefix, int ptr, int k) {
+    private void prefixSearch(TSTNode r, char[] prefix, int ptr) {
         if (r == null) {   
         } else if (prefix[ptr] < r.data) {
-            prefixSearch(r.left, prefix, ptr, k);
+            prefixSearch(r.left, prefix, ptr);
         } else if (prefix[ptr] > r.data) {
-            prefixSearch(r.right, prefix, ptr, k);
+            prefixSearch(r.right, prefix, ptr);
         } else {
             if (ptr == prefix.length - 1) {
                 if(r.isEnd) {
                     al.add(r);
-                } else {
-                    al.add(r.middle);
                 }
-                traverse(r.middle, k);
+                traverse(r.middle);
             } else {
-                prefixSearch(r.middle, prefix, ptr + 1, k);
+                prefixSearch(r.middle, prefix, ptr + 1);
             }
         }
     }  
     /** function to traverse tree **/
-    private void traverse(TSTNode r, int k) {
+    private void traverse(TSTNode r) {
         if (r != null) {
-//             if (al.size() < k) {
-//                 traverse(r.left, k);
-//                 if (r.isEnd) {
-//                     //System.out.println(r.word);
-//                     al.add(r);
-//                 }
-
-//                 traverse(r.middle, k);
-//                 traverse(r.right, k);
-// //         }
-// //     }
-// // }
-
-
-
-
-
-//             } else {
-
-                if (r.middle != null) {
-                    //System.out.println(r.middle.max - al.peek().val);
-                    if (r.middle.max > al.peek().val && al.size() == k) {
-                        traverse(r.middle, k);
-                    } else if (al.size() != k) {
-                        traverse(r.middle, k);
-                    }
-                }
-
-
-                if (r.isEnd) {
-                    // al.poll();
-                    //System.out.println(al.peek().val);
-
-                    // al.add(r);
-                    if (al.peek().val < r.val && al.size() == k && !chek.contains(r)) {
-                        al.poll();
-                        al.add(r);
-                                            //System.out.println(r.val);
-                        chek.add(r);
-                    } else if (!chek.contains(r) && al.size() < k) {
-                        al.add(r);
-                                            //System.out.println(r.val);
-                        // System.out.println(r.val);
-                        chek.add(r);
-                    }
-                }
-                if (r.left != null) {
-                    if (r.left.max > al.peek().val && al.size() == k) {
-                        traverse(r.left, k);
-                    } else if (al.size() != k) {
-                                                // traverse(r.middle, k);
-                        traverse(r.left, k);
-                        // traverse(r.right, k);      
-                                     }
-                }
-
-                                        if (r.right != null) {
-                    if (r.right.max > al.peek().val && al.size() == k) {
-                        traverse(r.right, k);
-                    } else if (al.size() != k) {
-                        // traverse(r.middle, k);
-                        // traverse(r.left, k);
-                        traverse(r.right, k);
-                    }
-                }
+            traverse(r.left);
+            if (r.isEnd) {
+                al.add(r);
             }
-
-
-
-
-            // }
+            traverse(r.middle);
+            traverse(r.right);
         }
     }
-// }
+}
+
+
+
+
+

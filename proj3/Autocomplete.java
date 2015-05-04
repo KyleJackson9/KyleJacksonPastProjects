@@ -60,7 +60,7 @@ public class Autocomplete {
             LinkedList<String> hold = new LinkedList(nothing.values());
             return hold.pollLast();
         } else {
-            tops = t.prefixSearch(prefix, 1);
+            tops = t.prefixSearch(prefix);
         }
         return tops.poll().word;
     }
@@ -89,13 +89,13 @@ public class Autocomplete {
             }
             return topMatch;
         } else {
-            tops = t.prefixSearch(prefix, k);
+            tops = t.prefixSearch(prefix);
         }
         if (tops.size() < k) {
             max = tops.size();
         }
         for (int i = 0; i < max; i++) {
-            topMatch.addFirst(tops.poll().word);
+            topMatch.add(tops.poll().word);
         }
         return topMatch;
     }
