@@ -95,7 +95,7 @@ public class Autocomplete {
             max = tops.size();
         }
         for (int i = 0; i < max; i++) {
-            topMatch.add(tops.poll().word);
+            topMatch.addFirst(tops.poll().word);
         }
         return topMatch;
     }
