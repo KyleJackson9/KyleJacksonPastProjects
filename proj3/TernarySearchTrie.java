@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.PriorityQueue;
 import java.util.Comparator;
-import java.util.HashSet;
 
 public class TernarySearchTrie {
     private TSTNode root;
@@ -13,12 +12,22 @@ public class TernarySearchTrie {
         root = null;
     }
 
-    /** function to insert for a word **/
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param word the string to be weighed
+     * @param num double of the weight
+     */
     public void insert(String word, double num) {
         root = insert(root, word.toCharArray(), 0, num);
     }
 
-    /** function to insert for a word **/
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param r the node to be weighed
+     * @param word double of the weight
+     * @param ptr pointer
+     * @param num double num
+     */
     public TSTNode insert(TSTNode r, char[] word, int ptr, double num) {
         if (r == null) {
             r = new TSTNode(word[ptr]);
@@ -49,13 +58,22 @@ public class TernarySearchTrie {
         return r;
     }
 
-
-    /** function to search for a word **/
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param term the string to be weighed
+     * @return a double of the weight
+     */
     public double search(String word) {
         return search(root, word.toCharArray(), 0);
     }
 
-    /** function to search for a word **/
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param r the node to be weighed
+     * @param word the chararray of the word
+     * @param ptr the pointer to it
+     * @return a double of the weight
+     */
     private double search(TSTNode r, char[] word, int ptr) {
         if (r == null) {
             return -1.0;
@@ -75,6 +93,11 @@ public class TernarySearchTrie {
         }        
     }
 
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param word the string to be prefixed
+     * @return a PQ of the nodes
+     */
     public PriorityQueue prefixSearch(String word) {
         Comparator<TSTNode> compareTST = new Comparator<TSTNode>() {
             @Override
@@ -94,7 +117,12 @@ public class TernarySearchTrie {
         
     }
 
-    /** function to search for a word **/
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param r the node to be weighed
+     * @param prefix to search for
+     * @param ptr the pointer to get it
+     */
     private void prefixSearch(TSTNode r, char[] prefix, int ptr) {
         if (r == null) {   
         } else if (prefix[ptr] < r.data) {
@@ -112,7 +140,10 @@ public class TernarySearchTrie {
             }
         }
     }  
-    /** function to traverse tree **/
+    /**
+     * Find the weight of a given term. If it is not in the dictionary, return 0.0
+     * @param r the node to be recursively tried
+     */
     private void traverse(TSTNode r) {
         if (r != null) {
             traverse(r.left);
