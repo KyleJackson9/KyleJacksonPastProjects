@@ -1,10 +1,12 @@
 import java.util.Scanner;
 import java.util.PriorityQueue;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class TernarySearchTrie {
     private TSTNode root;
     private PriorityQueue<TSTNode> al;
+    private HashSet<TSTNode> chek;
 
     // http://www.sanfoundry.com/java-program-ternary-search-tree/
     // got help from here when thinking of how to implement it (changed much)
@@ -23,14 +25,20 @@ public class TernarySearchTrie {
             r = new TSTNode(word[ptr]);
         }
         if (word[ptr] < r.data) {
-            if (r.max < num) r.max = num;
+            if (r.max < num) {
+                r.max = num;
+            }
             r.left = insert(r.left, word, ptr, num);
         } else if (word[ptr] > r.data) {
-            if (r.max < num) r.max = num;
+            if (r.max < num) {
+                r.max = num;
+            }
             r.right = insert(r.right, word, ptr, num);
         } else {
             if (ptr + 1 < word.length) {
-                if (r.max < num) r.max = num;
+                if (r.max < num) {
+                    r.max = num;
+                }
                 r.middle = insert(r.middle, word, ptr + 1, num);
             } else {
                 r.max = (double) num;
@@ -73,15 +81,16 @@ public class TernarySearchTrie {
             @Override
             public int compare(TSTNode a, TSTNode b) {
                 if (a.val > b.val) {
-                    return -1;
-                } else if (b.val > a.val) {
                     return 1;
+                } else if (b.val > a.val) {
+                    return -1;
                 } 
                 return 0;
             }
         };
 
         al = new PriorityQueue<TSTNode>(k, compareTST);
+        chek = new HashSet<TSTNode>();
         prefixSearch(root, word.toCharArray(), 0, k);
         return al;
         
@@ -98,6 +107,8 @@ public class TernarySearchTrie {
             if (ptr == prefix.length - 1) {
                 if(r.isEnd) {
                     al.add(r);
+                } else {
+                    al.add(r.middle);
                 }
                 traverse(r.middle, k);
             } else {
@@ -108,55 +119,77 @@ public class TernarySearchTrie {
     /** function to traverse tree **/
     private void traverse(TSTNode r, int k) {
         if (r != null) {
-            // if (al.size() < k) {
-                traverse(r.left, k);
-                if (r.isEnd) {
-                    //System.out.println(r.word);
-                    al.add(r);
+//             if (al.size() < k) {
+//                 traverse(r.left, k);
+//                 if (r.isEnd) {
+//                     //System.out.println(r.word);
+//                     al.add(r);
+//                 }
+
+//                 traverse(r.middle, k);
+//                 traverse(r.right, k);
+// //         }
+// //     }
+// // }
+
+
+
+
+
+//             } else {
+
+                if (r.middle != null) {
+                    //System.out.println(r.middle.max - al.peek().val);
+                    if (r.middle.max > al.peek().val && al.size() == k) {
+                        traverse(r.middle, k);
+                    } else if (al.size() != k) {
+                        traverse(r.middle, k);
+                    }
                 }
 
-                traverse(r.middle, k);
-                traverse(r.right, k);
+
+                if (r.isEnd) {
+                    // al.poll();
+                    //System.out.println(al.peek().val);
+
+                    // al.add(r);
+                    if (al.peek().val < r.val && al.size() == k && !chek.contains(r)) {
+                        al.poll();
+                        al.add(r);
+                                            //System.out.println(r.val);
+                        chek.add(r);
+                    } else if (!chek.contains(r) && al.size() < k) {
+                        al.add(r);
+                                            //System.out.println(r.val);
+                        // System.out.println(r.val);
+                        chek.add(r);
+                    }
+                }
+                if (r.left != null) {
+                    if (r.left.max > al.peek().val && al.size() == k) {
+                        traverse(r.left, k);
+                    } else if (al.size() != k) {
+                                                // traverse(r.middle, k);
+                        traverse(r.left, k);
+                        // traverse(r.right, k);      
+                                     }
+                }
+
+                                        if (r.right != null) {
+                    if (r.right.max > al.peek().val && al.size() == k) {
+                        traverse(r.right, k);
+                    } else if (al.size() != k) {
+                        // traverse(r.middle, k);
+                        // traverse(r.left, k);
+                        traverse(r.right, k);
+                    }
+                }
+            }
+
+
+
+
+            // }
         }
     }
-}
-
-
-
-
-
-            // } else {
-                // if (r.left != null) {
-                //     if (r.left.max > al.peek().val) {
-                //         traverse(r.left, k);
-                //     }
-                // }
-
-                // if (al.peek().val <= r.val && r.isEnd) {
-                //     // al.poll();
-                //     // System.out.println(r.word)
-                //     // al.add(r);
-                //     if (al.size() == k) {
-                //         al.poll();
-                //         al.add(r);
-                //     } else {
-                //         al.add(r);
-                //     }
-                // }
-                // if (r.middle != null) {
-                //     if (r.middle.max > al.peek().val) {
-                //         traverse(r.middle, k);
-                //     }
-                // }
-
-                //                 if (r.right != null) {
-                //     if (r.right.max > al.peek().val) {
-                //         traverse(r.right, k);
-//                 //     }
-//                 // }
-
-
-//             // }
-//         }
-//     }
 // }
